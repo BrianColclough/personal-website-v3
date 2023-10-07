@@ -21,54 +21,76 @@ export async function getStaticPaths() {
 // 2. For your template, you can get the entry directly from the prop
 
 const {entry}: postData = Astro.props;
+const options = {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+};
+const {Content} = await entry.render();
+
 let relatedPosts
 if (entry.data.relatedPosts) {
     relatedPosts = await getEntries?.(entry.data.relatedPosts);
 }
-
-
-const {Content} = await entry.render();
 ---
 
 <Layout>
-    <h1>{entry.data.title}</h1>
-    <p>{entry.data.date.toDateString()}</p>
-    <div class="tags">
-        <span>Tags: </span>
-        <ul class="tags-list">
-            {entry.data.tags.map(tag => (
-                    <li>{tag}</li>
-            ))}
-        </ul>
-    </div>
-    <Content/>
+    <div class="markdown-wrapper">
+        <article class="markdown-container">
+            <h1>{entry.data.title}</h1>
+            <p>Date Published: {entry.data.date.toLocaleString("en-US", options as Intl.DateTimeFormatOptions)}</p>
+            <div class="tags">
+                <span>Tags: </span>
+                <ul class="tags-list">
+                    {entry.data.tags.map(tag => (
+                            <li>{tag}</li>
+                    ))}
+                </ul>
+            </div>
+            <Content/>
 
-    <h2>You might also like:</h2>
-    {relatedPosts ? (
-            relatedPosts.map(p => (
-                    <a href={p.slug}>{p.data.title}</a>
-            )))
-        : (
-                    <p>No related posts</p>
-        )
-    }
+            <h2>You might also like:</h2>
+            {relatedPosts ? (
+                    relatedPosts.map(p => (
+                            <a href={p.slug}>{p.data.title}</a>
+                    )))
+                : (
+                            <p>No related posts</p>
+                )
+            }
+        </article>
+    </div>
 </Layout>
 
-<style>
+<style is:global>
     h1, h2, h3, h4 {
         font-family: SpaceGrotesk, 'sans-serif';
+        font-weight: bold;
+        margin-left: -1rem;
     }
 
     h1 {
         font-size: 3rem;
         font-weight: 700;
         margin-bottom: 1rem;
-        text-align: left;
+        text-decoration: var(--accent-blue);
+        text-decoration-line: underline;
     }
+
 
     .tags-list {
         list-style: none;
-display: inline-flex;
+        display: inline-flex;
         gap: .5rem
+    }
+
+    .markdown-wrapper {
+        display: flex;
+        justify-content: center;
+    }
+
+    .markdown-container {
+        max-width: 800px;
     }
 </style>
