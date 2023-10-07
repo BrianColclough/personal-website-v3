@@ -1,0 +1,108 @@
+---
+import {NavBar} from "../components/nav-bar";
+interface Props {
+    title: string;
+}
+
+const {title} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="description" content="Astro description"/>
+    <meta name="viewport" content="width=device-width"/>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
+    <meta name="generator" content={Astro.generator}/>
+    <title>{title}</title>
+</head>
+<body class="content-container">
+<NavBar/>
+<div class="content-wrapper">
+    <slot/>
+</div>
+</body>
+</html>
+<style is:global>
+
+    :root {
+        --accent-light: #FEF7DE;
+        --accent-pink: #FF0C8F;
+        --accent-orange: #F15300;
+        --accent-dark: 49, 10, 101;
+        --accent-green: #00FFAC;
+        --accent-blue: #4DCFF8;
+        --accent-purple: #990BD4;
+        -webkit-font-smoothing: subpixel-antialiased;
+        -moz-osx-font-smoothing: auto;
+        --accent-gradient: linear-gradient(
+                45deg,
+                rgb(var(--accent)),
+                rgb(var(--accent-light)) 30%,
+                white 60%
+        );
+
+        @font-face {
+            font-family: 'SpaceGrotesk';
+            src: url('/fonts/SpaceGrotesk-Regular.ttf') format('ttf');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'SpaceGroteskBold';
+            src: url('/fonts/SpaceGrotesk-Bold.ttf') format('ttf');
+            font-weight: bold;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Poppins';
+            src: url('/fonts/Poppins-Regular.ttf') format('ttf');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+    }
+
+
+    html {
+        font-family: 'poppins', sans-serif;
+        background: var(--accent-light);
+        background-size: 224px;
+        font-size: 115%;
+        font-weight: normal;
+        line-height: 1.5;
+    }
+
+    code {
+        font-family: Menlo,
+        Monaco,
+        Lucida Console,
+        Liberation Mono,
+        DejaVu Sans Mono,
+        Bitstream Vera Sans Mono,
+        Courier New,
+        monospace;
+    }
+
+    .content-container {
+        position: relative;
+        padding-top: 4rem;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+        align-items: center;
+        flex-grow: 1;
+        height: 100vh;
+    }
+
+    .content-wrapper {
+        width: 100%;
+        max-width: 80rem;
+    }
+</style>

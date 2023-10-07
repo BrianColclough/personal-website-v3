@@ -1,0 +1,19 @@
+.nav-bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: auto;
+  background-color: white;
+  border-bottom: 2px solid var(--accent-orange);
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.nav-bar-list {
+  display: flex;
+  justify-content: end;
+  gap: 2rem;
+  flex-direction: row;
+  list-style: none;
+}

@@ -1,0 +1,25 @@
+---
+// Example: Filter out content entries with `draft: true` only when building for production
+import {getCollection} from 'astro:content';
+import Layout from "../../layouts/Layout.astro";
+import { Card } from "../../components/card/card.tsx";
+const blogEntries = await getCollection('blog', ({data}) => {
+    return import.meta.env.PROD ? data.draft !== true : true;
+});
+---
+
+
+<Layout>
+    <div>
+        {
+            blogEntries.map((p) => (
+                    <Card title={p.data.title} subTitle={p.data.date.toDateString()} linkTo={'/blog/' + p.slug} body={p.data.summary} />
+                    <!--<a href={'/blog/' + p.slug}>{p.data.title}</a>-->
+                    <!--<p>Published on</p>-->
+                    <!--<time datetime={p.data.date.toISOString()}>-->
+                    <!--    {p.data.date.toDateString()}-->
+                    <!--</time>-->
+            ))
+        }
+    </div>
+</Layout>
