@@ -4,11 +4,11 @@ export const NavBar = () => {
   return (
     <nav class="nav-bar">
       <ul class="nav-bar-list">
-        <li>
-          <a href="/">home</a>
+        <li class="nav-bar-item">
+          <a href="/">Home</a>
         </li>
-        <li>
-          <a href="/blog">blog</a>
+        <li class="nav-bar-item">
+          <a href="/blog">Blog</a>
         </li>
       </ul>
     </nav>

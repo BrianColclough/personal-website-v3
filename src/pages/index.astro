@@ -3,11 +3,87 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout title="Brian Colclough">
-    <h1 class="welcome">Welcome</h1>
+    <div class="home-grid">
+        <div class="home-grid-item text-item">
+            <h1 class="text-item-header">Who am I?</h1>
+            <div>
+                Im Brian and I'm a front end software engineer. I love building things with code and I'm always looking
+                for
+                new ways to learn and grow.
+            </div>
+        </div>
+        <div class="home-grid-item welcome-item">
+            <h1 class="welcome">Hello, I'm Brian</h1>
+        </div>
+    </div>
 </Layout>
 
 <style>
-    .welcome{
-        font-family: 'SpaceGroteskBold', sans-serif;
+    .home-grid {
+        margin-left: 2rem;
+        margin-right: 2rem;
+        margin-top: 1rem;
+        display: grid;
+        grid-auto-flow: column;
+        row-gap: 5rem;
+        gap: 4rem;
+        max-width: 80rem;
     }
+
+    .home-grid > * {
+        break-inside: avoid;
+        border-radius: .75rem;
+    }
+
+    .home-grid-item {
+        outline: .5rem solid black;
+    }
+
+    .text-item {
+        margin-top: 5rem;
+        padding: .5rem;
+        background-color: var(--accent-green);
+        box-shadow: black 1rem 1rem 0 1px;
+        margin-bottom: -5rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-size: 1.1rem;
+        text-align: left;
+    }
+
+    .text-item-header {
+        font-size: 3rem;
+        font-family: SpaceGrotesk, 'sans-serif';
+        text-align: left;
+        width: 100%;
+        padding-bottom: 0;
+        margin-bottom: 0;
+        margin-top: .25rem;
+    }
+
+    .welcome-item {
+        justify-self: right;
+        padding-left: 2rem;
+        padding-right: 2rem;
+        background-color: var(--accent-purple);
+        box-shadow: black 1rem 1rem 0 1px;
+        color: white;
+    }
+
+    .welcome {
+        font-family: SpaceGrotesk, 'sans-serif';
+        font-size: 4rem;
+    }
+
+    @media (max-width: 800px) {
+        .home-grid {
+            grid-auto-flow: row;
+        }
+
+        .text-item {
+            margin: 0;
+        }
+    }
+
 </style>

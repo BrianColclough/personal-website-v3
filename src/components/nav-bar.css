@@ -13,7 +13,18 @@
 .nav-bar-list {
   display: flex;
   justify-content: end;
+  font-weight: bold;
   gap: 2rem;
   flex-direction: row;
   list-style: none;
+}
+
+.nav-bar-item > a:hover {
+  color: var(--accent-green);
+}
+
+.nav-bar-item > a {
+  font-size: 1.25rem;
+  text-decoration: none;
+  color: var(--accent-blue);
 }
