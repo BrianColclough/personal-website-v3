@@ -6,16 +6,30 @@ import {Card} from "../../components/card/card.tsx";
 const blogEntries = await getCollection('blog', ({data}) => {
     return import.meta.env.PROD ? data.draft !== true : true;
 });
+blogEntries.sort((a, b) => {
+    return b.data.date - a.data.date;
+});
 ---
 
 
 <Layout>
-    <div>
+    <div class="posts-container">
         {
             blogEntries.map((p) => (
-                    <Card title={p.data.title} subTitle={p.data.date.toDateString()} linkTo={'/blog/' + p.slug}
+                    <Card title={p.data.title} subTitle={p.data.date.toDateString()}
+                          linkTo={'/blog/' + p.slug}
                           body={p.data.summary}/>
             ))
         }
     </div>
 </Layout>
+
+<style>
+    .posts-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-top: 2rem;
+    }
+
+</style>

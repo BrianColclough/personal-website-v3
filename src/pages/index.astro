@@ -4,16 +4,24 @@ import Layout from '../layouts/Layout.astro';
 
 <Layout title="Brian Colclough">
     <div class="home-grid">
-        <div class="home-grid-item text-item">
-            <h1 class="text-item-header">Who am I?</h1>
-            <div>
-                Im Brian and I'm a front end software engineer. I love building things with code and I'm always looking
-                for
-                new ways to learn and grow.
-            </div>
-        </div>
         <div class="home-grid-item welcome-item">
             <h1 class="welcome">Hello, I'm Brian</h1>
+        </div>
+        <div class="home-grid-item text-item">
+            <div class="text-item-wrapper">
+                <h1 class="text-item-header">Who am I?</h1>
+                <p>
+                    Im Brian and I'm a front end software engineer. I love building things with code and I'm always
+                    looking
+                    for
+                    new ways to learn and grow.
+                </p>
+            </div>
+        </div>
+        <div class="home-grid-item self-intro">
+            <p>Here I write about my fitness journey as well as other things I'm interested in. I like to run, lift
+                weights, read, and watch movies. Theres a little of something for everyone here. Welcome to my corner of
+                the internet.</p>
         </div>
     </div>
 </Layout>
@@ -24,32 +32,35 @@ import Layout from '../layouts/Layout.astro';
         margin-right: 2rem;
         margin-top: 1rem;
         display: grid;
-        grid-auto-flow: column;
+        grid-template: 1fr 1fr / 1fr 1fr;
         row-gap: 5rem;
         gap: 4rem;
         max-width: 80rem;
     }
 
     .home-grid > * {
-        break-inside: avoid;
-        border-radius: .75rem;
     }
 
     .home-grid-item {
-        outline: .5rem solid black;
     }
 
     .text-item {
-        margin-top: 5rem;
-        padding: .5rem;
-        background-color: var(--accent-green);
+        grid-row: 1 / span 2;
+        place-self: center;
+    }
+
+    .text-item-wrapper {
+        outline: .5rem solid black;
         box-shadow: black 1rem 1rem 0 1px;
-        margin-bottom: -5rem;
+        background-color: var(--accent-green);
         display: flex;
         flex-direction: column;
         align-items: center;
         font-size: 1.1rem;
         text-align: left;
+        break-inside: avoid;
+        border-radius: .75rem;
+
     }
 
     .text-item-header {
@@ -63,11 +74,15 @@ import Layout from '../layouts/Layout.astro';
     }
 
     .welcome-item {
+        outline: .5rem solid black;
+        box-shadow: black 1rem 1rem 0 1px;
+        grid-row: 1;
+        grid-column: 2;
+        border-radius: .75rem;
         justify-self: right;
         padding-left: 2rem;
         padding-right: 2rem;
         background-color: var(--accent-purple);
-        box-shadow: black 1rem 1rem 0 1px;
         color: white;
     }
 
@@ -76,14 +91,33 @@ import Layout from '../layouts/Layout.astro';
         font-size: 4rem;
     }
 
+    .self-intro {
+        justify-self: end;
+        outline: .5rem solid black;
+        box-shadow: black 1rem 1rem 0 1px;
+        border-radius: .75rem;
+    }
+
     @media (max-width: 800px) {
         .home-grid {
             grid-auto-flow: row;
+            grid-template: 1fr/ auto;
         }
 
         .text-item {
             margin: 0;
         }
+
+        .welcome-item {
+            grid-column: 1;
+            grid-row: 1;
+        }
+
+        .text-item {
+            grid-row: 2;
+            place-self: center;
+        }
     }
+
 
 </style>

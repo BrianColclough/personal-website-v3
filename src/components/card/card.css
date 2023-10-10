@@ -2,6 +2,8 @@
   box-shadow: var(--accent-purple) 0 0 10px;
   border-radius: 5px;
   padding: 1rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
 }
 
 .card-title {

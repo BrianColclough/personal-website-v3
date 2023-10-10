@@ -1,16 +1,28 @@
 ---
 import {getCollection, getEntries} from 'astro:content';
 import Layout from "../../layouts/Layout.astro";
+import MarkdownLayout from "../../layouts/MarkdownLayout.astro";
+
+export type Post = {
+    title: string;
+    relatedPosts: string[];
+    date: Date
+    tags: string[];
+}
 
 type postData = {
-    data: {
-        title: string;
-        relatedPosts: string[];
-        date: Date
-        tags: string[];
-    };
+    data: Post;
     slug: string;
 }
+
+const {entry}: postData = Astro.props;
+const {Content} = await entry.render();
+let relatedPosts;
+
+if (entry.data.relatedPosts) {
+    relatedPosts = await getEntries<Post>(entry.data.relatedPosts);
+}
+
 // 1. Generate a new path for every collection entry
 export async function getStaticPaths() {
     const blogEntries = await getCollection('blog');
@@ -18,79 +30,10 @@ export async function getStaticPaths() {
         params: {slug: entry.slug}, props: {entry},
     }));
 }
-// 2. For your template, you can get the entry directly from the prop
-
-const {entry}: postData = Astro.props;
-const options = {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-};
-const {Content} = await entry.render();
-
-let relatedPosts
-if (entry.data.relatedPosts) {
-    relatedPosts = await getEntries?.(entry.data.relatedPosts);
-}
 ---
 
 <Layout>
-    <div class="markdown-wrapper">
-        <article class="markdown-container">
-            <h1>{entry.data.title}</h1>
-            <p>Date Published: {entry.data.date.toLocaleString("en-US", options as Intl.DateTimeFormatOptions)}</p>
-            <div class="tags">
-                <span>Tags: </span>
-                <ul class="tags-list">
-                    {entry.data.tags.map(tag => (
-                            <li>{tag}</li>
-                    ))}
-                </ul>
-            </div>
-            <Content/>
-
-            <h2>You might also like:</h2>
-            {relatedPosts ? (
-                    relatedPosts.map(p => (
-                            <a href={p.slug}>{p.data.title}</a>
-                    )))
-                : (
-                            <p>No related posts</p>
-                )
-            }
-        </article>
-    </div>
+    <MarkdownLayout frontmatter={entry.data} relatedPosts={relatedPosts}>
+        <Content/>
+    </MarkdownLayout>
 </Layout>
-
-<style is:global>
-    h1, h2, h3, h4 {
-        font-family: SpaceGrotesk, 'sans-serif';
-        font-weight: bold;
-        margin-left: -1rem;
-    }
-
-    h1 {
-        font-size: 3rem;
-        font-weight: 700;
-        margin-bottom: 1rem;
-        text-decoration: var(--accent-blue);
-        text-decoration-line: underline;
-    }
-
-
-    .tags-list {
-        list-style: none;
-        display: inline-flex;
-        gap: .5rem
-    }
-
-    .markdown-wrapper {
-        display: flex;
-        justify-content: center;
-    }
-
-    .markdown-container {
-        max-width: 800px;
-    }
-</style>
