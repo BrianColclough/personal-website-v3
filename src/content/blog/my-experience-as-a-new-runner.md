@@ -3,8 +3,8 @@ title: "My Experience as a New Runner"
 date: 2023-07-12
 summary: "Jumping into running seriously for the first time - things I've learned and what I'm doing differently to stay consistent"
 tags: [ running, training ]
-relatedPosts: ["finally-feeling-the-groove-of-running" ]
-draft: true
+relatedPosts: [ "finally-feeling-the-groove-of-running" ]
+draft: false
 ---
 
 # My Background
@@ -47,7 +47,7 @@ activities.
 ## What I'm Doing Different
 
 This time I've realized just how much my body can take before I start to feel aches and pains. As someone who hasn't
-regularly run before it's easy to overtrain and put too much stress on your body. Doing this will discourage you from
+regularly run before it's easy to over train and put too much stress on your body. Doing this will discourage you from
 running because you feel aches sometimes days after running. For me, the solution has been keeping track of the number
 of miles I've been running each week and not running more than 10% more in the next week. It's a slow process and I'm
 still in the middle of it. It's hard to see how someone could log thirty miles in one week when you're stuck at 10. If
