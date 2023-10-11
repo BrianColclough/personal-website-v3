@@ -23,18 +23,17 @@ const formattedPublishedDate = new Date(frontmatter.date).toLocaleDateString("en
 ---
 <div class="markdown-wrapper">
     <article class="markdown-container">
-        <h1>{frontmatter.title}
+        <div class="tags">
+            <sub class="tags-list">
+                {frontmatter.tags.map(tag => (
+                        <strong>{tag}</strong>
+                ))}
+            </sub>
+        </div>
+        <h1 class="frontmatter-header">{frontmatter.title}
             <span class="header-line"></span>
         </h1>
-        <p>Date Published: {formattedPublishedDate}</p>
-        <div class="tags">
-            <span>Tags: </span>
-            <ul class="tags-list">
-                {frontmatter.tags.map(tag => (
-                        <li>{tag}</li>
-                ))}
-            </ul>
-        </div>
+        <time datetime={frontmatter.date} class="pub-date"><i>{formattedPublishedDate}</i></time>
 
         <slot/>
 
@@ -44,17 +43,20 @@ const formattedPublishedDate = new Date(frontmatter.date).toLocaleDateString("en
 </div>
 
 <style is:global>
-    h1, h2, h3, h4 {
+    h2, h3, h4 {
         font-family: 'Wubberly', sans-serif;
         font-weight: bold;
         margin-left: -1rem;
     }
 
-    h1 {
+    .frontmatter-header {
+        font-family: 'Wubberly', sans-serif;
         font-size: 5rem;
         font-weight: 700;
         position: relative;
         margin-bottom: 2rem;
+        padding-top: 0;
+        margin-top: 0;
     }
 
     body {
@@ -66,7 +68,8 @@ const formattedPublishedDate = new Date(frontmatter.date).toLocaleDateString("en
     .tags-list {
         list-style: none;
         display: inline-flex;
-        gap: .5rem
+        gap: .5rem;
+        margin-top: 3rem;
     }
 
     .markdown-wrapper {
@@ -77,14 +80,15 @@ const formattedPublishedDate = new Date(frontmatter.date).toLocaleDateString("en
     .markdown-container {
         max-width: 800px;
         margin-top: 8rem;
-        position:relative:
+        position: relative;
     }
 
     .header-line {
         display: block;
-        position:absolute;
-        width: 40rem;
-        left: 10rem;
+        position: absolute;
+        overflow: hidden;
+        width: 25rem;
+        right: 0;
         height: 2px;
         background-color: var(--accent-orange);
     }
@@ -93,6 +97,14 @@ const formattedPublishedDate = new Date(frontmatter.date).toLocaleDateString("en
         .markdown-container {
             margin-left: 2rem;
             margin-right: 2rem
+        }
+
+        .header-line {
+            width: 15rem;
+        }
+
+        .frontmatter-header {
+            font-size: 3rem;
         }
     }
 </style>

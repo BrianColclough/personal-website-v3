@@ -19,7 +19,9 @@
 }
 
 .nav-bar-item > a:hover {
-  color: var(--accent-green);
+  color: var(--accent-dark-blue);
+  text-decoration: underline var(--accent-forrest) wavy;
+  text-underline-offset: 0.5rem;
 }
 
 .nav-bar-item > a {

@@ -1,5 +1,7 @@
 ---
 import {NavBar} from "../components/nav-bar";
+import '../styles/global.css';
+
 interface Props {
     title: string;
 }
@@ -26,55 +28,6 @@ const {title} = Astro.props;
 </html>
 <style is:global>
 
-
-    @font-face {
-        font-family: 'Wubberly';
-        src: url('/fonts/Wubberly-Regular.otf') format('opentype');
-        font-weight: normal;
-        font-style: normal;
-        font-display: swap;
-    }
-
-
-    @font-face {
-        font-family: 'Fields';
-        src: url('/fonts/Fields-Regular.otf') format('opentype');
-        font-weight: normal;
-        font-style: normal;
-        font-display: swap;
-    }
-
-    :root {
-        --accent-light: #f1f8ff;
-        --accent-pink: #FF0C8F;
-        --accent-orange: #F15300;
-        --accent-dark: #181a1a;
-        --accent-green: #00FFAC;
-        --accent-blue: #4DCFF8;
-        --accent-purple: #990BD4;
-        -webkit-font-smoothing: subpixel-antialiased;
-        -moz-osx-font-smoothing: auto;
-        font-family: 'Fields', sans-serif;
-    }
-
-    html {
-        background: var(--accent-light);
-        background-size: 224px;
-        font-size: 115%;
-        font-weight: normal;
-        line-height: 1.5;
-    }
-
-    code {
-        font-family: Menlo,
-        Monaco,
-        Lucida Console,
-        Liberation Mono,
-        DejaVu Sans Mono,
-        Bitstream Vera Sans Mono,
-        Courier New,
-        monospace;
-    }
 
     .content-container {
         position: relative;

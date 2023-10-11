@@ -1,0 +1,56 @@
+@font-face {
+  font-family: "Wubberly";
+  src: url("/fonts/Wubberly-Regular.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Fields";
+  src: url("/fonts/Fields-Regular.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --accent-light: #f1f8ff;
+  --accent-pink: #ff0c8f;
+  --accent-orange: #ff3200;
+  --accent-dark: #293330;
+  --accent-green: #00ffac;
+  --accent-forrest: #40806a;
+  --accent-blue: #4dcff8;
+  --accent-dark-blue: #0b3d91;
+  --accent-purple: #990bd4;
+  --accent-neon-purple: #4700ff;
+  -webkit-font-smoothing: subpixel-antialiased;
+  -moz-osx-font-smoothing: auto;
+}
+
+html {
+  font-family: "Fields", sans-serif;
+  background: var(--accent-light);
+  background-size: 224px;
+  font-size: 115%;
+  font-weight: normal;
+  line-height: 1.5;
+}
+
+code {
+  font-family:
+    Menlo,
+    Monaco,
+    Lucida Console,
+    Liberation Mono,
+    DejaVu Sans Mono,
+    Bitstream Vera Sans Mono,
+    Courier New,
+    monospace;
+}
+
+:focus-visible {
+  outline: 2px dotted var(--accent-pink);
+  outline-offset: 2px;
+}

@@ -24,6 +24,18 @@ import Layout from '../layouts/Layout.astro';
                 the internet.</p>
         </div>
     </div>
+    <div class="text-wall">
+        <p>
+            I'm a quite a <i>nerd</i> so I love customizing my little blog, this is the third iteration of my website.
+            Build
+            using Astro and solidJS and plain CSS.
+            By day I'm working as a front end developer working almost exclusively with Angular. I like to branch out
+            and
+            try new things. I love all things web development, I don't post much on the topic because I feel I still
+            have a lot to learn. I post a lot about my fitness journey and hopefully some of you will find my
+            advice/failures useful.
+        </p>
+    </div>
 </Layout>
 
 <style>
@@ -66,7 +78,7 @@ import Layout from '../layouts/Layout.astro';
 
     .text-item-header {
         font-size: 3rem;
-        font-family: SpaceGrotesk, 'sans-serif';
+        font-family: Wubberly, 'sans-serif';
         text-align: left;
         width: 100%;
         padding-bottom: 0;
@@ -88,7 +100,7 @@ import Layout from '../layouts/Layout.astro';
     }
 
     .welcome {
-        font-family: SpaceGrotesk, 'sans-serif';
+        font-family: Fields, 'sans-serif';
         font-size: 4rem;
     }
 
@@ -100,6 +112,20 @@ import Layout from '../layouts/Layout.astro';
         padding: 1rem;
         font-size: 1.2rem;
         background-color: var(--accent-blue);
+    }
+
+    .text-wall {
+        margin-left: 2rem;
+        margin-right: 2rem;
+        margin-top: 4rem;
+        max-width: 80rem;
+        font-size: 1.1rem;
+        background-color: var(--accent-forrest);
+        color: white;
+        padding: 1rem;
+        border-radius: .75rem;
+        outline: .5rem solid black;
+        box-shadow: black 1rem 1rem 1rem 1px;
     }
 
     @media (max-width: 800px) {

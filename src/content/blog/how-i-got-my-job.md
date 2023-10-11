@@ -2,7 +2,7 @@
 title: "How I got my First Job out of College With no Experience"
 date: 2022-10-25
 summary: "How I got my first job out of school while failing to gain other professional experience through internships"
-tags: [ "life", “career” ]
+tags: [ life, career ]
 draft: false
 ---
 
