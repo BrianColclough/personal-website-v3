@@ -13,7 +13,7 @@ blogEntries.sort((a, b) => {
 
 
 <Layout>
-    <div class="posts-container">
+    <div class="posts-wrapper">
         {
             blogEntries.map((p) => (
                     <Card title={p.data.title} subTitle={p.data.date.toDateString()}
@@ -27,9 +27,14 @@ blogEntries.sort((a, b) => {
 <style>
     .posts-container {
         display: flex;
-        flex-direction: column;
-        justify-content: center;
-        margin-top: 2rem;
+        align-items: center;
+    }
+
+    .posts-wrapper {
+        margin: 2rem 2rem 2rem;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 2rem;
     }
 
 </style>

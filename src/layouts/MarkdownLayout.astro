@@ -23,7 +23,9 @@ const formattedPublishedDate = new Date(frontmatter.date).toLocaleDateString("en
 ---
 <div class="markdown-wrapper">
     <article class="markdown-container">
-        <h1>{frontmatter.title}</h1>
+        <h1>{frontmatter.title}
+            <span class="header-line"></span>
+        </h1>
         <p>Date Published: {formattedPublishedDate}</p>
         <div class="tags">
             <span>Tags: </span>
@@ -43,17 +45,21 @@ const formattedPublishedDate = new Date(frontmatter.date).toLocaleDateString("en
 
 <style is:global>
     h1, h2, h3, h4 {
-        font-family: SpaceGrotesk, 'sans-serif';
+        font-family: 'Wubberly', sans-serif;
         font-weight: bold;
         margin-left: -1rem;
     }
 
     h1 {
-        font-size: 3rem;
+        font-size: 5rem;
         font-weight: 700;
-        margin-bottom: 1rem;
-        text-decoration: var(--accent-blue);
-        text-decoration-line: underline;
+        position: relative;
+        margin-bottom: 2rem;
+    }
+
+    body {
+        font-size: 1.1rem;
+        line-height: 1.7;
     }
 
 
@@ -71,6 +77,16 @@ const formattedPublishedDate = new Date(frontmatter.date).toLocaleDateString("en
     .markdown-container {
         max-width: 800px;
         margin-top: 8rem;
+        position:relative:
+    }
+
+    .header-line {
+        display: block;
+        position:absolute;
+        width: 40rem;
+        left: 10rem;
+        height: 2px;
+        background-color: var(--accent-orange);
     }
 
     @media (max-width: 800px) {

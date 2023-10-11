@@ -26,7 +26,9 @@ export const Card = (props: CardProps) => {
         </h1>
       </Show>
       <Show when={subTitle}>
-        <h2 class={CardClass.cardSubTitle}>{subTitle}</h2>
+        <i>
+          <h2 class={CardClass.cardSubTitle}>{subTitle}</h2>
+        </i>
       </Show>
       <Show when={body}>
         <p class={CardClass.cardBody}>{body}</p>

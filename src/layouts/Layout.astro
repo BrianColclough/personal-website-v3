@@ -26,6 +26,24 @@ const {title} = Astro.props;
 </html>
 <style is:global>
 
+
+    @font-face {
+        font-family: 'Wubberly';
+        src: url('/fonts/Wubberly-Regular.otf') format('opentype');
+        font-weight: normal;
+        font-style: normal;
+        font-display: swap;
+    }
+
+
+    @font-face {
+        font-family: 'Fields';
+        src: url('/fonts/Fields-Regular.otf') format('opentype');
+        font-weight: normal;
+        font-style: normal;
+        font-display: swap;
+    }
+
     :root {
         --accent-light: #f1f8ff;
         --accent-pink: #FF0C8F;
@@ -36,41 +54,10 @@ const {title} = Astro.props;
         --accent-purple: #990BD4;
         -webkit-font-smoothing: subpixel-antialiased;
         -moz-osx-font-smoothing: auto;
-        --accent-gradient: linear-gradient(
-                45deg,
-                rgb(var(--accent)),
-                rgb(var(--accent-light)) 30%,
-                white 60%
-        );
-
-        @font-face {
-            font-family: 'SpaceGrotesk';
-            src: url('/fonts/SpaceGrotesk-Regular.ttf') format('ttf');
-            font-weight: normal;
-            font-style: normal;
-            font-display: swap;
-        }
-
-        @font-face {
-            font-family: 'SpaceGroteskBold';
-            src: url('/fonts/SpaceGrotesk-Bold.ttf') format('ttf');
-            font-weight: bold;
-            font-style: normal;
-            font-display: swap;
-        }
-
-        @font-face {
-            font-family: 'Poppins';
-            src: url('/fonts/Poppins-Regular.ttf') format('ttf');
-            font-weight: normal;
-            font-style: normal;
-            font-display: swap;
-        }
+        font-family: 'Fields', sans-serif;
     }
 
-
     html {
-        font-family: 'poppins', sans-serif;
         background: var(--accent-light);
         background-size: 224px;
         font-size: 115%;

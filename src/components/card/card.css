@@ -1,13 +1,12 @@
 .card {
-  box-shadow: var(--accent-purple) 0 0 10px;
+  box-shadow: var(--accent-blue) 0 0 10px;
   border-radius: 5px;
   padding: 1rem;
-  margin-left: 1rem;
-  margin-right: 1rem;
 }
 
 .card-title {
-  color: var(--accent-orange);
+  color: var(--accent-dark);
+  font-family: "Wubberly", sans-serif;
   padding: 0;
   margin: 0;
 }
@@ -19,11 +18,7 @@ a {
 
 .card-subtitle {
   color: var(--accent-pink);
-  font-size: 1.2rem;
-  margin: 0.5rem 0 0;
+  font-size: 1rem;
+  margin: 0;
   padding: 0;
-}
-
-.card + .card {
-  margin-top: 1rem;
 }
