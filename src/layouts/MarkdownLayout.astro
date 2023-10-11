@@ -83,7 +83,8 @@ const formattedPublishedDate = new Date(frontmatter.date).toLocaleDateString("en
     .header-line {
         display: block;
         position:absolute;
-        width: 40rem;
+        overflow: hidden;
+        width:  40rem;
         left: 10rem;
         height: 2px;
         background-color: var(--accent-orange);
@@ -93,6 +94,10 @@ const formattedPublishedDate = new Date(frontmatter.date).toLocaleDateString("en
         .markdown-container {
             margin-left: 2rem;
             margin-right: 2rem
+        }
+
+        .header-line{
+            width: auto;
         }
     }
 </style>
