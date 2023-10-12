@@ -32,7 +32,7 @@ export async function getStaticPaths() {
 }
 ---
 
-<Layout>
+<Layout title={`Brian Colclough | ${entry.data.title}`}>
     <MarkdownLayout frontmatter={entry.data} relatedPosts={relatedPosts}>
         <Content/>
     </MarkdownLayout>
