@@ -34,11 +34,12 @@ const formattedDateUpdated = new Date(frontmatter.dateUpdated).toLocaleDateStrin
         <h1 class="frontmatter-header">{frontmatter.title}
             <span class="header-line"></span>
         </h1>
-        <time datetime={frontmatter.date} class="pub-date"><i>{formattedPublishedDate}</i></time>
-        <br></br>
-        <time datetime={frontmatter.dateUpdated} class:list={['pub-date', {'hidden': !frontmatter.dateUpdated}]}>
-            <strong>updated on: </strong> <i>{formattedDateUpdated}</i>
-        </time>
+        <div class="dates">
+            <time datetime={frontmatter.date} class="pub-date"><i>{formattedPublishedDate}</i></time>
+            <time datetime={frontmatter.dateUpdated} class:list={['pub-date', {'hidden': !frontmatter.dateUpdated}]}>
+                <strong>updated on: </strong> <i>{formattedDateUpdated}</i>
+            </time>
+        </div>
 
         <slot/>
 
@@ -54,9 +55,14 @@ const formattedDateUpdated = new Date(frontmatter.dateUpdated).toLocaleDateStrin
         margin-left: -1rem;
     }
 
+    h2 {
+        font-size: 2.5rem;
+    }
+
     .frontmatter-header {
         font-family: 'Wubberly', sans-serif;
         font-size: 5rem;
+        text-align: center;
         font-weight: 700;
         position: relative;
         margin-bottom: 2rem;
@@ -95,20 +101,25 @@ const formattedDateUpdated = new Date(frontmatter.dateUpdated).toLocaleDateStrin
         display: block;
         position: absolute;
         overflow: hidden;
-        width: 25rem;
         right: 0;
+        left: 0;
         height: 2px;
         background-color: var(--accent-orange);
+    }
+
+    .dates {
+        width: 100%;
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        gap: .5rem;
+        margin-top: 2rem;
     }
 
     @media (max-width: 800px) {
         .markdown-container {
             margin-left: 2rem;
             margin-right: 2rem
-        }
-
-        .header-line {
-            width: 15rem;
         }
 
         .frontmatter-header {
