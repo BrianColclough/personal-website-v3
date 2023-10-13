@@ -30,7 +30,7 @@
 }
 
 html {
-  font-family: "Fields", Fallback, sans-serif;
+  font-family: "Fields";
   background: var(--accent-light);
   background-size: 224px;
   font-size: 115%;
