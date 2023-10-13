@@ -28,7 +28,7 @@ const formattedDateUpdated = new Date(frontmatter.dateUpdated).toLocaleDateStrin
             <sub class="tags-list">
                 {frontmatter.tags.map(tag => (
                         <strong>{tag}</strong>
-                        <span class="tag-seperator">/</span>
+                        <span class="tag-separator">/</span>
                 ))}
             </sub>
         </div>
@@ -88,11 +88,11 @@ const formattedDateUpdated = new Date(frontmatter.dateUpdated).toLocaleDateStrin
         color: var(--accent-neon-purple);
     }
 
-    .tag-seperator {
+    .tag-separator {
         color: var(--accent-orange);
     }
 
-    .tag-seperator:last-child {
+    .tag-separator:last-child {
         display: none;
     }
 
