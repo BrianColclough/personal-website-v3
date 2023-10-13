@@ -1,21 +1,17 @@
 .nav-bar {
-  position: absolute;
+  width: 100%;
   display: flex;
+  flex-shrink: 1;
   justify-content: center;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: auto;
   background-color: var(--accent-light);
-  padding-left: 5rem;
-  padding-right: 5rem;
 }
 
 .nav-bar-wrapper {
-  width: 100%;
+  flex-grow: 1;
   max-width: 1280px;
   display: flex;
-  justify-content: end;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .nav-bar-list {
@@ -24,6 +20,10 @@
   gap: 2rem;
   font-weight: bold;
   list-style: none;
+}
+
+.navTitle {
+  font-size: 3rem;
 }
 
 .nav-bar-item > a:hover {
@@ -38,9 +38,13 @@
   color: var(--accent-blue);
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1280px) {
   .nav-bar {
-    padding-left: 2rem;
-    padding-right: 2rem;
+    margin-left: 3rem;
+    margin-right: 3rem;
+  }
+
+  .navTitle {
+    font-size: 2rem;
   }
 }

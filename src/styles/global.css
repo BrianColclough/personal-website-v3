@@ -30,12 +30,20 @@
 }
 
 html {
-  font-family: "Fields", sans-serif;
+  font-family: "Fields", Fallback, sans-serif;
   background: var(--accent-light);
   background-size: 224px;
   font-size: 115%;
   font-weight: normal;
   line-height: 1.5;
+}
+
+.fields {
+  font-family: "Fields", Fallback, sans-serif;
+}
+
+.wubberly {
+  font-family: "Wubberly", Fallback, sans-serif;
 }
 
 code {

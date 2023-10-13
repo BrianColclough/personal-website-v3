@@ -21,7 +21,7 @@ export const Card = (props: CardProps) => {
   return (
     <div class={CardClass.card}>
       <Show when={title}>
-        <h1 class={CardClass.cardTitle}>
+        <h1 class={[CardClass.cardTitle, "wubberly"].join(" ")}>
           <a href={linkTo}> {title}</a>
         </h1>
       </Show>
