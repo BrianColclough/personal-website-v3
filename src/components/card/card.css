@@ -21,3 +21,7 @@ a {
   margin: 0;
   padding: 0;
 }
+
+.card-body {
+  font-family: Fields, Fallback, sans-serif;
+}

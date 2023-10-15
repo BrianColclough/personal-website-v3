@@ -2,7 +2,7 @@
 title: Half Marathon Prep Prep Part Two
 date: 2023-10-11
 dateUpdated: 2023-10-13
-summary: two weeks out from my half marathon and I'm feeling good
+summary: Three weeks out from my half marathon and I'm feeling good
 draft: false
 tags: [ running, training ]
 relatedPosts: [ "half-marathon-prep-part-one" ]  

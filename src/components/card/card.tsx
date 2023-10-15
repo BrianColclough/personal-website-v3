@@ -27,7 +27,7 @@ export const Card = (props: CardProps) => {
       </Show>
       <Show when={subTitle}>
         <i>
-          <h2 class={CardClass.cardSubTitle}>{subTitle}</h2>
+          <h2 class={[CardClass.cardSubTitle].join(" ")}>{subTitle}</h2>
         </i>
       </Show>
       <Show when={body}>

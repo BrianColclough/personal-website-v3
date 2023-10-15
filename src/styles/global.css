@@ -14,6 +14,12 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: "Wotfard";
+  src: url("/fonts/wotfard-regular.woff2") format("woff2");
+  font-weight: normal;
+}
+
 :root {
   --accent-light: #f1f8ff;
   --accent-pink: #ff0c8f;
@@ -30,7 +36,7 @@
 }
 
 html {
-  font-family: "Fields";
+  font-family: Wotfard;
   background: var(--accent-light);
   background-size: 224px;
   font-size: 115%;
@@ -40,6 +46,10 @@ html {
 
 .fields {
   font-family: "Fields", Fallback, sans-serif;
+}
+
+.wotfard {
+  font-family: "Wotfard", Fallback, serif;
 }
 
 .wubberly {

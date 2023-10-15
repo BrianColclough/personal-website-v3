@@ -24,6 +24,7 @@
 
 .navTitle {
   font-size: 3rem;
+  font-family: Fields;
 }
 
 .nav-bar-item > a:hover {
@@ -33,6 +34,7 @@
 }
 
 .nav-bar-item > a {
+  font-family: Fields;
   font-size: 1.25rem;
   text-decoration: none;
   color: var(--accent-blue);

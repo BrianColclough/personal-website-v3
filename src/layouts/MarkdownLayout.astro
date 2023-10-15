@@ -23,7 +23,7 @@ const formattedPublishedDate = new Date(frontmatter.date).toLocaleDateString("en
 const formattedDateUpdated = new Date(frontmatter.dateUpdated).toLocaleDateString("en-US", options as Intl.DateTimeFormatOptions);
 ---
 <div class="markdown-wrapper">
-    <article class="markdown-container">
+    <article class="markdown-container fields">
         <div class="tags">
             <sub class="tags-list">
                 {frontmatter.tags.map(tag => (
