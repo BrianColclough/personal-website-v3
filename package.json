@@ -5,15 +5,17 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro build",
+    "build": "astro build && subfont -ir dist",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "subfont": "subfont -ir dist"
   },
   "dependencies": {
     "@astrojs/solid-js": "^3.0.2",
-    "astro": "^3.2.3",
+    "astro": "^3.6.4",
     "motion": "^10.16.4",
     "prettier": "^3.0.3",
-    "solid-js": "^1.7.12"
+    "solid-js": "^1.7.12",
+    "subfont": "^6.12.5"
   }
 }

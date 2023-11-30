@@ -1,0 +1,72 @@
+<nav class="nav-bar">
+    <div class="nav-bar-wrapper">
+        <span class="nav-title">Brian Colclough</span>
+        <ul class="nav-bar-list">
+            <li class="nav-bar-item">
+                <a href="/" data-astro-prefetch>
+                    Home
+                </a>
+            </li>
+            <li class="nav-bar-item">
+                <a href="/blog" data-astro-prefetch>
+                    Blog
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<style>
+    .nav-bar {
+        width: 100%;
+        display: flex;
+        flex-shrink: 1;
+        justify-content: center;
+        background-color: var(--accent-light);
+    }
+
+    .nav-bar-wrapper {
+        flex-grow: 1;
+        max-width: 1280px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .nav-bar-list {
+        display: flex;
+        flex-direction: row;
+        gap: 2rem;
+        font-weight: bold;
+        list-style: none;
+    }
+
+    .nav-title {
+        font-size: 3rem;
+        font-family: Fields, serif;
+    }
+
+    .nav-bar-item > a:hover {
+        color: var(--accent-dark-blue);
+        text-decoration: underline var(--accent-forrest) wavy;
+        text-underline-offset: 0.5rem;
+    }
+
+    .nav-bar-item > a {
+        font-family: Fields, serif;
+        font-size: 1.25rem;
+        text-decoration: none;
+        color: var(--accent-blue);
+    }
+
+    @media (max-width: 1280px) {
+        .nav-bar {
+            margin-left: 3rem;
+            margin-right: 3rem;
+        }
+
+        .nav-title {
+            font-size: 2rem;
+        }
+    }
+</style>
