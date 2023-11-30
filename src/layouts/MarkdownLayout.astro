@@ -60,6 +60,10 @@ const formattedDateUpdated = new Date(frontmatter.dateUpdated).toLocaleDateStrin
         font-size: 2.5rem;
     }
 
+    h3 {
+        font-size: 1.75rem;
+    }
+
     .frontmatter-header {
         font-size: 5rem;
         text-align: center;
@@ -101,9 +105,9 @@ const formattedDateUpdated = new Date(frontmatter.dateUpdated).toLocaleDateStrin
     }
 
     .markdown-container {
-        max-width: 800px;
         margin-top: 8rem;
         position: relative;
+        width: min(100%, 65ch);
     }
 
     .header-line {
@@ -134,5 +138,9 @@ const formattedDateUpdated = new Date(frontmatter.dateUpdated).toLocaleDateStrin
         .frontmatter-header {
             font-size: 3rem;
         }
+    }
+
+    article:is(h1, h2, h3, h4, h5, h6) {
+        text-wrap: balance;
     }
 </style>

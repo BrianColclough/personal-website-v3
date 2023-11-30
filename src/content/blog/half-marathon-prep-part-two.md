@@ -21,10 +21,11 @@ relatedPosts: [ "half-marathon-prep-part-one" ]
 ### Thursday 10/12
 
 - 60 minute goal pace run
-- 
+
 #### Post Workout Thoughts
 
-I felt really strong during this workout, the initial phase was quite difficult but pushing past the initial barrier I was able to get into a rhythm and keep pushing. I feel good and I'll be ready for the easy run tomorrow
+I felt really strong during this workout, the initial phase was quite difficult but pushing past the initial barrier I
+was able to get into a rhythm and keep pushing. I feel good and I'll be ready for the easy run tomorrow
 
 ### Friday 10/13
 
@@ -32,7 +33,8 @@ I felt really strong during this workout, the initial phase was quite difficult 
 
 #### Post Workout Thoughts
 
-While I was running this morning I had some tightness in my hamstring while I was running and I think I didn't intake enough electrolytes before my run/last night. I am going to start focusing on fueling before my runs in the morning.
+While I was running this morning I had some tightness in my hamstring while I was running and I think I didn't intake
+enough electrolytes before my run/last night. I am going to start focusing on fueling before my runs in the morning.
 
 ## Thoughts
 
