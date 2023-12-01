@@ -3,25 +3,31 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout title="Brian Colclough">
-    <div class="home-grid">
-        <div class="home-grid-item welcome-item">
-            <h1 class="welcome">Hello, I'm Brian</h1>
-        </div>
-        <div class="home-grid-item text-item">
-            <div class="text-item-wrapper">
-                <h1 class="text-item-header">Who am I?</h1>
-                <p>
-                    Im Brian and I'm a front end software engineer. I love building things with code and I'm always
-                    looking
-                    for
-                    new ways to learn and grow.
-                </p>
+    <div class="welcome-item">
+        <div class="welcome-container">
+            <div class="welcome-content">
+                <div class="welcome-item-bg-1"></div>
+                <div class="welcome-item-bg"></div>
+                <h1 class="welcome-content-header">Hello, I'm Brian</h1>
+                <p class="welcome-content-text">I'm a front-end developer from North Carolina</p>
             </div>
         </div>
-        <div class="home-grid-item self-intro">
-            <p>Here I write about my fitness journey as well as other things I'm interested in. I like to run, lift
+    </div>
+    <div class="who-am-i">
+        <div class="who-am-i-wrapper">
+            <h1 class="who-am-i-header">Who am I?</h1>
+            <p>
+                Im Brian and I'm a front end software engineer. I love building things with code and I'm always
+                looking
+                for
+                new ways to learn and grow.
+            </p>
+        </div>
+        <div class="self-intro">
+            <div>Here I write about my fitness journey as well as other things I'm interested in. I like to run, lift
                 weights, read, and watch movies. Theres a little of something for everyone here. Welcome to my corner of
-                the internet.</p>
+                the internet.
+            </div>
         </div>
     </div>
     <div class="text-wall">
@@ -39,44 +45,26 @@ import Layout from '../layouts/Layout.astro';
 </Layout>
 
 <style>
-    .home-grid {
-        margin-left: 2rem;
-        margin-right: 2rem;
-        margin-top: 4rem;
-        display: grid;
-        grid-template: 1fr 1fr / 1fr 1fr;
-        row-gap: 5rem;
-        gap: 4rem;
-        max-width: 80rem;
-    }
-
-    .home-grid > * {
-    }
-
-    .home-grid-item {
-    }
-
-    .text-item {
-        grid-row: 1 / span 2;
+    .who-am-i {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        align-items: center;
         place-self: center;
     }
 
-    .text-item-wrapper {
+    .who-am-i-wrapper {
         padding: 1rem;
-        outline: .5rem solid black;
-        box-shadow: black 1rem 1rem 0 1px;
-        background-color: var(--accent-green);
         display: flex;
         flex-direction: column;
         align-items: center;
         font-size: 1.1rem;
         text-align: left;
         break-inside: avoid;
-        border-radius: .75rem;
 
     }
 
-    .text-item-header {
+    .who-am-i-header {
         font-size: 3rem;
         font-family: Wubberly, 'sans-serif';
         text-align: left;
@@ -87,45 +75,94 @@ import Layout from '../layouts/Layout.astro';
     }
 
     .welcome-item {
-        outline: .5rem solid black;
-        box-shadow: black 1rem 1rem 0 1px;
+        margin-top: 2rem;
         grid-row: 1;
         grid-column: 2;
-        border-radius: .75rem;
-        justify-self: right;
-        padding-left: 2rem;
-        padding-right: 2rem;
-        background-color: var(--accent-purple);
-        color: white;
+        height: 70vh;
+        margin-bottom: 20vh;
     }
 
-    .welcome {
+    .welcome-content {
+        position: relative;
+        z-index: 0;
+    }
+
+    .welcome-item-bg {
+        position: absolute;
+        top: -3rem;
+        left: -3rem;
+        right: -3rem;
+        bottom: -4.5rem;
+        background-color: black;
+        rotate: 5deg;
+        z-index: -1;
+    }
+
+    .welcome-item-bg-1 {
+        position: absolute;
+        top: -3.5rem;
+        left: -3.5rem;
+        right: -3.5rem;
+        bottom: -5rem;
+        background-color: var(--accent-blue);
+        rotate: -7deg;
+        z-index: -1;
+    }
+
+    .welcome-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        gap: 2rem;
+        color: black;
+        position: relative;
+    }
+
+    .welcome-content-header {
         font-family: Fields, 'sans-serif';
         font-size: 4rem;
+        color: white;
+        padding: 0;
+        margin: 0;
+        z-index: 10;
+    }
+
+    .welcome-content-text {
+        color: white;
+        z-index: 10;
+        padding: 0;
+        margin: 0;
     }
 
     .self-intro {
-        justify-self: end;
-        outline: .5rem solid black;
+        outline: .125rem solid black;
         box-shadow: black 1rem 1rem 0 1px;
-        border-radius: .75rem;
-        padding: 1rem;
         font-size: 1.2rem;
-        background-color: var(--accent-blue);
+        display: flex;
+        align-items: center;
+        padding: 1rem;
+        height: min-content;
     }
 
     .text-wall {
-        margin-left: 2rem;
-        margin-right: 2rem;
-        margin-top: 4rem;
+        margin: 4rem 2rem 10vh;
         max-width: 80rem;
         font-size: 1.1rem;
-        background-color: var(--accent-forrest);
-        color: white;
+        color: black;
         padding: 1rem;
-        border-radius: .75rem;
-        outline: .5rem solid black;
-        box-shadow: black 1rem 1rem 2rem 1px;
+        outline: .125rem solid black;
+    }
+
+    .text-wall > p {
+        margin: .5rem;
+    }
+
+    @media (max-width: 1300px) {
+        .self-intro {
+            margin-right: 1rem;
+        }
     }
 
     @media (max-width: 800px) {
@@ -139,13 +176,21 @@ import Layout from '../layouts/Layout.astro';
         }
 
         .welcome-item {
-            grid-column: 1;
-            grid-row: 1;
+            margin-top: 2.5rem;
+            padding-left: 5rem;
+            padding-right: 5rem;
         }
 
         .text-item {
             grid-row: 2;
             place-self: center;
+        }
+
+        .who-am-i {
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 1;
         }
     }
 
