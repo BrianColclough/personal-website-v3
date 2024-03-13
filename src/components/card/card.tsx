@@ -6,32 +6,46 @@ export type CardProps = {
   subTitle?: string;
   body?: string;
   linkTo?: string;
+  tags?: string[];
 };
 
 enum CardClass {
-  card = "card",
-  cardTitle = "card-title",
-  cardSubTitle = "card-subtitle",
-  cardBody = "card-body",
+  Card = "card",
+  CardTitle = "card-title",
+  CardSubTitle = "card-subtitle",
+  CardBody = "card-body",
+  CardTags = "card-tags",
 }
 
 export const Card = (props: CardProps) => {
-  const { title, subTitle, body, linkTo } = props;
+  const { title, subTitle, body, linkTo, tags } = props;
 
   return (
-    <div class={CardClass.card}>
+    <div class={CardClass.Card}>
       <Show when={title}>
-        <h1 class={[CardClass.cardTitle, "wubberly"].join(" ")}>
+        <h1 class={[CardClass.CardTitle, "wubberly"].join(" ")}>
           <a href={linkTo}> {title}</a>
         </h1>
       </Show>
       <Show when={subTitle}>
         <i>
-          <h2 class={[CardClass.cardSubTitle].join(" ")}>{subTitle}</h2>
+          <h2 class={[CardClass.CardSubTitle].join(" ")}>{subTitle}</h2>
         </i>
       </Show>
       <Show when={body}>
-        <p class={CardClass.cardBody}>{body}</p>
+        <p class={CardClass.CardBody}>{body}</p>
+      </Show>
+      <Show when={tags}>
+        <div class={CardClass.CardTags}>
+          <sub class="tags-list">
+            {tags?.map((tag) => (
+              <>
+                <strong>{tag}</strong>
+                <span class="tag-separator">/</span>
+              </>
+            ))}
+          </sub>
+        </div>
       </Show>
     </div>
   );

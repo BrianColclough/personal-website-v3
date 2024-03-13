@@ -6,6 +6,8 @@
 
 .card-title {
   color: var(--accent-dark);
+  font-size: var(--font-xl);
+  line-height: var(--2xl);
   padding: 0;
   margin: 0;
 }
@@ -17,11 +19,32 @@ a {
 
 .card-subtitle {
   color: var(--accent-pink);
-  font-size: 1rem;
+  font-size: var(--font-md);
+  font-weight: lighter;
   margin: 0;
-  padding: 0;
 }
 
 .card-body {
   font-family: Fields, Fallback, sans-serif;
+  font-size: var(--font-md);
+  color: var(--accent-dark-50);
+  line-height: var(--lg);
+}
+
+.card-tags {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+}
+
+.tags-list {
+  list-style: none;
+  display: inline-flex;
+  gap: 0.5rem;
+  margin-top: 3rem;
+  color: var(--accent-neon-purple);
+}
+
+.tag-separator:last-child {
+  display: none;
 }

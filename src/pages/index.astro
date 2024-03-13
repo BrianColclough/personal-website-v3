@@ -13,18 +13,17 @@ import Layout from '../layouts/Layout.astro';
             </div>
         </div>
     </div>
+    <h1 class="who-am-i-header">Who am I?</h1>
     <div class="who-am-i">
-        <div class="who-am-i-wrapper">
-            <h1 class="who-am-i-header">Who am I?</h1>
-            <p>
-                Im Brian and I'm a front end software engineer. I love building things with code and I'm always
-                looking
-                for
-                new ways to learn and grow.
-            </p>
-        </div>
+        <p>
+            Im Brian and I'm a front end software engineer. I love building things with code and I'm always
+            looking
+            for
+            new ways to learn and grow.
+        </p>
         <div class="self-intro">
-            <div>Here I write about my fitness journey as well as other things I'm interested in. I like to run, lift
+            <div>
+                Here I write about my fitness journey as well as other things I'm interested in. I like to run, lift
                 weights, read, and watch movies. Theres a little of something for everyone here. Welcome to my corner of
                 the internet.
             </div>
@@ -47,30 +46,22 @@ import Layout from '../layouts/Layout.astro';
 <style>
     .who-am-i {
         display: flex;
-        width: 100%;
-        justify-content: space-between;
+        flex-direction: row;
+        width: auto;
+        gap: var(--lg);
         align-items: center;
-        place-self: center;
-    }
-
-    .who-am-i-wrapper {
-        padding: 1rem;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        font-size: 1.1rem;
-        text-align: left;
-        break-inside: avoid;
-
+        font-size: var(--lg);
     }
 
     .who-am-i-header {
-        font-size: 3rem;
+        font-size: var(--2xl);
         font-family: Wubberly, 'sans-serif';
         text-align: left;
         width: 100%;
-        padding-bottom: 0;
-        margin-bottom: 0;
+        margin-bottom: var(--lg);
+        text-decoration: underline var(--accent-blue) dashed;
+        text-decoration-thickness: var(--xxs);
+        text-underline-offset: var(--xs);
         margin-top: .25rem;
     }
 
@@ -78,7 +69,7 @@ import Layout from '../layouts/Layout.astro';
         margin-top: 2rem;
         grid-row: 1;
         grid-column: 2;
-        height: 70vh;
+        height: 75vh;
         margin-bottom: 20vh;
     }
 
@@ -115,16 +106,16 @@ import Layout from '../layouts/Layout.astro';
         justify-content: center;
         align-items: center;
         height: 100%;
-        gap: 2rem;
+        gap: var(--2xl);
         color: black;
         position: relative;
     }
 
     .welcome-content-header {
         font-family: Fields, 'sans-serif';
-        font-size: 4rem;
+        font-size: var(--3xl);
         color: white;
-        padding: 0;
+        padding: 0 0 var(--lg);
         margin: 0;
         z-index: 10;
     }
@@ -139,20 +130,21 @@ import Layout from '../layouts/Layout.astro';
     .self-intro {
         outline: .125rem solid black;
         box-shadow: black 1rem 1rem 0 1px;
-        font-size: 1.2rem;
+        font-size: var(--lg);
         display: flex;
         align-items: center;
-        padding: 1rem;
+        padding: var(--lg);
         height: min-content;
     }
 
     .text-wall {
-        margin: 4rem 2rem 10vh;
+        margin-top: var(--2xl);
         max-width: 80rem;
-        font-size: 1.1rem;
+        font-size: var(--lg);
         color: black;
-        padding: 1rem;
+        padding: var(--lg);
         outline: .125rem solid black;
+        margin-bottom: var(--3xl);
     }
 
     .text-wall > p {
@@ -169,6 +161,11 @@ import Layout from '../layouts/Layout.astro';
         .home-grid {
             grid-auto-flow: row;
             grid-template: 1fr/ auto;
+        }
+
+        .welcome-content-header {
+            font-size: var(--xl);
+            padding: 0;
         }
 
         .text-item {

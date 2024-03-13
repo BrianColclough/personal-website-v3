@@ -17,6 +17,8 @@
     "motion": "^10.16.4",
     "prettier": "^3.0.3",
     "solid-js": "^1.7.12",
-    "subfont": "^6.12.5"
+    "subfont": "^6.12.5",
+    "typescript": "^5.4.2",
+    "prettier-plugin-astro": "^0.13.0"
   }
 }

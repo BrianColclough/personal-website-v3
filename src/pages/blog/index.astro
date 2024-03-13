@@ -18,7 +18,9 @@ blogEntries.sort((a, b) => {
             blogEntries.map((p) => (
                     <Card title={p.data.title} subTitle={p.data.date.toDateString()}
                           linkTo={'/blog/' + p.slug}
-                          body={p.data.summary}/>
+                          body={p.data.summary}
+                          tags={p.data.tags}
+                    />
             ))
         }
     </div>

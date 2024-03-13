@@ -25,6 +25,7 @@
   --accent-pink: #ff0c8f;
   --accent-orange: #ff3200;
   --accent-dark: #293330;
+  --accent-dark-50: #164537;
   --accent-green: #00ffac;
   --accent-forrest: #40806a;
   --accent-blue: #4dcff8;
@@ -33,15 +34,41 @@
   --accent-neon-purple: #4700ff;
   -webkit-font-smoothing: subpixel-antialiased;
   -moz-osx-font-smoothing: auto;
+
+  /* sizing scale */
+  --xxs: 0.25rem;
+  --xs: 0.5rem;
+  --sm: 0.75rem;
+  --md: 1rem;
+  --lg: 1.5rem;
+  --xl: 2rem;
+  --2xl: 3rem;
+  --3xl: 4rem;
+  --4xl: 6rem;
+  --5xl: 8rem;
+  --6xl: 12rem;
+  --7xl: 16rem;
+  --8xl: 24rem;
+  --9xl: 32rem;
+  --10xl: 40rem;
+  --11xl: 48rem;
+
+  /* font sizing scale */
+  --font-sm: 0.618rem;
+  --font-md: 1rem;
+  --font-lg: 1.618rem;
+  --font-xl: 2.618rem;
+  --font-2xl: 4.236rem;
+  --font-3xl: 6.854rem;
+
+  font-size: 16px;
 }
 
 html {
   font-family: Wotfard;
   background: var(--accent-light);
-  background-size: 224px;
-  font-size: 115%;
   font-weight: normal;
-  line-height: 1.5;
+  line-height: var(--xl);
 }
 
 .fields {

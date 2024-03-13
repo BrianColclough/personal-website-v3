@@ -50,18 +50,19 @@ const formattedDateUpdated = new Date(frontmatter.dateUpdated).toLocaleDateStrin
 </div>
 
 <style is:global>
-    h2, h3, h4 {
+    h2, h3, h4, h5, h6 {
         font-family: 'Wubberly', sans-serif;
         font-weight: bold;
-        margin-left: -1rem;
+        margin-bottom: var(--lg);
+        margin-top: var(--2xl)
     }
 
     h2 {
-        font-size: 2.5rem;
+        font-size: var(--font-2xl)
     }
 
     h3 {
-        font-size: 1.75rem;
+        font-size: var(--font-xl)
     }
 
     .frontmatter-header {
