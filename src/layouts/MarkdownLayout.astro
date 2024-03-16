@@ -1,6 +1,5 @@
 ---
 import {RelatedPosts} from "../components/related-posts/related-posts";
-
 type Props = {
   file: string,
   url: string | undefined,
@@ -79,7 +78,7 @@ const formattedDateUpdated = new Date(frontmatter.dateUpdated).toLocaleDateStrin
     }
 
     body {
-        font-size: 1.1rem;
+        font-size: var(--font-lg);
         line-height: 1.7;
     }
 
@@ -92,11 +91,11 @@ const formattedDateUpdated = new Date(frontmatter.dateUpdated).toLocaleDateStrin
         display: inline-flex;
         gap: .5rem;
         margin-top: 3rem;
-        color: var(--accent-neon-purple);
+        color: var(--blue-500);
     }
 
     .tag-separator {
-        color: var(--accent-orange);
+        color: var(--red-500);
     }
 
     .tag-separator:last-child {
@@ -131,6 +130,7 @@ const formattedDateUpdated = new Date(frontmatter.dateUpdated).toLocaleDateStrin
         flex-direction: column;
         gap: .5rem;
         margin-top: 2rem;
+        color: var(--green-800);
     }
 
     @media (max-width: 800px) {
