@@ -1,28 +1,30 @@
 ---
-/* @jsxImportSource astro */
-import type { MarkdownLayoutProps } from "astro";
 import {RelatedPosts} from "../components/related-posts/related-posts";
 
-type Props = MarkdownLayoutProps<{
-    frontmatter: {
-        title: string;
-        relatedPosts: string[];
-        date: Date
-        tags: string[];
-    }
-    relatedPosts: unknown
-}>
+type Props = {
+  file: string,
+  url: string | undefined,
+  frontmatter: {
+    title: string,
+    relatedPosts: string[],
+    dateUpdated: string,
+    date: string,
+    tags: string[]
+  },
+  relatedPosts: {slug: string, data: {title: string, date: Date}}[]
+}
 
-const options = {
-    year: "numeric",
-    month: "numeric",
-    day: "numeric",
-};
+const options = { year: 'numeric', month: 'long', day: 'numeric' };
 
-const {frontmatter, relatedPosts} = Astro.props;
+const props: Props = Astro.props;
+const frontmatter = props.frontmatter;
+const relatedPosts = props.relatedPosts;
+
 const formattedPublishedDate = new Date(frontmatter.date).toLocaleDateString("en-US", options as Intl.DateTimeFormatOptions);
 const formattedDateUpdated = new Date(frontmatter.dateUpdated).toLocaleDateString("en-US", options as Intl.DateTimeFormatOptions);
+
 ---
+
 <div class="markdown-wrapper">
     <article class="markdown-container fields">
         <div class="tags">
