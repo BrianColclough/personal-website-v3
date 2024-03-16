@@ -1,39 +1,28 @@
 ---
-import {getCollection, getEntries} from 'astro:content';
+import { getCollection, getEntries } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import MarkdownLayout from "../../layouts/MarkdownLayout.astro";
 
-export type Post = {
-    title: string;
-    relatedPosts: string[];
-    date: Date
-    tags: string[];
-}
-
-type postData = {
-    data: Post;
-    slug: string;
-}
-
-const {entry}: postData = Astro.props;
-const {Content} = await entry.render();
+const { entry } = Astro.props;
+const { Content } = await entry.render();
 let relatedPosts;
 
 if (entry.data.relatedPosts) {
-    relatedPosts = await getEntries<Post>(entry.data.relatedPosts);
+    relatedPosts = await getEntries(entry.data.relatedPosts);
 }
 
 // 1. Generate a new path for every collection entry
 export async function getStaticPaths() {
-    const blogEntries = await getCollection('blog');
-    return blogEntries.map(entry => ({
-        params: {slug: entry.slug}, props: {entry},
+    const blogEntries = await getCollection("blog");
+    return blogEntries.map((entry) => ({
+        params: { slug: entry.slug },
+        props: { entry },
     }));
 }
 ---
 
 <Layout title={`Brian Colclough | ${entry.data.title}`}>
     <MarkdownLayout frontmatter={entry.data} relatedPosts={relatedPosts}>
-        <Content/>
+        <Content />
     </MarkdownLayout>
 </Layout>

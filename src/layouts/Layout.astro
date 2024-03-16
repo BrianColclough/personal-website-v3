@@ -1,34 +1,35 @@
 ---
 import NavBar from "../components/nav-bar.astro";
-import '../styles/global.css';
+import "../styles/global.css";
 
 interface Props {
     title: string;
 }
 
-const {title} = Astro.props;
+const { title } = Astro.props;
 ---
 
 <!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8"/>
-    <meta name="description" content="Astro description"/>
-    <meta name="viewport" content="width=device-width"/>
-    <link rel="icon" type="image/svg+xml" href="/favicon.png"/>
-    <meta name="generator" content={Astro.generator}/>
-    <title>{title}</title>
-</head>
-<body class="content-container">
-<NavBar/>
-<div class="content-wrapper">
-    <slot/>
-</div>
-</body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="description" content="Astro description" />
+        <meta name="viewport" content="width=device-width" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.png" />
+        <meta name="generator" content={Astro.generator} />
+        <title>{title}</title>
+    </head>
+    <body class="content-container">
+        <NavBar />
+        <div class="content-wrapper">
+            <slot />
+        </div>
+    </body>
 </html>
 
 <style is:global>
     .content-container {
+        margin: 0;
         position: relative;
         display: flex;
         flex-direction: column;
@@ -39,14 +40,13 @@ const {title} = Astro.props;
     }
 
     .content-wrapper {
-        width: 100%;
         max-width: 1280px;
     }
 
     @media (max-width: 1300px) {
         .content-wrapper {
             margin-left: 2rem;
-            margin-right: 2rem
+            margin-right: 2rem;
         }
     }
 </style>

@@ -1,101 +1,205 @@
 @font-face {
-  font-family: "Wubberly";
-  src: url("/fonts/Wubberly-Regular.woff2") format("woff2");
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
+    font-family: "Wubberly";
+    src: url("/fonts/Wubberly-Regular.woff2") format("woff2");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
 }
 
 @font-face {
-  font-family: "Fields";
-  src: url("/fonts/Fields-Regular.woff2") format("woff2");
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
+    font-family: "Fields";
+    src: url("/fonts/Fields-Regular.woff2") format("woff2");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
 }
 
 @font-face {
-  font-family: "Wotfard";
-  src: url("/fonts/wotfard-regular.woff2") format("woff2");
-  font-weight: normal;
+    font-family: "Wotfard";
+    src: url("/fonts/wotfard-regular.woff2") format("woff2");
+    font-weight: normal;
 }
 
 :root {
-  --accent-light: #f1f8ff;
-  --accent-pink: #ff0c8f;
-  --accent-orange: #ff3200;
-  --accent-dark: #293330;
-  --accent-dark-50: #164537;
-  --accent-green: #00ffac;
-  --accent-forrest: #40806a;
-  --accent-blue: #4dcff8;
-  --accent-dark-blue: #0b3d91;
-  --accent-purple: #b021ff;
-  --accent-neon-purple: #4700ff;
-  -webkit-font-smoothing: subpixel-antialiased;
-  -moz-osx-font-smoothing: auto;
+    /* colors */
+    --rose-50: #fef1f8;
+    --rose-100: #fee5f4;
+    --rose-200: #ffcaeb;
+    --rose-300: #ffa0d8;
+    --rose-400: #ff64bc;
+    --rose-500: #fd37a0;
+    --rose-600: #ee177e;
+    --rose-700: #cf0761;
+    --rose-800: #ab0950;
+    --rose-900: #8e0d45;
+    --rose-950: #580025;
 
-  /* sizing scale */
-  --xxs: 0.25rem;
-  --xs: 0.5rem;
-  --sm: 0.75rem;
-  --md: 1rem;
-  --lg: 1.5rem;
-  --xl: 2rem;
-  --2xl: 3rem;
-  --3xl: 4rem;
-  --4xl: 6rem;
-  --5xl: 8rem;
-  --6xl: 12rem;
-  --7xl: 16rem;
-  --8xl: 24rem;
-  --9xl: 32rem;
-  --10xl: 40rem;
-  --11xl: 48rem;
+    --green-50: #effef6;
+    --green-100: #d9ffeb;
+    --green-200: #b5fdd8;
+    --green-300: #63f8ad;
+    --green-400: #3cec94;
+    --green-500: #12d574;
+    --green-600: #08b15d;
+    --green-700: #0b8a4b;
+    --green-800: #0e6d3f;
+    --green-900: #0e5936;
+    --green-950: #01321c;
 
-  /* font sizing scale */
-  --font-sm: 0.618rem;
-  --font-md: 1rem;
-  --font-lg: 1.618rem;
-  --font-xl: 2.618rem;
-  --font-2xl: 4.236rem;
-  --font-3xl: 6.854rem;
+    --purple-50: #fcf2ff;
+    --purple-100: #f8e5ff;
+    --purple-200: #f1c9ff;
+    --purple-300: #eb9fff;
+    --purple-400: #e166ff;
+    --purple-500: #cf2dff;
+    --purple-600: #b50ced;
+    --purple-700: #9906c5;
+    --purple-800: #780797;
+    --purple-900: #6b0c83;
+    --purple-950: #480059;
 
-  font-size: 16px;
+    --light-blue-50: #ebfffd;
+    --light-blue-100: #ccfffc;
+    --light-blue-200: #a0fffc;
+    --light-blue-300: #5ffffd;
+    --light-blue-400: #17f6f9;
+    --light-blue-500: #00d8df;
+    --light-blue-600: #00adbb;
+    --light-blue-700: #078997;
+    --light-blue-800: #106e7a;
+    --light-blue-900: #125a67;
+    --light-blue-950: #053c47;
+
+    --gray-50: #f6f6f6;
+    --gray-100: #e7e7e7;
+    --gray-200: #d1d1d1;
+    --gray-300: #b0b0b0;
+    --gray-400: #888888;
+    --gray-500: #6d6d6d;
+    --gray-600: #5d5d5d;
+    --gray-700: #4f4f4f;
+    --gray-800: #454545;
+    --gray-900: #3d3d3d;
+    --gray-950: #121212;
+
+    --blue-50: #e9efff;
+    --blue-100: #d8e1ff;
+    --blue-200: #b8c7ff;
+    --blue-300: #8ea2ff;
+    --blue-400: #616eff;
+    --blue-500: #3d3dff;
+    --blue-600: #2f1bff;
+    --blue-700: #250ef1;
+    --blue-800: #2111c2;
+    --blue-900: #1f1897;
+    --blue-950: #150e58;
+
+    --orange-50: #fff6ed;
+    --orange-100: #ffebd4;
+    --orange-200: #ffd3a8;
+    --orange-300: #ffb470;
+    --orange-400: #ff8837;
+    --orange-500: #ff6a14;
+    --orange-600: #f04c06;
+    --orange-700: #c73707;
+    --orange-800: #9e2c0e;
+    --orange-900: #7f270f;
+    --orange-950: #451005;
+
+    --yellow-50: #fefee8;
+    --yellow-100: #feffc2;
+    --yellow-200: #fffe87;
+    --yellow-300: #fff643;
+    --yellow-400: #ffe814;
+    --yellow-500: #efce03;
+    --yellow-600: #cea100;
+    --yellow-700: #a47304;
+    --yellow-800: #885a0b;
+    --yellow-900: #734910;
+    --yellow-950: #432605;
+
+
+    --red-50: #fff0f0;
+    --red-100: #ffdede;
+    --red-200: #ffc3c3;
+    --red-300: #ff9999;
+    --red-400: #ff5f5f;
+    --red-500: #ff2d2d;
+    --red-600: #f40b0b;
+    --red-700: #ce0707;
+    --red-800: #aa0a0a;
+    --red-900: #8c1010;
+    --red-950: #4d0202;
+
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto;
+
+    /* sizing scale */
+    --xxs: 0.25rem;
+    --xs: 0.5rem;
+    --sm: 0.75rem;
+    --md: 1rem;
+    --lg: 1.5rem;
+    --xl: 2rem;
+    --2xl: 3rem;
+    --3xl: 4rem;
+    --4xl: 6rem;
+    --5xl: 8rem;
+    --6xl: 12rem;
+    --7xl: 16rem;
+    --8xl: 24rem;
+    --9xl: 32rem;
+    --10xl: 40rem;
+    --11xl: 48rem;
+
+    /* font sizing scale */
+    --font-xxs: 12px;
+    --font-xs: 14px;
+    --font-sm: 16px;
+    --font-md: 18px;
+    --font-lg: 20px;
+    --font-xl: 24px;
+    --font-2xl: 30px;
+    --font-3xl: 36px;
+    --font-4xl: 48px;
+    --font-5xl: 60px;
+    --font-6xl: 72px;
+
+    font-size: 16px;
 }
 
 html {
-  font-family: Wotfard;
-  background: var(--accent-light);
-  font-weight: normal;
-  line-height: var(--xl);
+    font-family: Wotfard;
+    background: var(--accent-light);
+    font-weight: normal;
+    line-height: var(--xl);
 }
 
 .fields {
-  font-family: "Fields", Fallback, sans-serif;
+    font-family: "Fields", Fallback, sans-serif;
 }
 
 .wotfard {
-  font-family: "Wotfard", Fallback, serif;
+    font-family: "Wotfard", Fallback, serif;
 }
 
 .wubberly {
-  font-family: "Wubberly", Fallback, sans-serif;
+    font-family: "Wubberly", Fallback, sans-serif;
 }
 
 code {
-  font-family:
-    Menlo,
-    Monaco,
-    Lucida Console,
-    Liberation Mono,
-    DejaVu Sans Mono,
-    Bitstream Vera Sans Mono,
-    Courier New,
-    monospace;
+    font-family:
+        Menlo,
+        Monaco,
+        Lucida Console,
+        Liberation Mono,
+        DejaVu Sans Mono,
+        Bitstream Vera Sans Mono,
+        Courier New,
+        monospace;
 }
 
 :focus-visible {
-  outline: 2px dotted var(--accent-pink);
-  outline-offset: 2px;
+    outline: 2px dotted var(--accent-pink);
+    outline-offset: 2px;
 }
