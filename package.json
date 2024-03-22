@@ -1,24 +1,26 @@
 {
-  "name": "personal-website-v3",
-  "type": "module",
-  "version": "0.0.1",
-  "scripts": {
-    "dev": "astro dev",
-    "start": "astro dev",
-    "build": "astro build && subfont -ir dist",
-    "preview": "astro preview",
-    "astro": "astro",
-    "subfont": "subfont -ir dist"
-  },
-  "dependencies": {
-    "@astrojs/solid-js": "^3.0.2",
-    "@astrojs/vercel": "^6.0.1",
-    "astro": "^4.0.3",
-    "motion": "^10.16.4",
-    "prettier": "^3.0.3",
-    "solid-js": "^1.7.12",
-    "subfont": "^6.12.5",
-    "typescript": "^5.4.2",
-    "prettier-plugin-astro": "^0.13.0"
-  }
+    "name": "personal-website-v3",
+    "type": "module",
+    "version": "0.0.2",
+    "scripts": {
+        "dev": "astro dev",
+        "start": "astro dev",
+        "build": "astro build && subfont -ir dist",
+        "preview": "astro preview",
+        "astro": "astro",
+        "subfont": "subfont -ir dist"
+    },
+    "dependencies": {
+        "@astrojs/solid-js": "^3.0.2",
+        "@astrojs/vercel": "^6.0.1",
+        "astro": "^4.0.3",
+        "motion": "^10.16.4",
+        "prettier": "^3.0.3",
+        "solid-js": "^1.7.12",
+        "prettier-plugin-astro": "^0.13.0"
+    },
+    "devDependencies": {
+        "subfont": "^6.12.5",
+        "typescript": "^5.4.2"
+    }
 }

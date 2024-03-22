@@ -1,26 +1,46 @@
 ---
 // Example: Filter out content entries with `draft: true` only when building for production
-import {getCollection} from 'astro:content';
+import { getCollection } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
-import {Card} from "../../components/card/card.tsx";
-const blogEntries = await getCollection('blog', ({data}) => {
+import { Card } from "../../components/card/card.tsx";
+
+type blogEntries = {
+    id: string;
+    slug: string;
+    body: string;
+    collection: string;
+    data: {
+        title: string;
+        date: Date;
+        dateUpdated?: Date;
+        draft: boolean;
+        tags: string[];
+        summary: string;
+        relatedPosts?: any[];
+    };
+    render: Function
+}[];
+
+const blogEntries: blogEntries = await getCollection("blog", ({ data }) => {
     return import.meta.env.PROD ? data.draft !== true : true;
 });
+
 blogEntries.sort((a, b) => {
-    return b.data.date - a.data.date;
+    return b.data.date.getTime() - a.data.date.getTime();
 });
 ---
-
 
 <Layout title="Brian Colclough | Blog">
     <div class="posts-wrapper">
         {
             blogEntries.map((p) => (
-                    <Card title={p.data.title} subTitle={p.data.date.toDateString()}
-                          linkTo={'/blog/' + p.slug}
-                          body={p.data.summary}
-                          tags={p.data.tags}
-                    />
+                <Card
+                    title={p.data.title}
+                    subTitle={p.data.date.toDateString()}
+                    linkTo={"/blog/" + p.slug}
+                    body={p.data.summary}
+                    tags={p.data.tags}
+                />
             ))
         }
     </div>
@@ -38,5 +58,10 @@ blogEntries.sort((a, b) => {
         grid-cols: 1fr;
         gap: 2rem;
     }
-
+    
+    @media (max-width: 768px) {
+        .posts-wrapper {
+            margin: 2rem 0 2rem; 
+        }
+    }
 </style>

@@ -3,9 +3,25 @@ import { getCollection, getEntries } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import MarkdownLayout from "../../layouts/MarkdownLayout.astro";
 
+type RelatedPosts = {
+  id: string;
+  slug: string;
+  body: string;
+  collection: string;
+  data: {
+    title: string;
+    date: Date;
+    draft: boolean;
+    tags: string[];
+    summary: string;
+    dateUpdated?: Date;
+    relatedPosts?: RelatedPosts[];
+  };
+}[];
+
 const { entry } = Astro.props;
 const { Content } = await entry.render();
-let relatedPosts;
+let relatedPosts: RelatedPosts[];
 
 if (entry.data.relatedPosts) {
     relatedPosts = await getEntries(entry.data.relatedPosts);
