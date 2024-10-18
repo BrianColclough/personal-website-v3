@@ -1,45 +1,35 @@
 ---
 // Example: Filter out content entries with `draft: true` only when building for production
-import { getCollection } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import { Card } from "../../components/card/card.tsx";
+import { contentfulClient, type BlogEntry } from "../../lib/contentful";
 
-type blogEntries = {
-    id: string;
-    slug: string;
-    body: string;
-    collection: string;
-    data: {
-        title: string;
-        date: Date;
-        dateUpdated?: Date;
-        draft: boolean;
-        tags: string[];
-        summary: string;
-        relatedPosts?: any[];
-    };
-    render: Function
-}[];
 
-const blogEntries: blogEntries = await getCollection("blog", ({ data }) => {
-    return import.meta.env.PROD ? data.draft !== true : true;
+const entries = await contentfulClient.getEntries<BlogEntry>({
+  content_type: "blogPost",
 });
 
-blogEntries.sort((a, b) => {
-    return b.data.date.getTime() - a.data.date.getTime();
+const posts = entries.items.map((item) => {
+  const { title, datePosted, summary, slug } = item.fields;
+
+  return {
+    title,
+    slug,
+    summary,
+    datePosted: new Date(datePosted).toLocaleDateString()
+  };
 });
 ---
 
 <Layout title="Brian Colclough | Blog">
     <div class="posts-wrapper">
         {
-            blogEntries.map((p) => (
+            posts.map((p) => (
                 <Card
-                    title={p.data.title}
-                    subTitle={p.data.date.toDateString()}
+                    title={p.title}
+                    subTitle={p.datePosted}
                     linkTo={"/blog/" + p.slug}
-                    body={p.data.summary}
-                    tags={p.data.tags}
+                    body={p.summary}
                 />
             ))
         }

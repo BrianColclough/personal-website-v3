@@ -1,16 +1,15 @@
-<nav class="nav-bar">
-    <div class="nav-bar-wrapper">
-        <span class="nav-title">Brian Colclough</span>
-        <ul class="nav-bar-list">
-            <li class="nav-bar-item">
-                <a href="/" data-astro-prefetch> Home </a>
-            </li>
-            <li class="nav-bar-item">
-                <a href="/blog" data-astro-prefetch> Blog </a>
-            </li>
-        </ul>
-    </div>
-</nav>
+<div class="fixed mx-auto m-2 z-10">
+    <ul
+        class="flex rounded-full border-black border gap-6 bg-gray-200 px-4 py-1 text-black"
+    >
+        <li class="transition duration-500 hover:ease-in-out">
+            <a class="text-lg" href="/" data-astro-prefetch> Home </a>
+        </li>
+        <li>
+            <a class="text-lg" href="/blog" data-astro-prefetch> Blog </a>
+        </li>
+    </ul>
+</div>
 
 <style>
     .nav-bar {
