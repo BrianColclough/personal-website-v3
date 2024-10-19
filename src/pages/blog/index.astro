@@ -1,21 +1,23 @@
 ---
-// Example: Filter out content entries with `draft: true` only when building for production
 import Layout from "../../layouts/Layout.astro";
 import { Card } from "../../components/card/card.tsx";
-import { contentfulClient, type BlogEntry } from "../../lib/contentful";
+import { contentfulClient, type BlogEntryRO } from "../../lib/contentful";
+import type { BlogPost } from "./types/blogPost";
+import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
 
 
-const entries = await contentfulClient.getEntries<BlogEntry>({
+const entries = await contentfulClient.getEntries<BlogEntryRO>({
   content_type: "blogPost",
 });
 
-const posts = entries.items.map((item) => {
-  const { title, datePosted, summary, slug } = item.fields;
+const posts: BlogPost[] = entries.items.map((item) => {
+const { title, datePosted, summary, slug, content } = item.fields;
 
   return {
     title,
     slug,
     summary,
+    content: documentToHtmlString(content),
     datePosted: new Date(datePosted).toLocaleDateString()
   };
 });

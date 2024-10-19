@@ -1,54 +1,30 @@
 ---
-import {RelatedPosts} from "../components/related-posts/related-posts";
 type Props = {
-  file: string,
-  url: string | undefined,
-  frontmatter: {
     title: string,
-    relatedPosts: string[],
-    dateUpdated: string,
     date: string,
-    tags: string[]
-  },
-  relatedPosts: {slug: string, data: {title: string, date: Date}}[]
+    content: string
 }
 
 const options = { year: 'numeric', month: 'long', day: 'numeric' };
 
-const props: Props = Astro.props;
-const frontmatter = props.frontmatter;
-const relatedPosts = props.relatedPosts;
+const {title, date, content} = Astro.props;
 
-const formattedPublishedDate = new Date(frontmatter.date).toLocaleDateString("en-US", options as Intl.DateTimeFormatOptions);
-const formattedDateUpdated = new Date(frontmatter.dateUpdated).toLocaleDateString("en-US", options as Intl.DateTimeFormatOptions);
+const formattedPublishedDate = new Date(date).toLocaleDateString("en-US", options as Intl.DateTimeFormatOptions);
 
 ---
 
 <div class="markdown-wrapper">
-    <article class="markdown-container fields">
-        <div class="tags">
-            <sub class="tags-list">
-                {frontmatter.tags.map(tag => (
-                        <strong>{tag}</strong>
-                        <span class="tag-separator">/</span>
-                ))}
-            </sub>
-        </div>
-        <h1 class="frontmatter-header wubberly">{frontmatter.title}
+        <h1 class="frontmatter-header wubberly">{title}
             <span class="header-line"></span>
         </h1>
         <div class="dates">
-            <time datetime={frontmatter.date} class="pub-date"><i>{formattedPublishedDate}</i></time>
-            <time datetime={frontmatter.dateUpdated} class:list={['pub-date', {'hidden': !frontmatter.dateUpdated}]}>
-                <strong>updated on: </strong> <i>{formattedDateUpdated}</i>
-            </time>
+            <time datetime={date} class="pub-date"><i>{formattedPublishedDate}</i></time>
+            <!-- <time datetime={frontmatter.dateUpdated} class:list={['pub-date', {'hidden': !frontmatter.dateUpdated}]}> -->
+            <!--     <strong>updated on: </strong> <i>{formattedDateUpdated}</i> -->
+            <!-- </time> -->
         </div>
 
-        <slot/>
-
-        <RelatedPosts posts={relatedPosts}/>
-
-    </article>
+        <article class="markdown-container fields" set:html={content} />
 </div>
 
 <style is:global>

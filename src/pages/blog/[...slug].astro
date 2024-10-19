@@ -2,31 +2,28 @@
 import { getCollection, getEntries } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import MarkdownLayout from "../../layouts/MarkdownLayout.astro";
-import type { BlogEntry } from "./types";
-
-const { entry } = Astro.props;
-
-const { Content } = await entry.render();
-let relatedPosts: BlogEntry[];
-
-if (entry.data.relatedPosts) {
-    relatedPosts = await getEntries(entry.data.relatedPosts);
-}
+import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
+import { contentfulClient, type BlogEntry } from "../../lib/contentful";
 
 // 1. Generate a new path for every collection entry
 export async function getStaticPaths() {
-    const blogEntries: BlogEntry[] = await getCollection("blog");
+    const blogEntries = await contentfulClient.getEntries<BlogEntry>({
+        content_type: "blogPost",
+    });
 
-    return blogEntries.map((entry: BlogEntry) => ({
-        params: { slug: entry.slug },
-        props: { entry },
-
+    return blogEntries.items.map((entry) => ({
+        params: { slug: entry.fields.slug },
+        props: {
+            title: entry.fields.title,
+            content: documentToHtmlString(entry.fields.content),
+            date: new Date(entry.fields.datePosted).toLocaleDateString(),
+        },
     }));
 }
+
+const { content, title, date } = Astro.props;
 ---
 
-<Layout title={`Brian Colclough | ${entry.data.title}`}>
-    <MarkdownLayout frontmatter={entry.data} relatedPosts={relatedPosts}>
-        <Content />
-    </MarkdownLayout>
+<Layout title={`Brian Colclough | ${title}`}>
+    <MarkdownLayout title={title} date={date} content={content} />
 </Layout>

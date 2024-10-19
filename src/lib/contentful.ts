@@ -1,7 +1,7 @@
 import type { EntryFieldTypes } from 'contentful';
 import * as contentful from 'contentful';
 
-export interface BlogEntry {
+export interface BlogEntryRO {
     contentTypeId: "blogPost",
     fields: {
         title: EntryFieldTypes.Text,
