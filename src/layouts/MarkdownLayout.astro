@@ -18,25 +18,7 @@ const formattedPublishedDate = new Date(date).toLocaleDateString("en-US", option
         <p class="text-neutral-400 italic text-lg">{formattedPublishedDate}</p>
     </header>
 
-    <article class="prose prose-xl prose-invert mx-auto text-neutral-300 leading-relaxed prose-headings:font-fields prose-headings:text-orange-400 prose-headings:mt-12 prose-headings:mb-4">
+    <article class="prose prose-xl mx-auto text-neutral-300 leading-relaxed prose-headings:font-fields prose-headings:text-orange-400 prose-headings:mt-12 prose-headings:mb-4">
         <div set:html={content} />
     </article>
 </div>
-
-<style>
-    /* Add decorative dividers for sections */
-    hr {
-        border: none;
-        border-top: 1px solid #444;
-        margin: 2rem 0;
-    }
-
-    /* Optional first-letter styling for a unique touch */
-    .markdown-container p:first-of-type::first-letter {
-        font-size: 3rem;
-        font-weight: bold;
-        color: #f97316; /* Tailwind orange-500 */
-        margin-right: 0.2rem;
-        float: left;
-    }
-</style>
