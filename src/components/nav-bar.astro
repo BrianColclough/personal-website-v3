@@ -1,15 +1,15 @@
-<nav class="fixed top-0 left-0 w-full z-20 p-4">
+<nav class="fixed top-0 left-0 w-full z-20 p-4 bg-black bg-opacity-80 backdrop-blur-md animate-fade-in">
     <div class="max-w-7xl mx-auto flex justify-between items-center">
         <div class="text-3xl font-bold text-white font-fields">Brian Colclough</div>
         <ul class="flex space-x-8 text-lg text-white">
-            <li class="hover:text-gray-300 transition-colors">
-                <a href="/" data-astro-prefetch>Home</a>
+            <li class="relative group hover:text-gray-300 transition-colors">
+                <a href="/" data-astro-prefetch class="after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-orange-500 after:transition-all after:duration-300 group-hover:after:w-full">Home</a>
             </li>
-            <li class="hover:text-gray-300 transition-colors">
-                <a href="/blog" data-astro-prefetch>Blog</a>
+            <li class="relative group hover:text-gray-300 transition-colors">
+                <a href="/blog" data-astro-prefetch class="after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-orange-500 after:transition-all after:duration-300 group-hover:after:w-full">Blog</a>
             </li>
-            <li class="hover:text-gray-300 transition-colors">
-                <a href="/about" data-astro-prefetch>About</a>
+            <li class="relative group hover:text-gray-300 transition-colors">
+                <a href="/about" data-astro-prefetch class="after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-orange-500 after:transition-all after:duration-300 group-hover:after:w-full">About</a>
             </li>
         </ul>
     </div>
