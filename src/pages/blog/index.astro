@@ -1,67 +1,74 @@
 ---
-// Example: Filter out content entries with `draft: true` only when building for production
-import { getCollection } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import { Card } from "../../components/card/card.tsx";
+import { contentfulClient, type BlogEntryRO } from "../../lib/contentful";
+import type { BlogPost } from "./types/blogPost";
+import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
 
-type blogEntries = {
-    id: string;
-    slug: string;
-    body: string;
-    collection: string;
-    data: {
-        title: string;
-        date: Date;
-        dateUpdated?: Date;
-        draft: boolean;
-        tags: string[];
-        summary: string;
-        relatedPosts?: any[];
-    };
-    render: Function
-}[];
 
-const blogEntries: blogEntries = await getCollection("blog", ({ data }) => {
-    return import.meta.env.PROD ? data.draft !== true : true;
+const entries = await contentfulClient.getEntries<BlogEntryRO>({
+  content_type: "blogPost",
 });
 
-blogEntries.sort((a, b) => {
-    return b.data.date.getTime() - a.data.date.getTime();
-});
+const posts: BlogPost[] = entries.items.map((item) => {
+  const { title, datePosted, summary, slug, content } = item.fields;
+
+  return {
+    title,
+    slug,
+    summary,
+    content: documentToHtmlString(content),
+    datePosted: new Date(datePosted).toLocaleDateString(),
+    rawDate: new Date(datePosted) // Add a raw date for sorting purposes
+  };
+}).sort((a, b) => b.rawDate.getTime() - a.rawDate.getTime()); // Sort by date in descending order
+
 ---
 
 <Layout title="Brian Colclough | Blog">
-    <div class="posts-wrapper">
+    <!-- Hero Section -->
+    <section class="relative w-full min-h-[400px] bg-black text-white flex items-center justify-center">
+        <div class="max-w-4xl text-center">
+            <h1 class="text-6xl sm:text-8xl font-fields font-extrabold text-orange-500 mb-4">
+                My Blog
+            </h1>
+            <p class="text-lg sm:text-xl font-fields italic text-gray-300">
+                A collection of my thoughts, experiences, and learnings as a photographer, software engineer, and fitness enthusiast.
+            </p>
+        </div>
+    </section>
+
+    <!-- Blog Post Cards -->
+    <div class="mt-12 px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto animate-slide-up">
         {
-            blogEntries.map((p) => (
+            posts.map((p) => (
                 <Card
-                    title={p.data.title}
-                    subTitle={p.data.date.toDateString()}
+                    title={p.title}
+                    subTitle={p.datePosted}
                     linkTo={"/blog/" + p.slug}
-                    body={p.data.summary}
-                    tags={p.data.tags}
+                    body={p.summary}
+                    className="transition-all duration-500 hover:shadow-lg rounded-lg p-4 bg-white text-black"
                 />
             ))
         }
     </div>
 </Layout>
 
-<style>
-    .posts-container {
-        display: flex;
-        align-items: center;
+<style is:global>
+@keyframes slideUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
     }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 
-    .posts-wrapper {
-        margin: 2rem 2rem 2rem;
-        display: grid;
-        grid-cols: 1fr;
-        gap: 2rem;
-    }
-    
-    @media (max-width: 768px) {
-        .posts-wrapper {
-            margin: 2rem 0 2rem; 
-        }
-    }
+.animate-slide-up {
+    opacity: 0;
+    animation: slideUp 1s ease-out forwards;
+}
 </style>
+

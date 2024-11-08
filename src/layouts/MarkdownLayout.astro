@@ -1,153 +1,25 @@
 ---
-import {RelatedPosts} from "../components/related-posts/related-posts";
 type Props = {
-  file: string,
-  url: string | undefined,
-  frontmatter: {
     title: string,
-    relatedPosts: string[],
-    dateUpdated: string,
     date: string,
-    tags: string[]
-  },
-  relatedPosts: {slug: string, data: {title: string, date: Date}}[]
+    content: string
 }
 
 const options = { year: 'numeric', month: 'long', day: 'numeric' };
 
-const props: Props = Astro.props;
-const frontmatter = props.frontmatter;
-const relatedPosts = props.relatedPosts;
+const {title, date, content} = Astro.props;
 
-const formattedPublishedDate = new Date(frontmatter.date).toLocaleDateString("en-US", options as Intl.DateTimeFormatOptions);
-const formattedDateUpdated = new Date(frontmatter.dateUpdated).toLocaleDateString("en-US", options as Intl.DateTimeFormatOptions);
+const formattedPublishedDate = new Date(date).toLocaleDateString("en-US", options as Intl.DateTimeFormatOptions);
 
 ---
 
-<div class="markdown-wrapper">
-    <article class="markdown-container fields">
-        <div class="tags">
-            <sub class="tags-list">
-                {frontmatter.tags.map(tag => (
-                        <strong>{tag}</strong>
-                        <span class="tag-separator">/</span>
-                ))}
-            </sub>
-        </div>
-        <h1 class="frontmatter-header wubberly">{frontmatter.title}
-            <span class="header-line"></span>
-        </h1>
-        <div class="dates">
-            <time datetime={frontmatter.date} class="pub-date"><i>{formattedPublishedDate}</i></time>
-            <time datetime={frontmatter.dateUpdated} class:list={['pub-date', {'hidden': !frontmatter.dateUpdated}]}>
-                <strong>updated on: </strong> <i>{formattedDateUpdated}</i>
-            </time>
-        </div>
+<div class="max-w-4xl mx-auto mt-16 px-4 sm:px-6 lg:px-8 rounded-lg p-8">
+    <header class="mb-10 text-center">
+        <h1 class="text-6xl font-bold font-wubberly mb-6 text-orange-600">{title}</h1>
+        <p class="text-gray-500 italic text-lg">{formattedPublishedDate}</p>
+    </header>
 
-        <slot/>
-
-        <RelatedPosts posts={relatedPosts}/>
-
+    <article class="prose prose-xl mx-auto text-gray-900 leading-relaxed prose-headings:font-fields">
+        <div class="markdown-container" set:html={content} />
     </article>
 </div>
-
-<style is:global>
-    h2, h3, h4, h5, h6 {
-        font-family: 'Wubberly', sans-serif;
-        font-weight: bold;
-        margin-bottom: var(--lg);
-        margin-top: var(--2xl)
-    }
-
-    h2 {
-        font-size: var(--font-2xl)
-    }
-
-    h3 {
-        font-size: var(--font-xl)
-    }
-
-    .frontmatter-header {
-        font-size: 5rem;
-        text-align: center;
-        font-weight: 700;
-        position: relative;
-        margin-bottom: 2rem;
-        padding-top: 0;
-        margin-top: 0;
-    }
-
-    body {
-        font-size: var(--font-lg);
-        line-height: 1.7;
-    }
-
-    .hidden {
-        display: none;
-    }
-
-    .tags-list {
-        list-style: none;
-        display: inline-flex;
-        gap: .5rem;
-        margin-top: 3rem;
-        color: var(--blue-500);
-    }
-
-    .tag-separator {
-        color: var(--red-500);
-    }
-
-    .tag-separator:last-child {
-        display: none;
-    }
-
-    .markdown-wrapper {
-        display: flex;
-        justify-content: center;
-    }
-
-    .markdown-container {
-        margin-top: var(--3xl);
-        position: relative;
-        width: min(100%, 65ch);
-    }
-
-    .header-line {
-        display: block;
-        position: absolute;
-        overflow: hidden;
-        right: 0;
-        left: 0;
-        height: 2px;
-        background-color: var(--accent-orange);
-    }
-
-    .dates {
-        width: 100%;
-        align-items: center;
-        display: flex;
-        flex-direction: column;
-        gap: .5rem;
-        margin-top: 2rem;
-        color: var(--green-800);
-    }
-
-    @media (max-width: 800px) {
-        .markdown-container {
-            margin-top: var(--sm);
-        }
-
-        .tags-list {
-            margin-top: 1rem;
-        }
-
-        .frontmatter-header {
-            font-size: 3rem;
-        }
-    }
-
-    article:is(h1, h2, h3, h4, h5, h6) {
-        text-wrap: balance;
-    }
-</style>
