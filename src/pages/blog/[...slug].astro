@@ -25,5 +25,7 @@ const { content, title, date } = Astro.props;
 ---
 
 <Layout title={`Brian Colclough | ${title}`}>
-    <MarkdownLayout title={title} date={date} content={content} />
+    <article class="prose prose-lg mx-auto mt-16 p-6 bg-white text-black rounded-lg shadow-lg">
+        <MarkdownLayout title={title} date={date} content={content} />
+    </article>
 </Layout>

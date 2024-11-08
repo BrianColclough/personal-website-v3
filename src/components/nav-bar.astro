@@ -1,70 +1,17 @@
-<div class="fixed mx-auto m-2 z-10">
-    <ul
-        class="flex rounded-full border-black border gap-6 bg-gray-200 px-4 py-1 text-black"
-    >
-        <li class="transition duration-500 hover:ease-in-out">
-            <a class="text-lg" href="/" data-astro-prefetch> Home </a>
-        </li>
-        <li>
-            <a class="text-lg" href="/blog" data-astro-prefetch> Blog </a>
-        </li>
-    </ul>
-</div>
+<nav class="fixed top-0 left-0 w-full z-20 p-4">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+        <div class="text-3xl font-bold text-white font-fields">Brian Colclough</div>
+        <ul class="flex space-x-8 text-lg text-white">
+            <li class="hover:text-gray-300 transition-colors">
+                <a href="/" data-astro-prefetch>Home</a>
+            </li>
+            <li class="hover:text-gray-300 transition-colors">
+                <a href="/blog" data-astro-prefetch>Blog</a>
+            </li>
+            <li class="hover:text-gray-300 transition-colors">
+                <a href="/about" data-astro-prefetch>About</a>
+            </li>
+        </ul>
+    </div>
+</nav>
 
-<style>
-    .nav-bar {
-        display: flex;
-        justify-content: center;
-        width: 100%;
-        background-color: var(--rose-600);
-        overflow: visible;
-    }
-
-    .nav-bar-wrapper {
-        flex-grow: 1;
-        overflow: visible;
-        max-width: 1280px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding-top: var(--md);
-        padding-bottom: var(--md);
-        padding-left: var(--md);
-        padding-right: var(--md);
-        color: white;
-    }
-
-    .nav-bar-list {
-        display: flex;
-        flex-direction: row;
-        gap: 2rem;
-        font-weight: bold;
-        list-style: none;
-    }
-
-    .nav-title {
-        font-size: var(--3xl);
-        font-family: Fields, serif;
-        text-shadow: 0 0 0.5rem var(--gray-500);
-    }
-
-    .nav-bar-item > a:hover {
-        color: var(--accent-dark-blue);
-        text-shadow: 0 0 0.5rem var(--gray-500);
-        text-decoration: underline var(--blue-500) wavy;
-        text-underline-offset: 0.5rem;
-    }
-
-    .nav-bar-item > a {
-        font-family: Fields, serif;
-        font-size: var(--xl);
-        text-decoration: none;
-        color: var(--accent-blue);
-    }
-
-    @media (max-width: 1280px) {
-        .nav-title {
-            font-size: 2rem;
-        }
-    }
-</style>

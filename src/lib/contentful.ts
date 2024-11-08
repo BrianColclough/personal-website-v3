@@ -12,6 +12,13 @@ export interface BlogEntryRO {
     }
 };
 
+export interface ImagesRO {
+    contentTypeId: "spotlightImages",
+    fields: {
+        images: EntryFieldTypes.AssetLink;
+    }
+}
+
 export const contentfulClient = contentful.createClient({
   space: import.meta.env.CONTENTFUL_SPACE_ID,
   accessToken: import.meta.env.DEV

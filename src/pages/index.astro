@@ -1,19 +1,79 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { contentfulClient, type ImagesRO } from "../lib/contentful";
+
+const images = await contentfulClient.getEntries<ImagesRO>({
+    content_type: "spotlightImages",
+});
+
+const content = images.items[0].fields.images;
+const heroImage = content[0].fields.file.url; // Use the first image as the hero image
 ---
 
-<Layout title="Brian Colclough">
-    <div class="max-w-2xl h-full flex-grow w-full flex items-center">
-        <div class="inline-flex gap-2 flex-col w-full items-center">
-            <h1 class="text-white text-3xl">Brian Colclough</h1>
-            <div class="inline-flex gap-1">
-                <span>Photographer</span>
-                <span>-</span>
-                <span>Programmer</span>
-                <span>-</span>
-                <span>Fitness Enthusiest</span>
-                <div></div>
+<Layout title="Brian Colclough | Photography Portfolio">
+    <section class="relative w-full min-h-screen flex items-center bg-black text-white overflow-hidden">
+        <div class="flex flex-col md:flex-row items-center justify-between w-full max-w-7xl mx-auto px-6 animate-fade-in">
+            <!-- Text Block with Overlay -->
+            <div class="relative md:w-1/2 text-left md:pr-6 z-20 animate-slide-in-left">
+                <h1 class="text-8xl sm:text-[10rem] font-fields subpixel-antialiased font-extrabold text-orange-500 leading-none tracking-tight">
+                    Brian Colclough
+                </h1>
+                <p class="mt-4 text-base sm:text-lg font-fields italic text-gray-300 animate-fade-in-delay">
+                    I'm a hobbyist art photographer, mainly capturing landscapes and moments of everyday life. As a software engineer studying AI, I blend technology with my passion for art. Fitness enthusiast and blogger at heart.
+                </p>
+            </div>
+
+            <!-- Hero Image -->
+            <div 
+                class="relative md:w-1/2 h-[600px] md:h-[800px] bg-cover bg-center rounded-lg shadow-lg overflow-hidden transform transition-transform duration-700 animate-fade-in"
+                style={`background-image: url(${heroImage});`}
+            >
+                <div class="absolute inset-0 bg-black opacity-20 hover:opacity-10 transition-opacity duration-500"></div> <!-- Dark overlay for contrast -->
             </div>
         </div>
-    </div>
+    </section>
+
+    <section class="relative z-20 mt-12 px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+        {content.splice(1).map((p, index) => (
+            <div 
+                key={index}
+                class="group relative overflow-hidden shadow-lg rounded-lg transition-all duration-500 hover:shadow-2xl transform hover:-translate-y-1"
+            >
+                <img
+                    src={p.fields.file.url}
+                    alt={`Portfolio photo ${index + 1}`}
+                    class="w-full h-96 object-cover transition-transform duration-500 transform group-hover:scale-105"
+                />
+                <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-0 group-hover:opacity-80 transition-opacity duration-500"></div>
+                <div class="absolute bottom-0 left-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                    <h2 class="text-lg font-fields font-semibold">Photo {index + 1}</h2>
+                </div>
+            </div>
+        ))}
+    </section>
+
+    <style>
+        .animate-fade-in {
+            animation: fadeIn 2.5s ease-out forwards;
+        }
+
+        .animate-fade-in-delay {
+            animation: fadeIn 3s ease-out forwards;
+        }
+
+        .animate-slide-in-left {
+            animation: slideInLeft 2s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideInLeft {
+            0% { opacity: 0; transform: translateX(-50px); }
+            100% { opacity: 1; transform: translateX(0); }
+        }
+    </style>
 </Layout>
+
