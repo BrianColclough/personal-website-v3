@@ -15,7 +15,7 @@ export interface BlogEntryRO {
 export interface ImagesRO {
     contentTypeId: "spotlightImages",
     fields: {
-        images: EntryFieldTypes.AssetLink;
+        images: EntryFieldTypes.AssetLink[];
     }
 }
 

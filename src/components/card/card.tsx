@@ -5,7 +5,7 @@ export type CardProps = {
     body: string;
     subTitle: string;
     linkTo?: string;
-};
+}
 
 export const Card = (props: CardProps) => {
     const { title, subTitle, body, linkTo } = props;
@@ -20,11 +20,11 @@ export const Card = (props: CardProps) => {
                 </Show>
                 <Show when={subTitle}>
                     <i>
-                        <time class="font-wotfard text-neutral-400">{subTitle}</time>
+                        <time class="font-fields text-neutral-400">{subTitle}</time>
                     </i>
                 </Show>
                 <Show when={body}>
-                    <article class="font-wotfard text-neutral-300">{body}</article>
+                    <article class="font-fields text-neutral-300">{body}</article>
                 </Show>
             </div>
         </div>

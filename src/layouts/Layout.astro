@@ -1,6 +1,6 @@
 ---
 // Importing NavBar component
-import NavBar from "../components/nav-bar.astro";
+import NavBar from "../components/nav-bar";
 import "../styles/global.css";
 
 interface Props {
@@ -19,7 +19,7 @@ const { title } = Astro.props;
         <title>{title}</title>
     </head>
     <body class="bg-black text-white flex flex-col min-h-screen">
-        <NavBar />
+        <NavBar client:load />
         <main class="flex-grow mt-16">
             <slot />
         </main>

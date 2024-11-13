@@ -6,7 +6,7 @@ const images = await contentfulClient.getEntries<ImagesRO>({
     content_type: "spotlightImages",
 });
 
-const content = images.items[0].fields.images;
+const content = images.items[0].fields.images as Array<any>; //TODO: fix this
 const heroImage = content[0].fields.file.url; // Use the first image as the hero image
 ---
 
