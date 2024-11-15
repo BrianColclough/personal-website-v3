@@ -63,8 +63,10 @@ const heroImage = content[0].fields.file.url; // Use the first image as the hero
           <Image
             src={p.fields.file.url}
             alt={`Portfolio photo ${index + 1}`}
-            inferSize={true}
             class="w-full h-auto object-cover"
+            width={800}
+            height={800}
+            format="webp"
           />
           <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-0 group-hover:opacity-80 transition-opacity duration-500" />
         </div>

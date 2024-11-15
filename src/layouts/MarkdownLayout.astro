@@ -32,6 +32,7 @@ const formattedPublishedDate = new Date(date).toLocaleDateString(
 
   <article
     class="prose prose-xl mx-auto text-neutral-300 leading-relaxed prose-headings:font-fields prose-headings:text-orange-400"
+    transition:animate="fade"
   >
     <div set:html={content} />
   </article>
