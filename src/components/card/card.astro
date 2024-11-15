@@ -10,13 +10,13 @@ const { title, subTitle, body, linkTo } = Astro.props;
 ---
 
 <div
-  class="border-2 border-white transition-transform duration-300 hover:scale-105 subpixel-antialiased"
+  class="transition-transform duration-300 hover:scale-105 subpixel-antialiased bg-gray-950 rounded-lg"
 >
   <div class="m-8">
     {
       title && (
         <h1
-          class="wubberly hover:text-orange-400 transition-colors text-white text-5xl mb-2"
+          class="font-fields hover:text-orange-400 transition-colors text-white text-5xl mb-2"
           transition:name={`title-${title}`}
         >
           <a href={linkTo}>{title}</a>

@@ -1,3 +1,4 @@
+
 /** @type {import('tailwindcss').Config} */
 export default {
     content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
@@ -35,7 +36,18 @@ export default {
                     '900': '#1d3a5d',
                     '950': '#152842',
                 },
-
+                'orange': {
+                    50: 'color-mix(in srgb, var(--color-orange-base) 5%, white)',
+                    100: 'color-mix(in srgb, var(--color-orange-base) 10%, white)',
+                    200: 'color-mix(in srgb, var(--color-orange-base) 30%, white)',
+                    300: 'color-mix(in srgb, var(--color-orange-base) 50%, white)',
+                    400: 'color-mix(in srgb, var(--color-orange-base) 70%, white)',
+                    500: 'var(--color-orange-base)',
+                    600: 'color-mix(in srgb, var(--color-orange-base), black 10%)',
+                    700: 'color-mix(in srgb, var(--color-orange-base), black 30%)',
+                    800: 'color-mix(in srgb, var(--color-orange-base), black 50%)',
+                    900: 'color-mix(in srgb, var(--color-orange-base), black 70%)',
+                }
             },
 
         },

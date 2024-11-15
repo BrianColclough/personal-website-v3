@@ -8,7 +8,7 @@ export default function NavBar() {
       <div class="max-w-7xl mx-auto">
         {/* Desktop Navigation */}
         <div class="hidden md:flex justify-between items-center">
-          <div class="text-3xl font-bold text-white font-fields">Brian Colclough</div>
+          <span class="text-3xl font-bold text-white font-fields">Brian Colclough</span>
           <ul class="flex space-x-8 text-lg text-white">
             <li class="relative group hover:text-gray-300 transition-colors">
               <a href="/" data-astro-prefetch class="after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-orange-500 after:transition-all after:duration-300 group-hover:after:w-full">Home</a>
@@ -26,7 +26,7 @@ export default function NavBar() {
         <div class="md:hidden">
           {/* Header with logo and hamburger */}
           <div class="flex justify-between items-center">
-            <div class="text-2xl font-bold text-white font-fields">Brian Colclough</div>
+            <span class="text-2xl font-bold text-white font-fields">Brian Colclough</span>
             <button onClick={() => setIsOpen(!isOpen())} class="cursor-pointer text-white">
               {/* Hamburger icon */}
               <svg class={`w-6 h-6 ${isOpen() ? 'hidden' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
