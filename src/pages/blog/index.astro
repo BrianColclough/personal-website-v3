@@ -45,7 +45,7 @@ const posts: BlogPost[] = entries.items
 
   <!-- Blog Post Cards -->
   <div
-    class="mt-12 px-6 grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-7xl mx-auto animate-slide-up"
+    class="mt-12 px-6 grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-7xl mx-auto"
   >
     {
       posts.map((p) => (
@@ -59,21 +59,3 @@ const posts: BlogPost[] = entries.items
     }
   </div>
 </Layout>
-
-<style is:global>
-  @keyframes slideUp {
-    0% {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    100% {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  .animate-slide-up {
-    opacity: 0;
-    animation: slideUp 1s ease-out forwards;
-  }
-</style>

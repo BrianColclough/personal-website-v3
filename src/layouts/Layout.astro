@@ -32,8 +32,8 @@ const {
     <link rel="sitemap" href="/sitemap-index.xml" />
   </head>
   <body class="bg-black text-white flex flex-col min-h-screen font-wotfard">
-    <NavBar client:load />
-    <main class="flex-grow mt-16">
+    <NavBar transition:persist client:load />
+    <main class="flex-grow mt-16" transition:animate="slide">
       <slot />
     </main>
   </body>

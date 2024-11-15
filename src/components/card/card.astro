@@ -15,10 +15,7 @@ const { title, subTitle, body, linkTo } = Astro.props;
   <div class="m-8">
     {
       title && (
-        <h1
-          class="font-fields hover:text-orange-400 transition-colors text-white text-5xl mb-2"
-          transition:name={`title-${title}`}
-        >
+        <h1 class="font-fields hover:text-orange-400 transition-colors text-white text-5xl mb-2">
           <a href={linkTo}>{title}</a>
         </h1>
       )
@@ -26,12 +23,7 @@ const { title, subTitle, body, linkTo } = Astro.props;
     {
       subTitle && (
         <i>
-          <time
-            class="font-fields text-neutral-400"
-            transition:name={`date-${subTitle}`}
-          >
-            {subTitle}
-          </time>
+          <time class="font-fields text-neutral-400">{subTitle}</time>
         </i>
       )
     }

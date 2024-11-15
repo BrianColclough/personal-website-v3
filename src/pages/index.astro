@@ -11,25 +11,46 @@ const content = images.items[0].fields.images as Array<any>; //TODO: fix this
 const heroImage = content[0].fields.file.url; // Use the first image as the hero image
 ---
 
+<head>
+  <link
+    rel="preload"
+    href="/fonts/Wotfard-Regular.woff2"
+    as="font"
+    type="font/woff2"
+    crossorigin="anonymous"
+  />
+  <link
+    rel="preload"
+    href="/fonts/Fields-Regular.woff2"
+    as="font"
+    type="font/woff2"
+    crossorigin="anonymous"
+  />
+  <link
+    rel="preload"
+    href="/fonts/Wubberly-Regular.woff2"
+    as="font"
+    type="font/woff2"
+    crossorigin="anonymous"
+  />
+  <link rel="preload" href={heroImage} as="image" />
+</head>
+
 <Layout title="Brian Colclough | Photography Portfolio">
   <section
     class="relative w-full min-h-screen flex items-center bg-black text-white overflow-hidden"
   >
     <div
-      class="flex flex-col md:flex-row items-center justify-between w-full max-w-7xl mx-auto px-6 animate-fade-in"
+      class="flex flex-col md:flex-row items-center justify-between w-full max-w-7xl mx-auto px-6"
     >
       <!-- Text Block with Overlay -->
-      <div
-        class="relative md:w-1/2 text-left md:pr-6 z-20 animate-slide-in-left"
-      >
+      <div class="relative md:w-1/2 text-left md:pr-6 z-20">
         <h1
           class="text-8xl sm:text-[10rem] font-fields subpixel-antialiased font-extrabold text-orange-500 leading-none tracking-tight"
         >
           Brian Colclough
         </h1>
-        <p
-          class="mt-4 text-base sm:text-lg font-fields italic text-gray-300 animate-fade-in-delay"
-        >
+        <p class="mt-4 text-base sm:text-lg font-fields italic text-gray-300">
           I'm a hobbyist art photographer, mainly capturing landscapes and
           moments of everyday life. As a software engineer studying AI, I blend
           technology with my passion for art. Fitness enthusiast and blogger at
@@ -38,16 +59,19 @@ const heroImage = content[0].fields.file.url; // Use the first image as the hero
       </div>
 
       <!-- Hero Image -->
+      <Image
+        class="relative md:w-1/2 rounded-lg shadow-lg overflow-hidden transform transition-transform"
+        alt="self portrait"
+        src={heroImage}
+        height="800"
+        width="600"
+      />
+      <!-- Add explicit width and height -->
       <div
-        class="relative md:w-1/2 h-[600px] md:h-[800px] bg-cover bg-center rounded-lg shadow-lg overflow-hidden transform transition-transform duration-700 animate-fade-in"
-        style={`background-image: url(${heroImage});`}
+        class="absolute inset-0 bg-black opacity-20 hover:opacity-10 transition-opacity duration-500"
       >
-        <div
-          class="absolute inset-0 bg-black opacity-20 hover:opacity-10 transition-opacity duration-500"
-        >
-        </div>
-        <!-- Dark overlay for contrast -->
       </div>
+      <!-- Dark overlay for contrast -->
     </div>
   </section>
 
@@ -73,40 +97,4 @@ const heroImage = content[0].fields.file.url; // Use the first image as the hero
       ))
     }
   </section>
-
-  <style>
-    .animate-fade-in {
-      animation: fadeIn 2.5s ease-out forwards;
-    }
-
-    .animate-fade-in-delay {
-      animation: fadeIn 3s ease-out forwards;
-    }
-
-    .animate-slide-in-left {
-      animation: slideInLeft 2s ease-out forwards;
-    }
-
-    @keyframes fadeIn {
-      0% {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @keyframes slideInLeft {
-      0% {
-        opacity: 0;
-        transform: translateX(-50px);
-      }
-      100% {
-        opacity: 1;
-        transform: translateX(0);
-      }
-    }
-  </style>
 </Layout>
