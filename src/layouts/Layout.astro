@@ -1,27 +1,40 @@
 ---
-// Importing NavBar component
+import { ViewTransitions } from "astro:transitions";
 import NavBar from "../components/nav-bar";
+import SEOHead from "../components/SEOHead.astro";
 import "../styles/global.css";
 
 interface Props {
-    title: string;
+  title: string;
+  description?: string;
+  image?: string;
+  article?: boolean;
 }
 
-const { title } = Astro.props;
+const {
+  title,
+  description = "Brian Colclough's personal website featuring photography, software engineering, and blog posts about AI and technology.",
+  image,
+  article,
+} = Astro.props;
 ---
+
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="icon" href="/favicon.png" type="image/svg+xml" />
-        <meta name="description" content="Brian Colclough Photography Portfolio" />
-        <title>{title}</title>
-    </head>
-    <body class="bg-black text-white flex flex-col min-h-screen">
-        <NavBar client:load />
-        <main class="flex-grow mt-16">
-            <slot />
-        </main>
-    </body>
+  <head>
+    <SEOHead
+      title={title}
+      description={description}
+      image={image}
+      article={article}
+    />
+    <ViewTransitions />
+    <link rel="sitemap" href="/sitemap.xml" />
+  </head>
+  <body class="bg-black text-white flex flex-col min-h-screen">
+    <NavBar client:load />
+    <main class="flex-grow mt-16">
+      <slot />
+    </main>
+  </body>
 </html>

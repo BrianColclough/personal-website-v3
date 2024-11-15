@@ -1,0 +1,40 @@
+---
+export interface Props {
+  title: string;
+  body: string;
+  subTitle: string;
+  linkTo?: string;
+}
+
+const { title, subTitle, body, linkTo } = Astro.props;
+---
+
+<div
+  class="border-2 border-white transition-transform duration-300 hover:scale-105 subpixel-antialiased"
+>
+  <div class="m-8">
+    {
+      title && (
+        <h1
+          class="wubberly hover:text-orange-400 transition-colors text-white text-5xl mb-2"
+          transition:name={`title-${title}`}
+        >
+          <a href={linkTo}>{title}</a>
+        </h1>
+      )
+    }
+    {
+      subTitle && (
+        <i>
+          <time
+            class="font-fields text-neutral-400"
+            transition:name={`date-${subTitle}`}
+          >
+            {subTitle}
+          </time>
+        </i>
+      )
+    }
+    {body && <article class="font-fields text-neutral-300">{body}</article>}
+  </div>
+</div>

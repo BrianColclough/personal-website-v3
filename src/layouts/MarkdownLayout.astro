@@ -1,24 +1,38 @@
 ---
 type Props = {
-    title: string,
-    date: string,
-    content: string
-}
+  title: string;
+  date: string;
+  content: string;
+};
 
-const options = { year: 'numeric', month: 'long', day: 'numeric' };
+const options = { year: "numeric", month: "long", day: "numeric" };
 
 const { title, date, content } = Astro.props;
 
-const formattedPublishedDate = new Date(date).toLocaleDateString("en-US", options as Intl.DateTimeFormatOptions);
+const formattedPublishedDate = new Date(date).toLocaleDateString(
+  "en-US",
+  options as Intl.DateTimeFormatOptions
+);
 ---
 
-<div class="max-w-4xl mx-auto mt-16 px-4 sm:px-6 lg:px-8 bg-black rounded-lg shadow-lg p-8">
-    <header class="mb-12 text-center">
-        <h1 class="text-6xl font-bold font-wubberly mb-4 text-orange-600">{title}</h1>
-        <p class="text-neutral-400 italic text-lg">{formattedPublishedDate}</p>
-    </header>
+<div
+  class="max-w-4xl mx-auto mt-16 px-4 sm:px-6 lg:px-8 bg-black rounded-lg shadow-lg p-8"
+>
+  <header class="mb-12 text-center">
+    <h1
+      class="text-6xl font-bold font-wubberly mb-4 text-orange-600"
+      transition:name={`title-${title}`}
+    >
+      {title}
+    </h1>
+    <p class="text-neutral-400 italic text-lg" transition:name={`date-${date}`}>
+      {formattedPublishedDate}
+    </p>
+  </header>
 
-    <article class="prose prose-xl mx-auto text-neutral-300 leading-relaxed prose-headings:font-fields prose-headings:text-orange-400 prose-headings:mt-12 prose-headings:mb-4">
-        <div set:html={content} />
-    </article>
+  <article
+    class="prose prose-xl mx-auto text-neutral-300 leading-relaxed prose-headings:font-fields prose-headings:text-orange-400"
+  >
+    <div set:html={content} />
+  </article>
 </div>

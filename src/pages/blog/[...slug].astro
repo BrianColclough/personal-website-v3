@@ -1,30 +1,28 @@
 ---
-import { getCollection, getEntries } from "astro:content";
+import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
 import Layout from "../../layouts/Layout.astro";
 import MarkdownLayout from "../../layouts/MarkdownLayout.astro";
-import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
-import { contentfulClient, type BlogEntry } from "../../lib/contentful";
+import { contentfulClient, type BlogEntryRO } from "../../lib/contentful";
 
 // 1. Generate a new path for every collection entry
 export async function getStaticPaths() {
-    const blogEntries = await contentfulClient.getEntries<BlogEntry>({
-        content_type: "blogPost",
-    });
+  const blogEntries = await contentfulClient.getEntries<BlogEntryRO>({
+    content_type: "blogPost",
+  });
 
-    return blogEntries.items.map((entry) => ({
-        params: { slug: entry.fields.slug },
-        props: {
-            title: entry.fields.title,
-            content: documentToHtmlString(entry.fields.content),
-            date: new Date(entry.fields.datePosted).toLocaleDateString(),
-        },
-    }));
+  return blogEntries.items.map((entry) => ({
+    params: { slug: entry.fields.slug },
+    props: {
+      title: entry.fields.title,
+      content: documentToHtmlString(entry.fields.content),
+      date: new Date(entry.fields.datePosted).toLocaleDateString(),
+    },
+  }));
 }
 
 const { content, title, date } = Astro.props;
 ---
 
-<Layout title={`Brian Colclough | ${title}`}>
-    <MarkdownLayout title={title} date={date} content={content} />
+<Layout title={`Brian Colclough | ${title}`} article={true}>
+  <MarkdownLayout title={title} date={date} content={content} />
 </Layout>
-
