@@ -15,22 +15,38 @@ const formattedPublishedDate = new Date(date).toLocaleDateString(
 );
 ---
 
-<div
-  class="max-w-4xl mx-auto mt-16 px-4 sm:px-6 lg:px-8 bg-black rounded-lg shadow-lg p-8"
-  transition:animate="slide"
->
-  <header class="mb-12 text-center">
-    <h1 class="text-6xl font-bold font-wubberly mb-4 text-orange-600">
-      {title}
-    </h1>
-    <p class="text-neutral-400 italic text-lg">
-      {formattedPublishedDate}
-    </p>
-  </header>
+<div class="max-w-3xl mx-auto mt-24 px-4 sm:px-6 lg:px-8">
+  <article class="relative">
+    <header class="mb-16">
+      <div class="space-y-4">
+        <time
+          class="text-sm font-geistMono tracking-wide text-neutral-400 uppercase"
+          datetime={date}
+        >
+          {formattedPublishedDate}
+        </time>
+        <h1
+          class="text-4xl sm:text-5xl font-fields font-bold text-white leading-tight"
+        >
+          {title}
+        </h1>
+      </div>
+    </header>
 
-  <article
-    class="prose prose-xl mx-auto text-neutral-300 leading-relaxed prose-headings:font-fields prose-headings:text-orange-400"
-  >
-    <div set:html={content} />
+    <div
+      class="max-w-xl prose prose-lg mx-auto font-geistMono text-neutral-300 leading-relaxed
+      prose-headings:font-fields prose-headings:text-white prose-headings:font-semibold prose-headings:leading-tight
+      prose-h2:text-2xl prose-h2:mt-12 prose-h2:mb-6
+      prose-p:text-neutral-300 prose-p:leading-relaxed
+      prose-a:text-orange-400 prose-a:no-underline hover:prose-a:text-orange-300 prose-a:font-medium
+      prose-code:text-orange-300 prose-code:font-normal prose-code:bg-neutral-900 prose-code:rounded-md prose-code:px-1.5 prose-code:py-0.5
+      prose-strong:text-white prose-strong:font-semibold
+      prose-blockquote:border-l-2 prose-blockquote:border-orange-400/30 prose-blockquote:pl-6 prose-blockquote:italic
+      prose-img:rounded-lg prose-img:shadow-xl prose-img:my-8
+      prose-ul:my-6 prose-li:my-2
+      prose-hr:border-neutral-800"
+    >
+      <div set:html={content} />
+    </div>
   </article>
 </div>

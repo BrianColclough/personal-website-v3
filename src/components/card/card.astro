@@ -9,24 +9,40 @@ export interface Props {
 const { title, subTitle, body, linkTo } = Astro.props;
 ---
 
-<div
-  class="transition-transform duration-300 hover:scale-105 subpixel-antialiased bg-gray-950 rounded-lg"
->
-  <div class="m-8">
-    {
-      title && (
-        <h1 class="font-fields hover:text-orange-400 transition-colors text-white text-5xl mb-2">
-          <a href={linkTo}>{title}</a>
-        </h1>
-      )
-    }
-    {
-      subTitle && (
-        <i>
-          <time class="font-fields text-neutral-400">{subTitle}</time>
-        </i>
-      )
-    }
-    {body && <article class="font-fields text-neutral-300">{body}</article>}
+<a href={linkTo} class="perspective h-full">
+  <div
+    class="group h-full relative overflow-hidden rounded-xl backdrop-blur-sm bg-gray-950/80 border border-gray-800/20 transition-all duration-500 ease-out hover:shadow-orange-500/20 hover:shadow-[0_0_40px_rgba(255,120,40,0.15)] before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/5 before:to-transparent before:translate-x-[-200%] before:transition-transform before:duration-500 before:ease-out hover:before:translate-x-[200%] hover:border-orange-500/20 transform-gpu text-balance hover:animate-wiggle"
+  >
+    <div
+      class="relative p-8 transition-transform duration-500 group-hover:scale-[1.01]"
+    >
+      {
+        title && (
+          <h1 class="font-fields text-white text-5xl mb-3 bg-gradient-to-r from-white to-white bg-clip-text group-hover:text-transparent transition-colors duration-300">
+            {title}
+          </h1>
+        )
+      }
+      {
+        subTitle && (
+          <time class="font-wotfard text-neutral-400 block mb-4 transition-colors duration-300 group-hover:text-orange-300">
+            {subTitle}
+          </time>
+        )
+      }
+      {
+        body && (
+          <article class="font-geistMono text-neutral-300/90 leading-relaxed">
+            {body}
+          </article>
+        )
+      }
+    </div>
   </div>
-</div>
+</a>
+
+<style>
+  .perspective {
+    perspective: 2000px;
+  }
+</style>

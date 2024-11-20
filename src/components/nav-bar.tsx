@@ -8,16 +8,18 @@ export default function NavBar() {
       <div class="max-w-7xl mx-auto">
         {/* Desktop Navigation */}
         <div class="hidden md:flex justify-between items-center">
-          <span class="text-3xl font-bold text-white font-fields">Brian Colclough</span>
+          <a href="/" class="text-3xl font-bold text-white font-fields">
+            Brian Colclough
+          </a>
           <ul class="flex space-x-8 text-lg text-white">
             <li class="relative group hover:text-gray-300 transition-colors">
-              <a href="/" data-astro-prefetch class="after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-orange-500 after:transition-all after:duration-300 group-hover:after:w-full">Home</a>
+              <a href="/" data-astro-prefetch class="after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-orange-500 after:transition-all after:duration-300 group-hover:after:w-full font-geistMono">Home</a>
             </li>
             <li class="relative group hover:text-gray-300 transition-colors">
-              <a href="/blog" data-astro-prefetch class="after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-orange-500 after:transition-all after:duration-300 group-hover:after:w-full">Blog</a>
+              <a href="/blog" data-astro-prefetch class="after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-orange-500 after:transition-all after:duration-300 group-hover:after:w-full font-geistMono">Blog</a>
             </li>
             <li class="relative group hover:text-gray-300 transition-colors">
-              <a href="/about" data-astro-prefetch class="after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-orange-500 after:transition-all after:duration-300 group-hover:after:w-full">About</a>
+              <a href="/about" data-astro-prefetch class="after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-orange-500 after:transition-all after:duration-300 group-hover:after:w-full font-geistMono">About</a>
             </li>
           </ul>
         </div>
@@ -44,13 +46,13 @@ export default function NavBar() {
             isOpen() ? 'translate-y-0 opacity-100 h-auto pb-4' : '-translate-y-2 h-0 opacity-0 pointer-events-none pb-0'
           } flex flex-col mt-4 space-y-2 text-lg text-white transition-all duration-300 ease-in-out`}>
             <li class="hover:text-gray-300 transition-colors">
-              <a href="/" data-astro-prefetch class="block py-2 px-4 hover:bg-gray-800 rounded-lg">Home</a>
+              <a href="/" data-astro-prefetch class="block py-2 px-4 hover:bg-gray-800 rounded-lg font-geistMono">Home</a>
             </li>
             <li class="hover:text-gray-300 transition-colors">
-              <a href="/blog" data-astro-prefetch class="block py-2 px-4 hover:bg-gray-800 rounded-lg">Blog</a>
+              <a href="/blog" data-astro-prefetch class="block py-2 px-4 hover:bg-gray-800 rounded-lg font-geistMono">Blog</a>
             </li>
             <li class="hover:text-gray-300 transition-colors">
-              <a href="/about" data-astro-prefetch class="block py-2 px-4 hover:bg-gray-800 rounded-lg">About</a>
+              <a href="/about" data-astro-prefetch class="block py-2 px-4 hover:bg-gray-800 rounded-lg font-geistMono">About</a>
             </li>
           </ul>
         </div>

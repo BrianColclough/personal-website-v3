@@ -1,5 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+
+const age = new Date().getFullYear() - new Date("2000-06-14").getFullYear();
 ---
 
 <Layout title="About | Brian Colclough">
@@ -14,7 +16,7 @@ import Layout from "../../layouts/Layout.astro";
       class="prose prose-xl prose-invert mx-auto text-neutral-300 leading-relaxed"
     >
       <p class="mb-8">
-        Hello! I'm Brian Colclough, a 24-year-old software engineer based in
+        Hello! I'm Brian Colclough, a {age}-year-old software engineer based in
         Charlotte, NC, currently pursuing my master’s degree in Artificial
         Intelligence at The University of Johns Hopkins. When I'm not coding or
         studying, you'll likely find me out capturing moments with my camera or

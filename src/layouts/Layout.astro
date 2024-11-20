@@ -1,5 +1,6 @@
 ---
 import { ViewTransitions } from "astro:transitions";
+import Footer from "../components/footer/footer.astro";
 import NavBar from "../components/nav-bar";
 import SEOHead from "../components/SEOHead.astro";
 import "../styles/global.css";
@@ -36,5 +37,6 @@ const {
     <main class="flex-grow mt-16" transition:animate="slide">
       <slot />
     </main>
+    <Footer />
   </body>
 </html>

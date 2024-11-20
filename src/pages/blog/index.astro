@@ -25,6 +25,22 @@ const posts: BlogPost[] = entries.items
   .sort((a, b) => b.rawDate.getTime() - a.rawDate.getTime()); // Sort by date in descending order
 ---
 
+<head>
+  <link
+    rel="preload"
+    href="/fonts/wotfard-regular.woff2"
+    as="font"
+    type="font/woff2"
+    crossorigin="anonymous"
+  />
+  <link
+    rel="preload"
+    href="/fonts/GeistMono-Regular.woff2"
+    as="font"
+    type="font/woff2"
+    crossorigin="anonymous"
+  />
+</head>
 <Layout title="Brian Colclough | Blog">
   <!-- Hero Section -->
   <section
@@ -36,9 +52,9 @@ const posts: BlogPost[] = entries.items
       >
         My Blog
       </h1>
-      <p class="text-lg sm:text-xl font-fields italic text-gray-300">
-        A collection of my thoughts, experiences, and learnings as a
-        photographer, software engineer, and fitness enthusiast.
+      <p class="text-lg sm:text-xl font-geistMono font-light text-gray-300">
+        A collection of my thoughts, opinions, and learnings as a photographer,
+        software engineer, and fitness enthusiast.
       </p>
     </div>
   </section>
