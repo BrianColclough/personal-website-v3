@@ -4,25 +4,63 @@ import Layout from "../../layouts/Layout.astro";
 import MarkdownLayout from "../../layouts/MarkdownLayout.astro";
 import { contentfulClient, type BlogEntryRO } from "../../lib/contentful";
 
-// 1. Generate a new path for every collection entry
 export async function getStaticPaths() {
-  const blogEntries = await contentfulClient.getEntries<BlogEntryRO>({
-    content_type: "blogPost",
-  });
+    // Get Contentful posts
+    const blogEntries = await contentfulClient.getEntries<BlogEntryRO>({
+        content_type: "blogPost",
+    });
 
-  return blogEntries.items.map((entry) => ({
-    params: { slug: entry.fields.slug },
-    props: {
-      title: entry.fields.title,
-      content: documentToHtmlString(entry.fields.content),
-      date: new Date(entry.fields.datePosted).toLocaleDateString(),
-    },
-  }));
+    const contentfulPaths = blogEntries.items.map((entry) => ({
+        params: { slug: entry.fields.slug },
+        props: {
+            title: entry.fields.title,
+            content: documentToHtmlString(entry.fields.content),
+            date: new Date(entry.fields.datePosted).toLocaleDateString(),
+            source: "contentful" as const,
+        },
+    }));
+
+    // Try to get markdown posts (will work after server restart)
+    let markdownPaths: any[] = [];
+    try {
+        const { getCollection } = await import("astro:content");
+        const markdownEntries = await getCollection("blog");
+        markdownPaths = await Promise.all(
+            markdownEntries.map(async (entry: any) => {
+                const { Content } = await entry.render();
+                const slug = entry.data.slug || entry.slug;
+
+                return {
+                    params: { slug },
+                    props: {
+                        title: entry.data.title,
+                        date: entry.data.datePosted.toLocaleDateString(),
+                        source: "markdown" as const,
+                        Content,
+                    },
+                };
+            }),
+        );
+    } catch (error) {
+        console.log(
+            "Markdown posts not available yet - restart dev server to enable",
+        );
+    }
+
+    return [...contentfulPaths, ...markdownPaths];
 }
 
-const { content, title, date } = Astro.props;
+const { title, date, source, content, Content } = Astro.props;
 ---
 
 <Layout title={`Brian Colclough | ${title}`} article={true}>
-  <MarkdownLayout title={title} date={date} content={content} />
+    {
+        source === "contentful" ? (
+            <MarkdownLayout title={title} date={date} content={content} />
+        ) : (
+            <MarkdownLayout title={title} date={date}>
+                <Content />
+            </MarkdownLayout>
+        )
+    }
 </Layout>

@@ -1,8 +1,8 @@
 ---
 type Props = {
-  title: string;
-  date: string;
-  content: string;
+    title: string;
+    date: string;
+    content?: string;
 };
 
 const options = { year: "numeric", month: "long", day: "numeric" };
@@ -10,31 +10,31 @@ const options = { year: "numeric", month: "long", day: "numeric" };
 const { title, date, content } = Astro.props;
 
 const formattedPublishedDate = new Date(date).toLocaleDateString(
-  "en-US",
-  options as Intl.DateTimeFormatOptions
+    "en-US",
+    options as Intl.DateTimeFormatOptions,
 );
 ---
 
 <div class="max-w-3xl mx-auto mt-24 px-4 sm:px-6 lg:px-8">
-  <article class="relative">
-    <header class="mb-16">
-      <div class="space-y-4">
-        <time
-          class="text-sm font-geistMono tracking-wide text-neutral-400 uppercase"
-          datetime={date}
-        >
-          {formattedPublishedDate}
-        </time>
-        <h1
-          class="text-4xl sm:text-5xl font-fields font-bold text-white leading-tight"
-        >
-          {title}
-        </h1>
-      </div>
-    </header>
+    <article class="relative">
+        <header class="mb-16">
+            <div class="space-y-4">
+                <time
+                    class="text-sm font-geistMono tracking-wide text-neutral-400 uppercase"
+                    datetime={date}
+                >
+                    {formattedPublishedDate}
+                </time>
+                <h1
+                    class="text-4xl sm:text-5xl font-fields font-bold text-white leading-tight"
+                >
+                    {title}
+                </h1>
+            </div>
+        </header>
 
-    <div
-      class="max-w-xl prose prose-lg mx-auto font-geistMono text-neutral-300 leading-relaxed
+        <div
+            class="max-w-xl prose prose-lg mx-auto font-geistMono text-neutral-300 leading-relaxed
       prose-headings:font-fields prose-headings:text-white prose-headings:font-semibold prose-headings:leading-tight
       prose-h2:text-2xl prose-h2:mt-12 prose-h2:mb-6
       prose-p:text-neutral-300 prose-p:leading-relaxed
@@ -45,8 +45,8 @@ const formattedPublishedDate = new Date(date).toLocaleDateString(
       prose-img:rounded-lg prose-img:shadow-xl prose-img:my-8
       prose-ul:my-6 prose-li:my-2
       prose-hr:border-neutral-800"
-    >
-      <div set:html={content} />
-    </div>
-  </article>
+        >
+            {content ? <div set:html={content} /> : <slot />}
+        </div>
+    </article>
 </div>
