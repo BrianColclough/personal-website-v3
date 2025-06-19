@@ -1,12 +1,15 @@
 ---
+import { calculateReadTime } from "../lib/reading-time";
+
 type Props = {
     title: string;
     date: string;
     content?: string;
     slug?: string;
+    source?: "contentful" | "markdown";
 };
 
-const { title, date, content, slug } = Astro.props;
+const { title, date, content, slug, source } = Astro.props;
 
 // Format date nicely
 const formattedPublishedDate = new Date(date).toLocaleDateString("en-US", {
@@ -14,15 +17,6 @@ const formattedPublishedDate = new Date(date).toLocaleDateString("en-US", {
     month: "long",
     day: "numeric",
 });
-
-// Calculate reading time
-function calculateReadTime(content: string): string {
-    const wordsPerMinute = 200;
-    const textContent = content.replace(/<[^>]*>/g, ""); // Strip HTML
-    const wordCount = textContent.split(/\s+/).length;
-    const readTime = Math.ceil(wordCount / wordsPerMinute);
-    return readTime === 1 ? "1 min read" : `${readTime} min read`;
-}
 
 // Extract headings for table of contents
 function extractHeadings(
@@ -43,6 +37,8 @@ function extractHeadings(
     return headings;
 }
 
+// Calculate reading time - only use content for reading time if we have it and it's meaningful
+// For markdown posts, we should have the raw markdown content passed in
 const readingTime = content ? calculateReadTime(content) : "5 min read";
 const headings = content ? extractHeadings(content) : [];
 const hasTableOfContents = headings.length > 2;
@@ -92,7 +88,7 @@ const hasTableOfContents = headings.length > 2;
                         hasTableOfContents && (
                             <div class="flex items-center gap-2">
                                 <svg
-                                    class="w-4 h-4 text-forest-600"
+                                    class="w-4 h-4 text-green-600"
                                     fill="currentColor"
                                     viewBox="0 0 20 20"
                                 >
@@ -169,7 +165,13 @@ const hasTableOfContents = headings.length > 2;
                 <!-- Article Content -->
                 <article class="flex-1 max-w-none">
                     <div class="prose prose-lg mx-auto prose-article">
-                        {content ? <div set:html={content} /> : <slot />}
+                        {
+                            source === "contentful" ? (
+                                <div set:html={content} />
+                            ) : (
+                                <slot />
+                            )
+                        }
                     </div>
                 </article>
             </div>
@@ -413,20 +415,32 @@ const hasTableOfContents = headings.length > 2;
         opacity: 1;
     }
 
-    .prose-article .heading-link {
+    .prose-article h1 .heading-link,
+    .prose-article h2 .heading-link,
+    .prose-article h3 .heading-link,
+    .prose-article h4 .heading-link,
+    .prose-article h5 .heading-link,
+    .prose-article h6 .heading-link {
         opacity: 0;
         color: var(--color-purple-400);
         text-decoration: none;
         margin-left: 0.5rem;
         transition: opacity 0.2s ease;
+        font-size: 0.7em !important;
+        font-weight: 400 !important;
+        vertical-align: middle;
+        line-height: 1 !important;
+        display: inline-block;
     }
 
-    .prose-article .heading-link:hover {
+    .prose-article h1 .heading-link:hover,
+    .prose-article h2 .heading-link:hover,
+    .prose-article h3 .heading-link:hover,
+    .prose-article h4 .heading-link:hover,
+    .prose-article h5 .heading-link:hover,
+    .prose-article h6 .heading-link:hover {
         color: var(--color-purple-600);
-    }
-
-    /* Forest green accents for special elements */
-    .text-forest-600 {
-        color: var(--color-forest-600);
+        font-size: 0.7em !important;
+        font-weight: 400 !important;
     }
 </style>

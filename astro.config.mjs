@@ -33,6 +33,7 @@ export default defineConfig({
         {
           properties: {
             className: ['heading-link'],
+            style: 'font-size: 0.7em; font-weight: 400; margin-right: 0.5rem; opacity: 0.9;',
           },
           content: {
             type: 'text',
