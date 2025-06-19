@@ -51,14 +51,20 @@ export async function getStaticPaths() {
 }
 
 const { title, date, source, content, Content } = Astro.props;
+const { slug } = Astro.params;
 ---
 
 <Layout title={`Brian Colclough | ${title}`} article={true}>
     {
         source === "contentful" ? (
-            <MarkdownLayout title={title} date={date} content={content} />
+            <MarkdownLayout
+                title={title}
+                date={date}
+                content={content}
+                slug={slug}
+            />
         ) : (
-            <MarkdownLayout title={title} date={date}>
+            <MarkdownLayout title={title} date={date} slug={slug}>
                 <Content />
             </MarkdownLayout>
         )

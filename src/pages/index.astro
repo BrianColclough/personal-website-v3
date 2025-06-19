@@ -7,96 +7,143 @@ const images = await contentfulClient.getEntries<ImagesRO>({
   content_type: "spotlightImages",
 });
 
-const content = images.items[0].fields.images as Array<any>; //TODO: fix this
-const heroImage = content[0].fields.file.url; // Use the first image as the hero image
+const content = images.items[0].fields.images as Array<any>;
+const heroImage = content[0].fields.file.url;
 ---
 
-<head>
-  <link
-    rel="preload"
-    href="/fonts/Fields-Regular.woff2"
-    as="font"
-    type="font/woff2"
-    crossorigin="anonymous"
-  />
-  <link
-    rel="preload"
-    href="/fonts/Wubberly-Regular.woff2"
-    as="font"
-    type="font/woff2"
-    crossorigin="anonymous"
-  />
-  <link
-    rel="preload"
-    href="/fonts/GeistMono-Regular.woff2"
-    as="font"
-    type="font/woff2"
-    crossorigin="anonymous"
-  />
-  <link rel="preload" href={heroImage} as="image" />
-</head>
+<Layout title="Brian Colclough | Photography & Software Engineering">
+  <!-- Hero Section with Personal Intro -->
+  <section class="relative min-h-screen bg-gradient-to-br from-purple-50 via-white to-green-50 flex items-center">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+      <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+        
+        <!-- Text Content -->
+        <div class="prose-spacing max-w-none">
+          <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-purple-700 leading-tight mb-6" style="font-family: 'Fields', Georgia, serif;" transition:name="page-title">
+            Brian Colclough
+          </h1>
+          
+          <div class="space-y-6 text-lg text-gray-700 leading-relaxed">
+            <p>
+              I'm a <span class="text-purple-600 font-medium">software engineer</span> studying AI and a 
+              <span class="text-forest-600 font-medium">hobbyist photographer</span> who captures landscapes 
+              and moments that tell stories.
+            </p>
+            
+            <p>
+              My work blends technology with art—exploring how code and creativity intersect 
+              to document life's beautiful complexities.
+            </p>
+          </div>
 
-<Layout title="Brian Colclough | Photography Portfolio">
-  <section
-    class="relative w-full min-h-screen flex items-center bg-black text-white overflow-hidden"
-  >
-    <div
-      class="flex flex-col md:flex-row items-center justify-between w-auto max-w-7xl mx-auto px-6"
-      transition:animate="slide"
-    >
-      <!-- Text Block with Overlay -->
-      <div class="md:w-1/2 w-full text-left z-20 text-balance">
-        <h1
-          class="text-8xl md:text-[10rem] font-fields subpixel-antialiased font-extrabold text-orange-500 leading-none tracking-tight"
-        >
-          Brian Colclough
-        </h1>
-        <p
-          class="mt-4 text-base sm:text-lg font-fields italic text-gray-300 sm:px-6 mb-4 sm:mb-0"
-        >
-          I'm a hobbyist art photographer, mainly capturing landscapes and
-          moments documenting my life. As a software engineer studying AI, I
-          blend technology with my passion for art.
-        </p>
-      </div>
+          <!-- CTA Buttons -->
+          <div class="flex flex-wrap gap-4 mt-8">
+            <a href="/blog" class="btn btn-primary hover-lift transition-smooth">
+              Read My Blog
+            </a>
+            <a href="/about" class="btn btn-secondary hover-lift transition-smooth">
+              Learn More About Me
+            </a>
+          </div>
 
-      <!-- Hero Image -->
-      <Image
-        class="relative md:w-1/2 rounded-lg shadow-lg overflow-hidden transform transition-transform"
-        alt="self portrait"
-        src={heroImage}
-        height="800"
-        width="600"
-      />
-      <!-- Add explicit width and height -->
-      <div
-        class="absolute inset-0 bg-black opacity-20 hover:opacity-10 transition-opacity duration-500"
-      >
+          <!-- Quick Stats -->
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-6 mt-12 pt-8 border-t border-purple-100">
+            <div class="text-center">
+              <div class="text-2xl font-bold text-purple-600" style="font-family: 'Fields', Georgia, serif;">50+</div>
+              <div class="text-sm text-gray-600 uppercase tracking-wide">Photos</div>
+            </div>
+            <div class="text-center">
+              <div class="text-2xl font-bold text-purple-600" style="font-family: 'Fields', Georgia, serif;">AI</div>
+              <div class="text-sm text-gray-600 uppercase tracking-wide">Focus</div>
+            </div>
+            <div class="text-center">
+              <div class="text-2xl font-bold text-purple-600" style="font-family: 'Fields', Georgia, serif;">∞</div>
+              <div class="text-sm text-gray-600 uppercase tracking-wide">Curiosity</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hero Image -->
+        <div class="relative group">
+          <div class="relative overflow-hidden rounded-2xl shadow-xl hover-lift transition-smooth">
+            <Image
+              class="w-full h-auto object-cover"
+              alt="Brian Colclough - Self portrait showcasing photography style"
+              src={heroImage}
+              height="800"
+              width="600"
+              format="webp"
+              loading="eager"
+            />
+            <!-- Subtle overlay -->
+            <div class="absolute inset-0 bg-gradient-to-t from-purple-900/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          </div>
+          
+          <!-- Floating accent -->
+          <div class="absolute -bottom-6 -right-6 w-24 h-24 bg-purple-100 rounded-full -z-10 group-hover:scale-110 transition-transform duration-300"></div>
+        </div>
+
       </div>
-      <!-- Dark overlay for contrast -->
     </div>
   </section>
 
-  <section
-    class="relative z-20 mt-12 px-6 w-screen max-w-none mx-auto lg:px-12 xl:px-24 columns-1 sm:columns-2 lg:columns-3 gap-6"
-  >
-    {
-      content.splice(1).map((p, index) => (
-        <div
-          key={index}
-          class="mb-6 break-inside-avoid group relative overflow-hidden rounded-lg shadow-lg transition-transform duration-500 hover:shadow-2xl transform hover:-translate-y-1"
-        >
-          <Image
-            src={p.fields.file.url}
-            alt={`Portfolio photo ${index + 1}`}
-            class="w-full h-auto object-cover"
-            width={800}
-            height={800}
-            format="webp"
-          />
-          <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-0 group-hover:opacity-80 transition-opacity duration-500" />
-        </div>
-      ))
-    }
+
+  <!-- Full Gallery Section -->
+  <section id="gallery" class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Section Header -->
+      <div class="text-center max-w-2xl mx-auto mb-16">
+        <h2 class="text-3xl md:text-4xl font-bold text-purple-700 mb-4" style="font-family: 'Fields', Georgia, serif;">
+          Photography Portfolio
+        </h2>
+        <p class="text-lg text-gray-600">
+          Documenting life through landscapes, portraits, and candid moments.
+        </p>
+      </div>
+
+      <!-- Masonry-style Gallery -->
+      <div class="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-6 space-y-6">
+        {content.slice(1).map((photo, index) => (
+          <div class="break-inside-avoid group relative overflow-hidden rounded-lg shadow-md hover-lift transition-smooth bg-white">
+            <Image
+              src={photo.fields.file.url}
+              alt={`Portfolio photograph ${index + 1}`}
+              class="w-full h-auto object-cover group-hover:scale-102 transition-transform duration-700"
+              width={400}
+              height={600}
+              format="webp"
+              loading="lazy"
+            />
+            <!-- Subtle hover effect -->
+            <div class="absolute inset-0 bg-gradient-to-t from-purple-900/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          </div>
+        ))}
+      </div>
+
+    </div>
   </section>
+
+  <!-- Blog Preview Section -->
+  <section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Section Header -->
+      <div class="text-center flex flex-col gap-4 max-w-3xl mx-auto mb-16">
+        <h2 class="text-3xl md:text-4xl font-bold text-purple-700 mb-4" style="font-family: 'Fields', Georgia, serif;">
+          Latest Thoughts
+        </h2>
+        <p class="text-lg text-gray-600 leading-relaxed">
+            Right now I'm trining for another half marathon in November, so my content has been focused on fitness and running.
+        </p>
+        <a href="/blog" class="btn btn-primary hover-lift transition-smooth w-fit mx-auto">
+          Visit Blog
+        </a>
+      </div>
+
+    </div>
+  </section>
+
 </Layout>
+
+
