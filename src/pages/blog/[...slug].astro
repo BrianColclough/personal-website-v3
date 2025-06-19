@@ -17,6 +17,7 @@ export async function getStaticPaths() {
             content: documentToHtmlString(entry.fields.content),
             date: new Date(entry.fields.datePosted).toLocaleDateString(),
             source: "contentful" as const,
+            summary: entry.fields.summary,
         },
     }));
 
@@ -34,6 +35,7 @@ export async function getStaticPaths() {
                     params: { slug },
                     props: {
                         title: entry.data.title,
+                        summary: entry.data.summary,
                         date: entry.data.datePosted.toLocaleDateString(),
                         source: "markdown" as const,
                         Content,
@@ -50,7 +52,7 @@ export async function getStaticPaths() {
     return [...contentfulPaths, ...markdownPaths];
 }
 
-const { title, date, source, content, Content } = Astro.props;
+const { title, date, source, content, Content, summary } = Astro.props;
 const { slug } = Astro.params;
 ---
 
@@ -60,11 +62,17 @@ const { slug } = Astro.params;
             <MarkdownLayout
                 title={title}
                 date={date}
+                summary={summary}
                 content={content}
                 slug={slug}
             />
         ) : (
-            <MarkdownLayout title={title} date={date} slug={slug}>
+            <MarkdownLayout
+                title={title}
+                date={date}
+                slug={slug}
+                summary={summary}
+            >
                 <Content />
             </MarkdownLayout>
         )
