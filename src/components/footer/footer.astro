@@ -3,99 +3,99 @@ import { Icon } from "astro-icon/components";
 const currentYear = new Date().getFullYear();
 
 interface SocialLink {
-  label: string;
-  href: string;
-  icon: string;
+    label: string;
+    href: string;
+    icon: string;
 }
 
 const socialLinks: SocialLink[] = [
-  {
-    label: "GitHub",
-    href: "https://github.com/briancolclough",
-    icon: "github",
-  },
-  {
-    label: "Instagram",
-    href: "https://instagram.com/brian_colclough",
-    icon: "instagram",
-  },
+    {
+        label: "GitHub",
+        href: "https://github.com/briancolclough",
+        icon: "github",
+    },
+    {
+        label: "Instagram",
+        href: "https://instagram.com/brian_colclough",
+        icon: "instagram",
+    },
 ];
 
 const footerLinks = [
-  {
-    title: "Writing",
-    links: [{ label: "Blog", href: "/blog" }],
-  },
-  {
-    title: "Photography",
-    links: [
-      { label: "Portfolio", href: "/portfolio" },
-      //TODO: Add collections
-      //   { label: "Collections", href: "/collections" },
-    ],
-  },
+    {
+        title: "Writing",
+        links: [{ label: "Blog", href: "/blog" }],
+    },
+    {
+        title: "Photography",
+        links: [
+            // { label: "Portfolio", href: "/portfolio" },
+            //TODO: Add collections
+            //   { label: "Collections", href: "/collections" },
+        ],
+    },
 ];
 ---
 
 <footer class="mt-32 border-t border-neutral-800/50">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="py-12 md:py-16 grid grid-cols-1 md:grid-cols-3 gap-12">
-      <!-- Brand Section -->
-      <div class="space-y-4">
-        <h3 class="font-fields text-white text-lg font-medium">
-          Brian Colclough
-        </h3>
-        <p
-          class="font-geistMono text-sm text-neutral-400 leading-relaxed max-w-xs"
-        >
-          Software engineer, and hobbyist photographer documenting my journey
-          through pixels and code.
-        </p>
-        <div class="flex gap-4 items-center pt-2">
-          {
-            socialLinks.map(({ label, href, icon }) => (
-              <a
-                href={href}
-                aria-label={label}
-                data-astro-prefetch
-                class="text-neutral-400 hover:text-orange-400 transition-colors duration-200"
-              >
-                <Icon name={`${icon}`} class="w-5 h-5" />
-              </a>
-            ))
-          }
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="py-12 md:py-16 grid grid-cols-1 md:grid-cols-3 gap-12">
+            <!-- Brand Section -->
+            <div class="space-y-4">
+                <h3 class="font-fields text-white text-lg font-medium">
+                    Brian Colclough
+                </h3>
+                <p
+                    class="font-geistMono text-sm text-neutral-400 leading-relaxed max-w-xs"
+                >
+                    Software engineer, and hobbyist photographer documenting my
+                    journey through pixels and code.
+                </p>
+                <div class="flex gap-4 items-center pt-2">
+                    {
+                        socialLinks.map(({ label, href, icon }) => (
+                            <a
+                                href={href}
+                                aria-label={label}
+                                data-astro-prefetch
+                                class="text-neutral-400 hover:text-orange-400 transition-colors duration-200"
+                            >
+                                <Icon name={`${icon}`} class="w-5 h-5" />
+                            </a>
+                        ))
+                    }
+                </div>
+            </div>
+
+            <!-- Navigation Sections -->
+            {
+                footerLinks.map(({ title, links }) => (
+                    <div class="space-y-4">
+                        <h3 class="font-fields text-white text-sm font-medium uppercase tracking-wider">
+                            {title}
+                        </h3>
+                        <ul class="space-y-3">
+                            {links.map(({ label, href }) => (
+                                <li>
+                                    <a
+                                        href={href}
+                                        class="font-geistMono text-sm text-neutral-400 hover:text-orange-400 transition-colors duration-200"
+                                    >
+                                        {label}
+                                    </a>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                ))
+            }
         </div>
-      </div>
 
-      <!-- Navigation Sections -->
-      {
-        footerLinks.map(({ title, links }) => (
-          <div class="space-y-4">
-            <h3 class="font-fields text-white text-sm font-medium uppercase tracking-wider">
-              {title}
-            </h3>
-            <ul class="space-y-3">
-              {links.map(({ label, href }) => (
-                <li>
-                  <a
-                    href={href}
-                    class="font-geistMono text-sm text-neutral-400 hover:text-orange-400 transition-colors duration-200"
-                  >
-                    {label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))
-      }
+        <!-- Copyright -->
+        <div class="border-t border-neutral-800/50 py-8">
+            <p class="font-geistMono text-sm text-neutral-500 text-center">
+                &copy; {currentYear} Brian Colclough. All rights reserved.
+            </p>
+        </div>
     </div>
-
-    <!-- Copyright -->
-    <div class="border-t border-neutral-800/50 py-8">
-      <p class="font-geistMono text-sm text-neutral-500 text-center">
-        &copy; {currentYear} Brian Colclough. All rights reserved.
-      </p>
-    </div>
-  </div>
 </footer>
