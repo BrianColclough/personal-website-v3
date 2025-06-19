@@ -2,12 +2,11 @@
 type Props = {
     title: string;
     date: string;
-    summary: string;
     content?: string;
     slug?: string;
 };
 
-const { title, date, content, slug, summary }: Props = Astro.props;
+const { title, date, content, slug } = Astro.props;
 
 // Format date nicely
 const formattedPublishedDate = new Date(date).toLocaleDateString("en-US", {
@@ -121,7 +120,8 @@ const hasTableOfContents = headings.length > 2;
                 <!-- Article Intro/Summary -->
                 <div class="prose prose-lg mx-auto">
                     <p class="text-lg text-gray-700 leading-relaxed">
-                        {summary}
+                        Exploring ideas at the intersection of technology and
+                        creativity.
                     </p>
                 </div>
             </div>
@@ -194,12 +194,14 @@ const hasTableOfContents = headings.length > 2;
                 <div class="flex justify-center gap-4">
                     <a
                         href="/blog"
+                        data-astro-prefetch
                         class="btn btn-secondary hover-lift transition-smooth"
                     >
                         ← Back to Blog
                     </a>
                     <a
                         href="/"
+                        data-astro-prefetch
                         class="btn btn-primary hover-lift transition-smooth"
                     >
                         Visit Homepage
