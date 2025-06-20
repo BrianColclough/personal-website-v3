@@ -7,9 +7,10 @@ type Props = {
     content?: string;
     slug?: string;
     source?: "contentful" | "markdown";
+    summary?: string;
 };
 
-const { title, date, content, slug, source } = Astro.props;
+const { title, date, content, slug, source, summary } = Astro.props;
 
 // Format date nicely
 const formattedPublishedDate = new Date(date).toLocaleDateString("en-US", {
@@ -116,8 +117,7 @@ const hasTableOfContents = headings.length > 2;
                 <!-- Article Intro/Summary -->
                 <div class="prose prose-lg mx-auto">
                     <p class="text-lg text-gray-700 leading-relaxed">
-                        Exploring ideas at the intersection of technology and
-                        creativity.
+                        {summary}
                     </p>
                 </div>
             </div>
