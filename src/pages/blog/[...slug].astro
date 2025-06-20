@@ -36,6 +36,7 @@ export async function getStaticPaths() {
                         title: entry.data.title,
                         date: entry.data.datePosted.toLocaleDateString(),
                         source: "markdown" as const,
+                        contentText: entry.body,
                         Content,
                     },
                 };
@@ -50,15 +51,29 @@ export async function getStaticPaths() {
     return [...contentfulPaths, ...markdownPaths];
 }
 
-const { title, date, source, content, Content } = Astro.props;
+const { title, date, source, content, contentText, Content } = Astro.props;
+const { slug } = Astro.params;
+const slugString = Array.isArray(slug) ? slug.join("/") : slug;
 ---
 
 <Layout title={`Brian Colclough | ${title}`} article={true}>
     {
         source === "contentful" ? (
-            <MarkdownLayout title={title} date={date} content={content} />
+            <MarkdownLayout
+                title={title}
+                date={date}
+                content={content}
+                slug={slugString}
+                source={source}
+            />
         ) : (
-            <MarkdownLayout title={title} date={date}>
+            <MarkdownLayout
+                title={title}
+                date={date}
+                slug={slugString}
+                content={contentText}
+                source={source}
+            >
                 <Content />
             </MarkdownLayout>
         )

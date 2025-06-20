@@ -1,52 +1,446 @@
 ---
+import { calculateReadTime } from "../lib/reading-time";
+
 type Props = {
     title: string;
     date: string;
     content?: string;
+    slug?: string;
+    source?: "contentful" | "markdown";
 };
 
-const options = { year: "numeric", month: "long", day: "numeric" };
+const { title, date, content, slug, source } = Astro.props;
 
-const { title, date, content } = Astro.props;
+// Format date nicely
+const formattedPublishedDate = new Date(date).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+});
 
-const formattedPublishedDate = new Date(date).toLocaleDateString(
-    "en-US",
-    options as Intl.DateTimeFormatOptions,
-);
+// Extract headings for table of contents
+function extractHeadings(
+    content: string,
+): Array<{ id: string; text: string; level: number }> {
+    const headingRegex = /<h([1-6])[^>]*id="([^"]*)"[^>]*>([^<]*)<\/h[1-6]>/g;
+    const headings = [];
+    let match;
+
+    while ((match = headingRegex.exec(content)) !== null) {
+        headings.push({
+            level: parseInt(match[1]),
+            id: match[2],
+            text: match[3],
+        });
+    }
+
+    return headings;
+}
+
+// Calculate reading time - only use content for reading time if we have it and it's meaningful
+// For markdown posts, we should have the raw markdown content passed in
+const readingTime = content ? calculateReadTime(content) : "5 min read";
+const headings = content ? extractHeadings(content) : [];
+const hasTableOfContents = headings.length > 2;
 ---
 
-<div class="max-w-3xl mx-auto mt-24 px-4 sm:px-6 lg:px-8">
-    <article class="relative">
-        <header class="mb-16">
-            <div class="space-y-4">
-                <time
-                    class="text-sm font-geistMono tracking-wide text-neutral-400 uppercase"
-                    datetime={date}
+<!-- Page Container -->
+<div
+    class="min-h-screen bg-gradient-to-br from-purple-50/30 via-white to-green-50/30"
+>
+    <!-- Article Header -->
+    <header class="bg-white border-b border-purple-100">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
+            <div class="text-center max-w-3xl mx-auto">
+                <!-- Meta Information -->
+                <div
+                    class="flex items-center justify-center gap-6 text-sm text-gray-600 mb-6"
                 >
-                    {formattedPublishedDate}
-                </time>
+                    <div class="flex items-center gap-2">
+                        <svg
+                            class="w-4 h-4 text-purple-500"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                        >
+                            <path
+                                fill-rule="evenodd"
+                                d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                        <time datetime={date}>{formattedPublishedDate}</time>
+                    </div>
+
+                    <div class="flex items-center gap-2">
+                        <svg
+                            class="w-4 h-4 text-purple-500"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                        >
+                            <path
+                                fill-rule="evenodd"
+                                d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                        <span>{readingTime}</span>
+                    </div>
+
+                    {
+                        hasTableOfContents && (
+                            <div class="flex items-center gap-2">
+                                <svg
+                                    class="w-4 h-4 text-green-600"
+                                    fill="currentColor"
+                                    viewBox="0 0 20 20"
+                                >
+                                    <path
+                                        fill-rule="evenodd"
+                                        d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                                        clip-rule="evenodd"
+                                    />
+                                </svg>
+                                <span>Table of Contents</span>
+                            </div>
+                        )
+                    }
+                </div>
+
+                <!-- Article Title -->
                 <h1
-                    class="text-4xl sm:text-5xl font-fields font-bold text-white leading-tight"
+                    class="text-3xl sm:text-4xl lg:text-5xl font-bold text-purple-700 leading-tight mb-6"
+                    style="font-family: 'Fields', Georgia, serif;"
+                    transition:name={slug ? `blog-title-${slug}` : undefined}
                 >
                     {title}
                 </h1>
-            </div>
-        </header>
 
-        <div
-            class="max-w-xl prose prose-lg mx-auto font-geistMono text-neutral-300 leading-relaxed
-      prose-headings:font-fields prose-headings:text-white prose-headings:font-semibold prose-headings:leading-tight
-      prose-h2:text-2xl prose-h2:mt-12 prose-h2:mb-6
-      prose-p:text-neutral-300 prose-p:leading-relaxed
-      prose-a:text-orange-400 prose-a:no-underline hover:prose-a:text-orange-300 prose-a:font-medium
-      prose-code:text-orange-300 prose-code:font-normal prose-code:bg-neutral-900 prose-code:rounded-md prose-code:px-1.5 prose-code:py-0.5
-      prose-strong:text-white prose-strong:font-semibold
-      prose-blockquote:border-l-2 prose-blockquote:border-orange-400/30 prose-blockquote:pl-6 prose-blockquote:italic
-      prose-img:rounded-lg prose-img:shadow-xl prose-img:my-8
-      prose-ul:my-6 prose-li:my-2
-      prose-hr:border-neutral-800"
-        >
-            {content ? <div set:html={content} /> : <slot />}
+                <!-- Article Intro/Summary -->
+                <div class="prose prose-lg mx-auto">
+                    <p class="text-lg text-gray-700 leading-relaxed">
+                        Exploring ideas at the intersection of technology and
+                        creativity.
+                    </p>
+                </div>
+            </div>
         </div>
-    </article>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="relative">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
+            <div class="flex gap-12 lg:gap-16">
+                <!-- Table of Contents (Desktop Sidebar) -->
+                {
+                    hasTableOfContents && (
+                        <aside class="hidden lg:block w-64 flex-shrink-0">
+                            <div class="sticky top-24">
+                                <div class="card p-6">
+                                    <h3
+                                        class="text-lg font-bold text-purple-700 mb-4"
+                                        style="font-family: 'Fields', Georgia, serif;"
+                                    >
+                                        Table of Contents
+                                    </h3>
+                                    <nav>
+                                        <ul class="space-y-2">
+                                            {headings.map((heading) => (
+                                                <li
+                                                    class={`${heading.level > 2 ? "ml-4" : ""}`}
+                                                >
+                                                    <a
+                                                        href={`#${heading.id}`}
+                                                        class="block text-sm text-gray-600 hover:text-purple-600 transition-colors duration-200 py-1 focus-ring rounded"
+                                                    >
+                                                        {heading.text}
+                                                    </a>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </aside>
+                    )
+                }
+
+                <!-- Article Content -->
+                <article class="flex-1 max-w-none">
+                    <div class="prose prose-lg mx-auto prose-article">
+                        {
+                            source === "contentful" ? (
+                                <div set:html={content} />
+                            ) : (
+                                <slot />
+                            )
+                        }
+                    </div>
+                </article>
+            </div>
+        </div>
+    </main>
+
+    <!-- Article Footer -->
+    <footer class="bg-gray-50 border-t border-gray-200">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="text-center">
+                <h3
+                    class="text-xl font-bold text-purple-700 mb-4"
+                    style="font-family: 'Fields', Georgia, serif;"
+                >
+                    Thanks for Reading
+                </h3>
+                <p class="text-gray-600 mb-6 max-w-2xl mx-auto">
+                    I hope you found this article helpful. Feel free to share
+                    your thoughts or connect with me on social media.
+                </p>
+
+                <div class="flex justify-center gap-4">
+                    <a
+                        href="/blog"
+                        data-astro-prefetch
+                        class="btn btn-secondary hover-lift transition-smooth"
+                    >
+                        ← Back to Blog
+                    </a>
+                    <a
+                        href="/"
+                        data-astro-prefetch
+                        class="btn btn-primary hover-lift transition-smooth"
+                    >
+                        Visit Homepage
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
 </div>
+
+<style>
+    /* Custom prose styling for the design system */
+    .prose-article {
+        font-size: 16px; /* Exactly 16px body text */
+        line-height: 1.7;
+        color: var(--color-text-primary);
+        max-width: 65ch; /* Optimal reading width */
+    }
+
+    .prose-article h1,
+    .prose-article h2,
+    .prose-article h3,
+    .prose-article h4,
+    .prose-article h5,
+    .prose-article h6 {
+        font-family: "Fields", Georgia, serif;
+        font-weight: 700;
+        color: var(--color-purple-700);
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        line-height: 1.2;
+        scroll-margin-top: 4rem; /* For anchor link offset */
+    }
+
+    .prose-article h1 {
+        font-size: 2.25rem;
+    }
+    .prose-article h2 {
+        font-size: 1.875rem;
+    }
+    .prose-article h3 {
+        font-size: 1.5rem;
+    }
+    .prose-article h4 {
+        font-size: 1.25rem;
+    }
+    .prose-article h5 {
+        font-size: 1.125rem;
+    }
+    .prose-article h6 {
+        font-size: 1rem;
+    }
+
+    .prose-article p {
+        margin-bottom: 1.5rem;
+        color: var(--color-text-primary);
+    }
+
+    .prose-article a {
+        color: var(--color-purple-600);
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.2s ease;
+    }
+
+    .prose-article a:hover {
+        color: var(--color-purple-700);
+        text-decoration: underline;
+        text-decoration-color: var(--color-purple-400);
+    }
+
+    /* Code styling that pops */
+    .prose-article code {
+        background-color: var(--color-purple-50);
+        color: var(--color-purple-700);
+        padding: 0.125rem 0.375rem;
+        border-radius: 0.25rem;
+        font-size: 0.875em;
+        font-weight: 500;
+        border: 1px solid var(--color-purple-200);
+        font-family: "Geist Mono", "Fira Code", Consolas, monospace;
+    }
+
+    .prose-article pre {
+        background: linear-gradient(
+            135deg,
+            var(--color-purple-900) 0%,
+            var(--color-purple-800) 100%
+        );
+        color: var(--color-purple-50);
+        padding: 1.5rem;
+        border-radius: 0.75rem;
+        overflow-x: auto;
+        margin: 2rem 0;
+        border: 1px solid var(--color-purple-700);
+        box-shadow: 0 4px 6px -1px rgba(139, 92, 246, 0.1);
+    }
+
+    .prose-article pre code {
+        background: none;
+        color: inherit;
+        padding: 0;
+        border: none;
+        font-size: 0.875rem;
+        font-weight: normal;
+    }
+
+    /* Blockquotes */
+    .prose-article blockquote {
+        border-left: 4px solid var(--color-purple-400);
+        background-color: var(--color-purple-50);
+        padding: 1rem 1.5rem;
+        margin: 2rem 0;
+        border-radius: 0 0.5rem 0.5rem 0;
+        font-style: italic;
+        color: var(--color-text-secondary);
+    }
+
+    /* Lists */
+    .prose-article ul,
+    .prose-article ol {
+        margin: 1.5rem 0;
+        padding-left: 1.5rem;
+    }
+
+    .prose-article li {
+        margin: 0.5rem 0;
+        color: var(--color-text-primary);
+    }
+
+    .prose-article li::marker {
+        color: var(--color-purple-500);
+    }
+
+    /* Images */
+    .prose-article img {
+        border-radius: 0.75rem;
+        box-shadow:
+            0 10px 25px -3px rgba(0, 0, 0, 0.1),
+            0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        margin: 2rem auto;
+        max-width: 100%;
+        height: auto;
+        transition:
+            transform 0.3s ease,
+            box-shadow 0.3s ease;
+    }
+
+    .prose-article img:hover {
+        transform: scale(1.02);
+        box-shadow:
+            0 20px 40px -3px rgba(139, 92, 246, 0.1),
+            0 8px 16px -4px rgba(139, 92, 246, 0.1);
+    }
+
+    /* Tables */
+    .prose-article table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 2rem 0;
+        border-radius: 0.5rem;
+        overflow: hidden;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .prose-article th,
+    .prose-article td {
+        padding: 0.75rem 1rem;
+        text-align: left;
+        border-bottom: 1px solid var(--color-border-light);
+    }
+
+    .prose-article th {
+        background-color: var(--color-purple-50);
+        color: var(--color-purple-700);
+        font-weight: 600;
+    }
+
+    .prose-article tr:hover {
+        background-color: var(--color-surface-subtle);
+    }
+
+    /* Strong text */
+    .prose-article strong {
+        color: var(--color-purple-700);
+        font-weight: 600;
+    }
+
+    /* Horizontal rules */
+    .prose-article hr {
+        border: none;
+        height: 1px;
+        background: linear-gradient(
+            to right,
+            transparent,
+            var(--color-purple-300),
+            transparent
+        );
+        margin: 3rem 0;
+    }
+
+    /* Heading anchor links */
+    .prose-article h1:hover .heading-link,
+    .prose-article h2:hover .heading-link,
+    .prose-article h3:hover .heading-link,
+    .prose-article h4:hover .heading-link,
+    .prose-article h5:hover .heading-link,
+    .prose-article h6:hover .heading-link {
+        opacity: 1;
+    }
+
+    .prose-article h1 .heading-link,
+    .prose-article h2 .heading-link,
+    .prose-article h3 .heading-link,
+    .prose-article h4 .heading-link,
+    .prose-article h5 .heading-link,
+    .prose-article h6 .heading-link {
+        opacity: 0;
+        color: var(--color-purple-400);
+        text-decoration: none;
+        margin-left: 0.5rem;
+        transition: opacity 0.2s ease;
+        font-size: 0.7em !important;
+        font-weight: 400 !important;
+        vertical-align: middle;
+        line-height: 1 !important;
+        display: inline-block;
+    }
+
+    .prose-article h1 .heading-link:hover,
+    .prose-article h2 .heading-link:hover,
+    .prose-article h3 .heading-link:hover,
+    .prose-article h4 .heading-link:hover,
+    .prose-article h5 .heading-link:hover,
+    .prose-article h6 .heading-link:hover {
+        color: var(--color-purple-600);
+        font-size: 0.7em !important;
+        font-weight: 400 !important;
+    }
+</style>

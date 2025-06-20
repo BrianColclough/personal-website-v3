@@ -2,16 +2,49 @@ import mdx from "@astrojs/mdx";
 import solidJs from "@astrojs/solid-js";
 import { defineConfig } from 'astro/config';
 
-import tailwind from "@astrojs/tailwind";
 
 import sitemap from "@astrojs/sitemap";
 
 import icon from "astro-icon";
 
+import tailwindcss from "@tailwindcss/vite";
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
+import rehypeSlug from "rehype-slug";
+
 // https://astro.build/config
 export default defineConfig({
-  integrations: [solidJs(), tailwind(), sitemap(), icon(), mdx()],
+  integrations: [solidJs(), sitemap(), icon(), mdx()],
   prefetch: true,
-  viewTransitions: true,
+  clientRouter: true,
   site: "https://www.briancolclough.com",
+
+  markdown: {
+    shikiConfig: {
+      themes: {
+        light: 'catppuccin-latte',
+        dark: 'catppuccin-mocha',
+      },
+      wrap: true,
+    },
+    rehypePlugins: [
+      rehypeSlug,
+      [
+        rehypeAutolinkHeadings,
+        {
+          properties: {
+            className: ['heading-link'],
+            style: 'font-size: 0.7em; font-weight: 400; margin-right: 0.5rem; opacity: 0.9;',
+          },
+          content: {
+            type: 'text',
+            value: '#',
+          },
+        },
+      ],
+    ],
+  },
+
+  vite: {
+    plugins: [tailwindcss()],
+  },
 });

@@ -1,0 +1,635 @@
+/* ================================================================
+   PERSONAL BLOG DESIGN SYSTEM
+   Built with Tailwind CSS v4 best practices for Astro
+   Performance-optimized with CSS custom properties
+   ================================================================ */
+
+@import 'tailwindcss';
+
+/* ================================================================
+   COLOR SYSTEM
+   Accessible, harmonious palette centered around cream background
+   Following Tailwind v4 standards with complete color mappings
+   ================================================================ */
+
+@layer theme {
+    :root {
+        /* Primary Colors */
+        --color-cream: #fefaf6;
+        --color-cream-dark: #f9f2eb;
+        --color-cream-darker: #f0e6d6;
+
+        /* Purple Accent - Signature Color */
+        --color-purple-50: #faf7ff;
+        --color-purple-100: #f0e8ff;
+        --color-purple-200: #e2d5ff;
+        --color-purple-300: #c9b3ff;
+        --color-purple-400: #a885ff;
+        --color-purple-500: #8b5cf6;
+        /* Primary purple */
+        --color-purple-600: #7c3aed;
+        --color-purple-700: #6d28d9;
+        --color-purple-800: #5b21b6;
+        --color-purple-900: #4c1d95;
+        --color-purple-950: #2e1065;
+
+        /* Forest Green Secondary */
+        --color-forest-50: #f0fdf4;
+        --color-forest-100: #dcfce7;
+        --color-forest-200: #bbf7d0;
+        --color-forest-300: #86efac;
+        --color-forest-400: #4ade80;
+        --color-forest-500: #22c55e;
+        --color-forest-600: #16a34a;
+        /* Primary forest */
+        --color-forest-700: #15803d;
+        --color-forest-800: #166534;
+        --color-forest-900: #14532d;
+        --color-forest-950: #052e16;
+
+        /* Gray Scale - Mapped to design system semantics */
+        --color-gray-50: var(--color-surface-subtle);
+        --color-gray-100: #f3f4f6;
+        --color-gray-200: var(--color-border-light);
+        --color-gray-300: #d1d5db;
+        --color-gray-400: #9ca3af;
+        --color-gray-500: var(--color-text-light);
+        --color-gray-600: var(--color-text-muted);
+        --color-gray-700: var(--color-text-secondary);
+        --color-gray-800: #1f2937;
+        --color-gray-900: #111827;
+        --color-gray-950: var(--color-text-primary);
+
+        /* White - Explicit definition for v4 */
+        --color-white: #ffffff;
+
+        /* Text Colors - Accessible Contrast */
+        --color-text-primary: #1a1a1a;
+        --color-text-secondary: #374151;
+        --color-text-muted: #6b7280;
+        --color-text-light: #9ca3af;
+
+        /* Interactive States with color-mix() */
+        --color-purple-focus: color-mix(in srgb, var(--color-purple-500) 15%, transparent);
+        --color-forest-focus: color-mix(in srgb, var(--color-forest-600) 15%, transparent);
+
+        /* Borders & Surfaces */
+        --color-border-light: #e5e7eb;
+        --color-border-medium: #d1d5db;
+        --color-surface-elevated: #ffffff;
+        --color-surface-subtle: #f9fafb;
+    }
+
+    /* Dark mode support (future-ready) */
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --color-cream: #1a1a1a;
+            --color-cream-dark: #262626;
+            --color-cream-darker: #404040;
+
+            --color-text-primary: #f9fafb;
+            --color-text-secondary: #e5e7eb;
+            --color-text-muted: #9ca3af;
+            --color-text-light: #6b7280;
+
+            --color-border-light: #374151;
+            --color-border-medium: #4b5563;
+            --color-surface-elevated: #262626;
+            --color-surface-subtle: #1f2937;
+
+            /* Update gray mappings for dark mode */
+            --color-gray-50: #1f2937;
+            --color-gray-100: #374151;
+            --color-gray-200: #4b5563;
+            --color-gray-500: #6b7280;
+            --color-gray-600: #9ca3af;
+            --color-gray-700: #d1d5db;
+            --color-gray-900: #f3f4f6;
+            --color-gray-950: #f9fafb;
+        }
+    }
+}
+
+/* ================================================================
+   TYPOGRAPHY SYSTEM
+   16px base with harmonious scale and custom font loading
+   ================================================================ */
+
+@layer base {
+
+    /* Font Loading with Performance Optimization */
+    @font-face {
+        font-family: 'Wubberly';
+        src: url('/fonts/Wubberly-Regular.woff2') format('woff2');
+        font-weight: normal;
+        font-style: normal;
+        font-display: swap;
+    }
+
+    @font-face {
+        font-family: 'Fields';
+        src: url('/fonts/Fields-Regular.woff2') format('woff2');
+        font-weight: normal;
+        font-style: normal;
+        font-display: swap;
+    }
+
+    @font-face {
+        font-family: 'Wotfard';
+        src: url('/fonts/wotfard-regular.woff2') format('woff2');
+        font-weight: normal;
+        font-display: swap;
+    }
+
+    @font-face {
+        font-family: 'Geist Mono';
+        src: url('/fonts/GeistMono-Regular.woff2') format('woff2');
+        font-weight: normal;
+        font-display: swap;
+    }
+
+    /* Base Typography */
+    html {
+        font-size: 16px;
+        /* Base 16px requirement */
+        line-height: 1.6;
+    }
+
+    body {
+        font-family: 'Wotfard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        font-size: 1rem;
+        /* 16px */
+        line-height: 1.6;
+        color: var(--color-text-primary);
+        background-color: var(--color-cream);
+        font-feature-settings: 'kern' 1, 'liga' 1;
+        text-rendering: optimizeLegibility;
+    }
+
+    /* Heading Styles with Purple Accent */
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-family: 'Fields', Georgia, serif;
+        font-weight: 700;
+        line-height: 1.2;
+        color: var(--color-purple-700);
+        margin-bottom: 0.5em;
+        letter-spacing: -0.025em;
+    }
+
+    h1 {
+        font-size: clamp(2rem, 4vw, 3.5rem);
+        /* Responsive */
+        margin-bottom: 1rem;
+    }
+
+    h2 {
+        font-size: clamp(1.5rem, 3vw, 2.5rem);
+        margin-bottom: 0.875rem;
+    }
+
+    h3 {
+        font-size: clamp(1.25rem, 2.5vw, 2rem);
+        margin-bottom: 0.75rem;
+    }
+
+    h4 {
+        font-size: 1.5rem;
+        margin-bottom: 0.625rem;
+    }
+
+    h5 {
+        font-size: 1.25rem;
+        margin-bottom: 0.5rem;
+    }
+
+    h6 {
+        font-size: 1.125rem;
+        margin-bottom: 0.5rem;
+    }
+
+    /* Body Text Optimization */
+    p {
+        margin-bottom: 1.25rem;
+        color: var(--color-text-primary);
+    }
+
+    /* Links with Purple Theme */
+    a {
+        color: var(--color-purple-600);
+        text-decoration: none;
+        transition: color 0.2s ease, text-decoration-color 0.2s ease;
+        text-underline-offset: 0.125rem;
+    }
+
+    a:hover {
+        color: var(--color-purple-700);
+        text-decoration: underline;
+        text-decoration-color: var(--color-purple-400);
+    }
+
+    a:focus-visible {
+        outline: 2px solid var(--color-purple-500);
+        outline-offset: 2px;
+        border-radius: 0.125rem;
+    }
+
+    /* Code Styling */
+    code {
+        font-family: 'Geist Mono', 'Fira Code', Consolas, monospace;
+        font-size: 0.875em;
+        background-color: var(--color-surface-subtle);
+        padding: 0.125rem 0.25rem;
+        border-radius: 0.25rem;
+        border: 1px solid var(--color-border-light);
+    }
+
+    pre {
+        font-family: 'Geist Mono', 'Fira Code', Consolas, monospace;
+        overflow-x: auto;
+        padding: 1rem;
+        border-radius: 0.5rem;
+        background-color: var(--color-surface-elevated);
+        border: 1px solid var(--color-border-medium);
+        margin: 1.5rem 0;
+    }
+
+    pre code {
+        background: none;
+        border: none;
+        padding: 0;
+        font-size: 0.875rem;
+    }
+}
+
+/* ================================================================
+   SPACING & LAYOUT SYSTEM
+   Generous whitespace with consistent rhythm
+   ================================================================ */
+
+@layer utilities {
+
+    /* Custom Spacing Scale */
+    .space-xs {
+        margin: 0.5rem;
+    }
+
+    .space-sm {
+        margin: 0.75rem;
+    }
+
+    .space-md {
+        margin: 1rem;
+    }
+
+    .space-lg {
+        margin: 1.5rem;
+    }
+
+    .space-xl {
+        margin: 2rem;
+    }
+
+    .space-2xl {
+        margin: 3rem;
+    }
+
+    .space-3xl {
+        margin: 4rem;
+    }
+
+    .space-4xl {
+        margin: 6rem;
+    }
+
+    /* Content Width Constraints */
+    .content-narrow {
+        max-width: 65ch;
+    }
+
+    .content-medium {
+        max-width: 75ch;
+    }
+
+    .content-wide {
+        max-width: 85ch;
+    }
+
+    .content-full {
+        max-width: 100%;
+    }
+
+    /* Breathing Room Classes */
+    .breathing-room-sm {
+        padding: 1.5rem;
+    }
+
+    .breathing-room-md {
+        padding: 2rem;
+    }
+
+    .breathing-room-lg {
+        padding: 3rem;
+    }
+
+    .breathing-room-xl {
+        padding: 4rem;
+    }
+
+    /* Vertical Rhythm */
+    .prose-spacing>*+* {
+        margin-top: 1.25rem;
+    }
+
+    .prose-spacing>h1+*,
+    .prose-spacing>h2+*,
+    .prose-spacing>h3+*,
+    .prose-spacing>h4+*,
+    .prose-spacing>h5+*,
+    .prose-spacing>h6+* {
+        margin-top: 0.5rem;
+    }
+
+    /* Design System Color Utilities - Semantic Helpers */
+    .text-primary {
+        color: var(--color-text-primary);
+    }
+
+    .text-secondary {
+        color: var(--color-text-secondary);
+    }
+
+    .text-muted {
+        color: var(--color-text-muted);
+    }
+
+    .text-light {
+        color: var(--color-text-light);
+    }
+
+    .bg-surface {
+        background-color: var(--color-surface-elevated);
+    }
+
+    .bg-subtle {
+        background-color: var(--color-surface-subtle);
+    }
+
+    .border-light {
+        border-color: var(--color-border-light);
+    }
+
+    .border-medium {
+        border-color: var(--color-border-medium);
+    }
+
+    /* Text Utilities */
+    .line-clamp-3 {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+}
+
+/* ================================================================
+   COMPONENT FOUNDATIONS
+   Base styles for UI elements with accessibility
+   ================================================================ */
+
+@layer components {
+
+    /* Button Base */
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+        font-weight: 500;
+        line-height: 1;
+        border-radius: 0.5rem;
+        border: 1px solid transparent;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        text-decoration: none;
+        font-family: inherit;
+    }
+
+    .btn:focus-visible {
+        outline: 2px solid var(--color-purple-500);
+        outline-offset: 2px;
+    }
+
+    .btn-primary {
+        background-color: var(--color-purple-600);
+        color: var(--color-white);
+        border-color: var(--color-purple-600);
+    }
+
+    .btn-primary:hover {
+        background-color: var(--color-purple-700);
+        border-color: var(--color-purple-700);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px var(--color-purple-focus);
+    }
+
+    .btn-secondary {
+        background-color: transparent;
+        color: var(--color-purple-600);
+        border-color: var(--color-purple-300);
+    }
+
+    .btn-secondary:hover {
+        background-color: var(--color-purple-50);
+        border-color: var(--color-purple-400);
+    }
+
+    .btn-forest {
+        background-color: var(--color-forest-600);
+        color: var(--color-white);
+        border-color: var(--color-forest-600);
+    }
+
+    .btn-forest:hover {
+        background-color: var(--color-forest-700);
+        border-color: var(--color-forest-700);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px var(--color-forest-focus);
+    }
+
+    /* Card Base */
+    .card {
+        background-color: var(--color-surface-elevated);
+        border: 1px solid var(--color-border-light);
+        border-radius: 0.75rem;
+        padding: 1.5rem;
+        transition: box-shadow 0.2s ease, transform 0.2s ease;
+    }
+
+    .card:hover {
+        box-shadow: 0 8px 25px color-mix(in srgb, var(--color-text-primary) 10%, transparent);
+        transform: translateY(-2px);
+    }
+
+    /* Input Base */
+    .input {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        font-size: 1rem;
+        line-height: 1.5;
+        color: var(--color-text-primary);
+        background-color: var(--color-surface-elevated);
+        border: 1px solid var(--color-border-medium);
+        border-radius: 0.5rem;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .input:focus {
+        outline: none;
+        border-color: var(--color-purple-500);
+        box-shadow: 0 0 0 3px var(--color-purple-focus);
+    }
+
+    .input::placeholder {
+        color: var(--color-text-muted);
+    }
+}
+
+/* ================================================================
+   ANIMATION SYSTEM
+   Subtle, smooth transitions for polish
+   ================================================================ */
+
+@layer utilities {
+
+    /* Smooth Transitions */
+    .transition-smooth {
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .transition-bounce {
+        transition: transform 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+    /* Hover Effects */
+    .hover-lift:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px color-mix(in srgb, var(--color-text-primary) 10%, transparent);
+    }
+
+    .hover-glow:hover {
+        box-shadow: 0 0 20px var(--color-purple-focus);
+    }
+
+    /* Focus States */
+    .focus-ring:focus-visible {
+        outline: 2px solid var(--color-purple-500);
+        outline-offset: 2px;
+        border-radius: 0.25rem;
+    }
+
+    .focus-ring-forest:focus-visible {
+        outline: 2px solid var(--color-forest-600);
+        outline-offset: 2px;
+        border-radius: 0.25rem;
+    }
+}
+
+/* ================================================================
+   PERFORMANCE OPTIMIZATIONS
+   Astro-specific and general performance enhancements
+   ================================================================ */
+
+@layer base {
+
+    /* Optimize font loading */
+    html {
+        font-synthesis: none;
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Reduce motion for accessibility */
+    @media (prefers-reduced-motion: reduce) {
+
+        *,
+        *::before,
+        *::after {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+        }
+    }
+
+    /* Optimize rendering */
+    img,
+    video {
+        max-width: 100%;
+        height: auto;
+    }
+
+    /* Improve scroll performance */
+    * {
+        scroll-behavior: smooth;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        * {
+            scroll-behavior: auto;
+        }
+    }
+}
+
+/* ================================================================
+   ACCESSIBILITY ENHANCEMENTS
+   WCAG 2.1 AA compliance
+   ================================================================ */
+
+@layer base {
+
+    /* Screen reader only content */
+    .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+
+    /* Skip links */
+    .skip-link {
+        position: absolute;
+        top: -40px;
+        left: 6px;
+        background-color: var(--color-purple-600);
+        color: var(--color-white);
+        padding: 8px;
+        border-radius: 4px;
+        text-decoration: none;
+        z-index: 1000;
+        transition: top 0.3s;
+    }
+
+    .skip-link:focus {
+        top: 6px;
+    }
+
+    /* High contrast mode support */
+    @media (prefers-contrast: high) {
+        :root {
+            --color-text-primary: #000000;
+            --color-purple-600: #4c1d95;
+            --color-forest-600: #14532d;
+        }
+    }
+}
