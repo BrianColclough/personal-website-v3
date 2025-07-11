@@ -24,7 +24,9 @@ const contentfulPosts: BlogPost[] = contentfulEntries.items.map((item) => {
 });
 
 const { getCollection } = await import("astro:content");
-const markdownEntries = await getCollection("blog");
+const markdownEntries = await getCollection("blog", ({ data }) => {
+    return data.draft !== true;
+});
 const markdownPosts = markdownEntries.map((entry: any) => {
     const slug = entry.data.slug || entry.slug;
     // Use raw markdown content for reading time calculation (no rendering needed)
