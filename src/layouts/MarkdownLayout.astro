@@ -38,409 +38,254 @@ function extractHeadings(
     return headings;
 }
 
-// Calculate reading time - only use content for reading time if we have it and it's meaningful
-// For markdown posts, we should have the raw markdown content passed in
 const readingTime = content ? calculateReadTime(content) : "5 min read";
 const headings = content ? extractHeadings(content) : [];
-const hasTableOfContents = headings.length > 2;
+const hasTableOfContents = headings.length > 1;
 ---
 
-<!-- Page Container -->
-<div
-    class="min-h-screen bg-gradient-to-br from-purple-50/30 via-white to-green-50/30"
->
+<div class="min-h-screen bg-surface">
     <!-- Article Header -->
-    <header class="bg-white border-b border-purple-100">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
-            <div class="text-center max-w-3xl mx-auto">
+    <header class="py-16 md:py-24 border-b-2 border-primary/20 bg-surface mt-10">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-3xl">
                 <!-- Meta Information -->
-                <div
-                    class="flex items-center justify-center gap-6 text-sm text-gray-600 mb-6"
-                >
-                    <div class="flex items-center gap-2">
-                        <svg
-                            class="w-4 h-4 text-purple-500"
-                            fill="currentColor"
-                            viewBox="0 0 20 20"
-                        >
-                            <path
-                                fill-rule="evenodd"
-                                d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
-                                clip-rule="evenodd"></path>
-                        </svg>
-                        <time datetime={date}>{formattedPublishedDate}</time>
-                    </div>
-
-                    <div class="flex items-center gap-2">
-                        <svg
-                            class="w-4 h-4 text-purple-500"
-                            fill="currentColor"
-                            viewBox="0 0 20 20"
-                        >
-                            <path
-                                fill-rule="evenodd"
-                                d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
-                                clip-rule="evenodd"></path>
-                        </svg>
-                        <span>{readingTime}</span>
-                    </div>
-
-                    {
-                        hasTableOfContents && (
-                            <div class="flex items-center gap-2">
-                                <svg
-                                    class="w-4 h-4 text-green-600"
-                                    fill="currentColor"
-                                    viewBox="0 0 20 20"
-                                >
-                                    <path
-                                        fill-rule="evenodd"
-                                        d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-                                        clip-rule="evenodd"
-                                    />
-                                </svg>
-                                <span>Table of Contents</span>
-                            </div>
-                        )
-                    }
+                <div class="flex items-center gap-4 text-sm font-mono text-text-secondary mb-8">
+                    <div class="sticker sticker-purple">{formattedPublishedDate}</div>
+                    <div class="sticker sticker-green">{readingTime}</div>
                 </div>
 
                 <!-- Article Title -->
                 <h1
-                    class="text-3xl sm:text-4xl lg:text-5xl font-bold text-purple-700 leading-tight mb-6"
-                    style="font-family: 'Fields', Georgia, serif;"
+                    class="text-4xl sm:text-5xl lg:text-7xl font-display font-extrabold text-black leading-[1.05] tracking-tight mb-8"
                     transition:name={slug ? `blog-title-${slug}` : undefined}
                 >
                     {title}
                 </h1>
 
                 <!-- Article Intro/Summary -->
-                <div class="prose prose-lg mx-auto">
-                    <p class="text-lg text-gray-700 leading-relaxed">
-                        {summary}
-                    </p>
-                </div>
+                <p class="text-xl md:text-2xl text-text-secondary leading-relaxed border-l-8 border-primary pl-6 py-2 font-medium">
+                    {summary}
+                </p>
             </div>
         </div>
     </header>
 
     <!-- Main Content Area -->
-    <main class="relative">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
-            <div class="flex gap-12 lg:gap-16">
+    <main class="relative py-16 md:py-24">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col lg:flex-row gap-12 lg:gap-16 items-start">
+                
                 <!-- Table of Contents (Desktop Sidebar) -->
-                {
-                    hasTableOfContents && (
-                        <aside class="hidden lg:block w-64 flex-shrink-0">
-                            <div class="sticky top-24">
-                                <div class="card p-6">
-                                    <h3
-                                        class="text-lg font-bold text-purple-700 mb-4"
-                                        style="font-family: 'Fields', Georgia, serif;"
-                                    >
-                                        Table of Contents
-                                    </h3>
-                                    <nav>
-                                        <ul class="space-y-2">
-                                            {headings.map((heading) => (
-                                                <li
-                                                    class={`${heading.level > 2 ? "ml-4" : ""}`}
-                                                >
-                                                    <a
-                                                        href={`#${heading.id}`}
-                                                        class="block text-sm text-gray-600 hover:text-purple-600 transition-colors duration-200 py-1 focus-ring rounded"
-                                                    >
-                                                        {heading.text}
-                                                    </a>
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </nav>
-                                </div>
-                            </div>
-                        </aside>
-                    )
-                }
+                {hasTableOfContents && (
+                    <aside class="w-full lg:w-72 flex-shrink-0 lg:sticky top-32 order-2 lg:order-1">
+                        <div class="card-asymmetric border-2 border-black p-6 bg-secondary-container">
+                            <h3 class="text-lg font-display font-black text-black mb-4 uppercase tracking-widest border-b-2 border-black pb-2">
+                                Contents
+                            </h3>
+                            <nav>
+                                <ul class="space-y-3 font-sans font-bold">
+                                    {headings.map((heading) => (
+                                        <li class={`${heading.level > 2 ? "ml-4 text-sm font-medium" : ""}`}>
+                                            <a
+                                                href={`#${heading.id}`}
+                                                class="block text-black hover:text-primary transition-colors duration-200"
+                                            >
+                                                → {heading.text}
+                                            </a>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </nav>
+                        </div>
+                    </aside>
+                )}
 
                 <!-- Article Content -->
-                <article class="flex-1 max-w-none">
-                    <div class="prose prose-lg mx-auto prose-article">
-                        {
-                            source === "contentful" ? (
-                                <div set:html={content} />
-                            ) : (
-                                <slot />
-                            )
-                        }
-                    </div>
+                <article class={`flex-1 min-w-0 w-full prose-neo-brutalist ${!hasTableOfContents ? 'mx-auto max-w-3xl' : ''} order-1 lg:order-2`}>
+                    {source === "contentful" ? (
+                        <div set:html={content} />
+                    ) : (
+                        <slot />
+                    )}
                 </article>
             </div>
         </div>
     </main>
 
     <!-- Article Footer -->
-    <footer class="bg-gray-50 border-t border-gray-200">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <div class="text-center">
-                <h3
-                    class="text-xl font-bold text-purple-700 mb-4"
-                    style="font-family: 'Fields', Georgia, serif;"
-                >
-                    Thanks for Reading
-                </h3>
-                <p class="text-gray-600 mb-6 max-w-2xl mx-auto">
-                    I hope you found this article helpful. Feel free to share
-                    your thoughts or connect with me on social media.
-                </p>
-
-                <div class="flex justify-center gap-4">
-                    <a
-                        href="/blog"
-                        data-astro-prefetch
-                        class="btn btn-secondary hover-lift transition-smooth"
-                    >
-                        ← Back to Blog
-                    </a>
-                    <a
-                        href="/"
-                        data-astro-prefetch
-                        class="btn btn-primary hover-lift transition-smooth"
-                    >
-                        Visit Homepage
-                    </a>
-                </div>
+    <footer class="border-t-2 border-black/10 py-24 bg-surface-container">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h3 class="text-4xl font-display font-black text-primary mb-8 tracking-tight">
+                Keep Exploring!
+            </h3>
+            <div class="flex justify-center gap-6">
+                <a href="/blog" data-astro-prefetch class="btn btn-secondary text-lg border-2 border-black text-black">
+                    ← Back to Blog
+                </a>
             </div>
         </div>
     </footer>
 </div>
 
-<style>
-    /* Custom prose styling for the design system */
-    .prose-article {
-        font-size: 16px; /* Exactly 16px body text */
-        line-height: 1.7;
-        color: var(--color-text-primary);
-        max-width: 65ch; /* Optimal reading width */
-    }
-
-    .prose-article h1,
-    .prose-article h2,
-    .prose-article h3,
-    .prose-article h4,
-    .prose-article h5,
-    .prose-article h6 {
-        font-family: "Fields", Georgia, serif;
-        font-weight: 700;
-        color: var(--color-purple-700);
-        margin-top: 2rem;
-        margin-bottom: 1rem;
-        line-height: 1.2;
-        scroll-margin-top: 4rem; /* For anchor link offset */
-    }
-
-    .prose-article h1 {
-        font-size: 2.25rem;
-    }
-    .prose-article h2 {
-        font-size: 1.875rem;
-    }
-    .prose-article h3 {
-        font-size: 1.5rem;
-    }
-    .prose-article h4 {
-        font-size: 1.25rem;
-    }
-    .prose-article h5 {
+<style is:global>
+    /* Neo-Brutalist Prose Styling */
+    .prose-neo-brutalist {
+        font-family: var(--font-sans);
         font-size: 1.125rem;
-    }
-    .prose-article h6 {
-        font-size: 1rem;
-    }
-
-    .prose-article p {
-        margin-bottom: 1.5rem;
+        line-height: 1.8;
         color: var(--color-text-primary);
     }
 
-    .prose-article a {
-        color: var(--color-purple-600);
-        text-decoration: none;
-        font-weight: 500;
-        transition: color 0.2s ease;
+    /* Headings */
+    .prose-neo-brutalist h1,
+    .prose-neo-brutalist h2,
+    .prose-neo-brutalist h3,
+    .prose-neo-brutalist h4,
+    .prose-neo-brutalist h5,
+    .prose-neo-brutalist h6 {
+        font-family: var(--font-display);
+        font-weight: 900;
+        color: black;
+        margin-top: 3.5rem;
+        margin-bottom: 1.25rem;
+        line-height: 1.2;
+        letter-spacing: -0.02em;
+        scroll-margin-top: 6rem;
     }
 
-    .prose-article a:hover {
-        color: var(--color-purple-700);
-        text-decoration: underline;
-        text-decoration-color: var(--color-purple-400);
-    }
-
-    /* Code styling that pops */
-    .prose-article code {
-        background-color: var(--color-purple-50);
-        color: var(--color-purple-700);
-        padding: 0.125rem 0.375rem;
-        border-radius: 0.25rem;
-        font-size: 0.875em;
-        font-weight: 500;
-        border: 1px solid var(--color-purple-200);
-        font-family: "Geist Mono", "Fira Code", Consolas, monospace;
-    }
-
-    .prose-article pre {
-        background: linear-gradient(
-            135deg,
-            var(--color-purple-900) 0%,
-            var(--color-purple-800) 100%
-        );
-        color: var(--color-purple-50);
-        padding: 1.5rem;
-        border-radius: 0.75rem;
-        overflow-x: auto;
-        margin: 2rem 0;
-        border: 1px solid var(--color-purple-700);
-        box-shadow: 0 4px 6px -1px rgba(139, 92, 246, 0.1);
-    }
-
-    .prose-article pre code {
-        background: none;
-        color: inherit;
-        padding: 0;
-        border: none;
-        font-size: 0.875rem;
-        font-weight: normal;
-    }
-
-    /* Blockquotes */
-    .prose-article blockquote {
-        border-left: 4px solid var(--color-purple-400);
-        background-color: var(--color-purple-50);
-        padding: 1rem 1.5rem;
-        margin: 2rem 0;
-        border-radius: 0 0.5rem 0.5rem 0;
-        font-style: italic;
-        color: var(--color-text-secondary);
-    }
-
-    /* Lists */
-    .prose-article ul,
-    .prose-article ol {
-        margin: 1.5rem 0;
-        padding-left: 1.5rem;
-    }
-
-    .prose-article li {
-        margin: 0.5rem 0;
-        color: var(--color-text-primary);
-    }
-
-    .prose-article li::marker {
-        color: var(--color-purple-500);
-    }
-
-    /* Images */
-    .prose-article img {
-        border-radius: 0.75rem;
-        box-shadow:
-            0 10px 25px -3px rgba(0, 0, 0, 0.1),
-            0 4px 6px -2px rgba(0, 0, 0, 0.05);
-        margin: 2rem auto;
-        max-width: 100%;
-        height: auto;
-        transition:
-            transform 0.3s ease,
-            box-shadow 0.3s ease;
-    }
-
-    .prose-article img:hover {
-        transform: scale(1.02);
-        box-shadow:
-            0 20px 40px -3px rgba(139, 92, 246, 0.1),
-            0 8px 16px -4px rgba(139, 92, 246, 0.1);
-    }
-
-    /* Tables */
-    .prose-article table {
-        width: 100%;
-        border-collapse: collapse;
-        margin: 2rem 0;
-        border-radius: 0.5rem;
-        overflow: hidden;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    }
-
-    .prose-article th,
-    .prose-article td {
-        padding: 0.75rem 1rem;
-        text-align: left;
-        border-bottom: 1px solid var(--color-border-light);
-    }
-
-    .prose-article th {
-        background-color: var(--color-purple-50);
-        color: var(--color-purple-700);
-        font-weight: 600;
-    }
-
-    .prose-article tr:hover {
-        background-color: var(--color-surface-subtle);
-    }
-
-    /* Strong text */
-    .prose-article strong {
-        color: var(--color-purple-700);
-        font-weight: 600;
-    }
-
-    /* Horizontal rules */
-    .prose-article hr {
-        border: none;
-        height: 1px;
-        background: linear-gradient(
-            to right,
-            transparent,
-            var(--color-purple-300),
-            transparent
-        );
-        margin: 3rem 0;
-    }
-
-    /* Heading anchor links */
-    .prose-article h1:hover .heading-link,
-    .prose-article h2:hover .heading-link,
-    .prose-article h3:hover .heading-link,
-    .prose-article h4:hover .heading-link,
-    .prose-article h5:hover .heading-link,
-    .prose-article h6:hover .heading-link {
-        opacity: 1;
-    }
-
-    .prose-article h1 .heading-link,
-    .prose-article h2 .heading-link,
-    .prose-article h3 .heading-link,
-    .prose-article h4 .heading-link,
-    .prose-article h5 .heading-link,
-    .prose-article h6 .heading-link {
-        opacity: 0;
-        color: var(--color-purple-400);
-        text-decoration: none;
-        margin-left: 0.5rem;
-        transition: opacity 0.2s ease;
-        font-size: 0.7em !important;
-        font-weight: 400 !important;
-        vertical-align: middle;
-        line-height: 1 !important;
+    .prose-neo-brutalist h2 {
+        font-size: 2.25rem;
+        border-bottom: 6px solid var(--color-primary);
+        padding-bottom: 0.5rem;
         display: inline-block;
     }
 
-    .prose-article h1 .heading-link:hover,
-    .prose-article h2 .heading-link:hover,
-    .prose-article h3 .heading-link:hover,
-    .prose-article h4 .heading-link:hover,
-    .prose-article h5 .heading-link:hover,
-    .prose-article h6 .heading-link:hover {
-        color: var(--color-purple-600);
-        font-size: 0.7em !important;
-        font-weight: 400 !important;
+    .prose-neo-brutalist h3 {
+        font-size: 1.75rem;
+        border-left: 4px solid var(--color-secondary);
+        padding-left: 1rem;
+    }
+    
+    .prose-neo-brutalist h4 { font-size: 1.5rem; }
+    
+    .prose-neo-brutalist p {
+        margin-bottom: 1.75rem;
+    }
+
+    /* Links */
+    .prose-neo-brutalist a {
+        color: var(--color-primary);
+        text-decoration: underline;
+        text-decoration-thickness: 3px;
+        text-underline-offset: 4px;
+        transition: all 0.2s;
+        font-weight: 800;
+    }
+    .prose-neo-brutalist a:hover {
+        background-color: var(--color-primary-container);
+        color: var(--color-primary);
+    }
+
+    /* Code styling */
+    .prose-neo-brutalist code:not(pre code) {
+        font-family: var(--font-mono);
+        background-color: var(--color-tertiary-container);
+        color: black;
+        padding: 0.2em 0.5em;
+        border-radius: 4px;
+        font-size: 0.9em;
+        font-weight: 800;
+        border: 2px solid black;
+        box-shadow: 2px 2px 0px rgba(0,0,0,0.1);
+    }
+
+    .prose-neo-brutalist pre {
+        background-color: #1a1a1a;
+        color: #f8f8f2;
+        padding: 1.5rem;
+        border-radius: 12px;
+        border: 4px solid black;
+        box-shadow: var(--shadow-sticker-lg);
+        overflow-x: auto;
+        margin: 2.5rem 0;
+        font-family: var(--font-mono);
+        font-size: 0.95rem;
+    }
+
+    /* Blockquotes */
+    .prose-neo-brutalist blockquote {
+        background-color: var(--color-tertiary-container);
+        color: black;
+        border: 4px solid black;
+        box-shadow: 6px 6px 0px var(--color-tertiary);
+        padding: 1.5rem 2rem;
+        margin: 3rem 0;
+        border-radius: 4px;
+        font-style: italic;
+        font-weight: 700;
+        font-size: 1.25rem;
+        transform: rotate(-1deg);
+    }
+    
+    .prose-neo-brutalist blockquote p {
+        margin-bottom: 0;
+    }
+
+    /* Lists */
+    .prose-neo-brutalist ul,
+    .prose-neo-brutalist ol {
+        margin: 2rem 0;
+        padding-left: 2rem;
+    }
+    .prose-neo-brutalist li {
+        margin-bottom: 0.75rem;
+        position: relative;
+    }
+    .prose-neo-brutalist ul li::before {
+        content: "▹";
+        position: absolute;
+        left: -1.5rem;
+        color: var(--color-primary);
+        font-weight: 900;
+        font-size: 1.25em;
+    }
+
+    /* Images */
+    .prose-neo-brutalist img {
+        border-radius: 8px;
+        border: 4px solid black;
+        box-shadow: var(--shadow-sticker-lg);
+        margin: 3rem auto;
+        max-width: 100%;
+        height: auto;
+    }
+
+    /* Tables */
+    .prose-neo-brutalist table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        margin: 3rem 0;
+        border: 4px solid black;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: var(--shadow-sticker);
+    }
+    .prose-neo-brutalist th {
+        background-color: var(--color-secondary);
+        color: black;
+        padding: 1rem;
+        text-align: left;
+        font-family: var(--font-display);
+        font-weight: 900;
+        border-bottom: 4px solid black;
+    }
+    .prose-neo-brutalist td {
+        padding: 1rem;
+        border-bottom: 2px solid black;
+        background-color: white;
+    }
+    .prose-neo-brutalist tr:last-child td {
+        border-bottom: none;
     }
 </style>

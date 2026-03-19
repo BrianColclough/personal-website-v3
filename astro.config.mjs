@@ -7,12 +7,15 @@ import sitemap from "@astrojs/sitemap";
 
 import icon from "astro-icon";
 
+import vercel from "@astrojs/vercel";
 import tailwindcss from "@tailwindcss/vite";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeSlug from "rehype-slug";
 
 // https://astro.build/config
 export default defineConfig({
+  output: "static",
+  adapter: vercel(),
   integrations: [solidJs(), sitemap(), icon(), mdx()],
   prefetch: true,
   clientRouter: true,

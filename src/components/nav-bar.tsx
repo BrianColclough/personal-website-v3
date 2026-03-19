@@ -5,14 +5,13 @@ export default function NavBar() {
   const [isOpen, setIsOpen] = createSignal(false);
 
   return (
-    <nav class="fixed top-0 left-0 w-full z-50 bg-white/95 backdrop-blur-sm border-b border-gray-200/50 transition-smooth">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <nav class="fixed top-4 left-1/2 -translate-x-1/2 w-[95%] max-w-7xl z-50 glassmorphism border-ghost transition-smooth">
+      <div class="px-4 sm:px-6 lg:px-8">
         {/* Desktop Navigation */}
         <div class="hidden md:flex h-16 justify-between items-center">
           <a
             href="/"
-            class="text-2xl font-bold text-purple-700 hover:text-purple-800 transition-colors duration-200 focus-ring no-underline"
-            style="font-family: 'Fields', Georgia, serif;"
+            class="text-2xl font-bold text-primary hover:text-black transition-colors duration-200 focus-ring no-underline font-display"
             data-astro-transition-name="nav-brand"
           >
             Brian Colclough
@@ -28,9 +27,9 @@ export default function NavBar() {
                 <a
                   href={href}
                   data-astro-prefetch
-                  class="font-medium text-gray-700 hover:text-purple-600 relative py-2 px-1 transition-colors duration-200 focus-ring no-underline
-                  after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5
-                  after:bg-purple-500 after:origin-left after:scale-x-0
+                  class="font-medium text-text-secondary hover:text-primary relative py-2 px-1 transition-colors duration-200 focus-ring no-underline
+                  after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px]
+                  after:bg-primary after:origin-left after:scale-x-0
                   hover:after:scale-x-100 after:transition-transform after:duration-200"
                 >
                   {label}
@@ -45,8 +44,7 @@ export default function NavBar() {
           <div class="flex h-16 justify-between items-center">
             <a
               href="/"
-              class="text-xl font-bold text-purple-700 focus-ring no-underline"
-              style="font-family: 'Fields', Georgia, serif;"
+              class="text-xl font-bold text-primary focus-ring no-underline font-display"
               data-astro-transition-name="nav-brand"
             >
               Brian Colclough
@@ -54,7 +52,7 @@ export default function NavBar() {
 
             <button
               onClick={() => setIsOpen(!isOpen())}
-              class="p-2 text-gray-600 hover:text-purple-600 hover:bg-purple-50 rounded-lg transition-all duration-200 focus-ring"
+              class="p-2 text-text-secondary hover:text-primary hover:bg-primary-container rounded-lg transition-all duration-200 focus-ring"
               aria-label="Toggle menu for navigation"
               aria-expanded={isOpen()}
             >
@@ -65,9 +63,8 @@ export default function NavBar() {
             </button>
           </div>
 
-          {/* Mobile menu */}
           <div
-            class={`fixed left-0 right-0 top-16 border-b border-gray-200/50 bg-white/95 backdrop-blur-sm
+            class={`absolute left-0 right-0 top-[110%] border-ghost glassmorphism
             transform transition-all duration-200 ease-out ${isOpen()
                 ? "translate-y-0 opacity-100"
                 : "-translate-y-4 opacity-0 pointer-events-none"
@@ -83,7 +80,7 @@ export default function NavBar() {
                   <a
                     href={href}
                     data-astro-prefetch
-                    class="block px-3 py-2 font-medium text-gray-700 hover:text-purple-600 hover:bg-purple-50 rounded-lg transition-all duration-200 focus-ring no-underline"
+                    class="block px-3 py-2 font-medium text-text-secondary hover:text-primary hover:bg-primary-container rounded-lg transition-all duration-200 focus-ring no-underline"
                     onClick={() => setIsOpen(false)}
                   >
                     {label}

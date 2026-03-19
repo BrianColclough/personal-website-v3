@@ -1,145 +1,232 @@
 ---
 import { Image } from "astro:assets";
 import Layout from "../layouts/Layout.astro";
-import { contentfulClient, type ImagesRO } from "../lib/contentful";
+import { contentfulClient, type ImagesRO, type BlogEntryRO } from "../lib/contentful";
+import StravaRuns from "../components/StravaRuns";
 
+// Fetch Images
 const images = await contentfulClient.getEntries<ImagesRO>({
   content_type: "spotlightImages",
 });
+const content = images.items[0]?.fields.images as Array<any> || [];
+const heroImage = content[0]?.fields.file.url;
+const photographyImages = content.slice(1);
 
-const content = images.items[0].fields.images as Array<any>;
-const heroImage = content[0].fields.file.url;
+// Fetch Contentful Posts
+const contentfulEntries = await contentfulClient.getEntries<BlogEntryRO>({
+    content_type: "blogPost",
+});
+const contentfulPosts = contentfulEntries.items.map((item) => {
+    const { title, datePosted, summary, slug } = item.fields;
+    return {
+        title: title as string, 
+        slug: slug as string, 
+        summary: summary as string,
+        datePosted: new Date(datePosted as string).toLocaleDateString(),
+        rawDate: new Date(datePosted as string),
+        type: "Code"
+    };
+});
+
+// Fetch Markdown Posts
+const { getCollection } = await import("astro:content");
+const markdownEntries = await getCollection("blog", ({ data }) => data.draft !== true);
+const markdownPosts = markdownEntries.map((entry: any) => {
+    return {
+        title: entry.data.title,
+        slug: entry.data.slug || entry.slug,
+        summary: entry.data.summary,
+        datePosted: entry.data.datePosted.toLocaleDateString(),
+        rawDate: entry.data.datePosted,
+        type: "Tech"
+    };
+});
+
+const allPosts = [...contentfulPosts, ...markdownPosts].sort(
+    (a, b) => b.rawDate.getTime() - a.rawDate.getTime()
+);
+const recentPosts = allPosts.slice(0, 4);
+
+// Helper for alternating styles
+const cardStyles = [
+  { bg: "bg-primary", text: "text-white", border: "border-secondary", shadow: "shadow-[6px_6px_0px_#22c55e]", sticker: "sticker-green" },
+  { bg: "bg-secondary-container", text: "text-primary", border: "border-primary", shadow: "shadow-[6px_6px_0px_#7c3aed]", sticker: "sticker-purple" },
+  { bg: "bg-tertiary-container", text: "text-primary", border: "border-secondary", shadow: "shadow-[6px_6px_0px_#22c55e]", sticker: "sticker-green" }
+];
 ---
 
 <Layout title="Brian Colclough | Photography & Software Engineering">
-  <!-- Hero Section with Personal Intro -->
-  <section class="relative min-h-screen bg-gradient-to-br from-purple-50 via-white to-green-50 flex items-center">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-      <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+  
+  {/* ------ HERO SECTION ------ */}
+  <section class="min-h-[85vh] flex items-center relative overflow-hidden pt-24 pb-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="grid lg:grid-cols-12 gap-12 lg:gap-8 items-center">
         
-        <!-- Text Content -->
-        <div class="prose-spacing max-w-none">
-          <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-purple-700 leading-tight mb-6" style="font-family: 'Fields', Georgia, serif;" transition:name="page-title">
-            Brian Colclough
-          </h1>
-          
-          <div class="space-y-6 text-lg text-gray-700 leading-relaxed">
-            <p>
-              I'm a <span class="text-purple-600 font-medium">software engineer</span> studying AI and a 
-              <span class="text-green-600 font-medium">passionate runner</span> who believes that physical 
-              fitness can bring happiness to everyone.
-            </p>
-            
-            <p>
-              I pursue two distinct passions: building innovative technology and maintaining 
-              an active lifestyle that brings joy and energy to everything I do.
-            </p>
+        {/* Text */}
+        <div class="lg:col-span-7 space-y-8">
+          <div class="relative inline-block">
+            <h1 class="text-6xl md:text-8xl font-display font-extrabold text-primary leading-[0.9] tracking-tighter mix-blend-multiply">
+              Brian <br/>Colclough.
+            </h1>
+            <div class="absolute -top-8 -right-8 sticker sticker-green rotate-6 text-sm">
+              Running on<br/>Code & Caffeine.
+            </div>
           </div>
-
-          <!-- CTA Buttons -->
-          <div class="flex flex-wrap gap-4 mt-8">
-            <a href="/blog" class="btn btn-primary hover-lift transition-smooth">
+          
+          <p class="text-xl md:text-2xl font-sans font-medium text-text-primary max-w-xl pr-4">
+            Software Engineer & Passionate Runner.<br/>
+            Building things & chasing miles.
+          </p>
+          
+          <div class="flex flex-wrap gap-4 pt-4">
+            <a href="/blog" class="btn btn-primary text-xl px-8 py-4">
               Read My Blog
             </a>
-            <a href="/about" class="btn btn-secondary hover-lift transition-smooth">
+            <a href="/about" class="btn btn-secondary text-xl px-8 py-4 bg-purple-50">
               Learn More About Me
             </a>
           </div>
-
-          <!-- Quick Stats -->
-          <div class="grid grid-cols-2 sm:grid-cols-2 gap-6 mt-12 pt-8 border-t border-purple-100">
-            <div class="text-center">
-              <div class="text-2xl font-bold text-purple-600" style="font-family: 'Fields', Georgia, serif;">AI</div>
-              <div class="text-sm text-gray-600 uppercase tracking-wide">Focus</div>
-            </div>
-            <div class="text-center">
-              <div class="text-2xl font-bold text-purple-600" style="font-family: 'Fields', Georgia, serif;">∞</div>
-              <div class="text-sm text-gray-600 uppercase tracking-wide">Curiosity</div>
-            </div>
-          </div>
         </div>
 
-        <!-- Hero Image -->
-        <div class="relative group">
-          <div class="relative overflow-hidden rounded-2xl shadow-xl hover-lift transition-smooth">
-            <Image
-              class="w-full h-auto object-cover"
-              alt="Brian Colclough - Self portrait showcasing photography style"
-              src={heroImage}
-              height="800"
-              width="600"
-              format="webp"
-              loading="eager"
-            />
-            <!-- Subtle overlay -->
-            <div class="absolute inset-0 bg-gradient-to-t from-purple-900/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        {/* Hero Image */}
+        <div class="lg:col-span-5 relative mt-8 lg:mt-0 px-8 lg:px-0">
+          <div class="relative z-10 rounded-[60%_40%_30%_70%_/_60%_30%_70%_40%] overflow-hidden border-8 border-secondary shadow-[12px_12px_0px_#7c3aed] aspect-[4/5] transform -rotate-3 hover:rotate-0 transition-transform duration-500">
+            {heroImage && (
+              <Image
+                src={heroImage}
+                alt="Brian Colclough"
+                width={800}
+                height={1000}
+                class="w-full h-full object-cover scale-110"
+                format="webp"
+                loading="eager"
+              />
+            )}
+            <div class="absolute inset-0 bg-primary/10 mix-blend-overlay"></div>
           </div>
-          
-          <!-- Floating accent -->
-          <div class="absolute -bottom-6 -right-6 w-24 h-24 bg-purple-100 rounded-full -z-10 group-hover:scale-110 transition-transform duration-300"></div>
         </div>
 
       </div>
     </div>
   </section>
 
-
-  <!-- Full Gallery Section -->
-  <section id="gallery" class="py-20 bg-gray-50">
+  {/* ------ TWO PASSIONS OVERLAY ------ */}
+  <section class="py-24 relative z-20">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid lg:grid-cols-2 gap-16 items-center">
+        
+        {/* Abstract Illustrations */}
+        <div class="relative h-[400px]">
+          {/* Code Window */}
+          <div class="absolute top-0 left-0 w-3/4 h-64 bg-gray-900 rounded-2xl border-4 border-black p-4 shadow-[8px_8px_0px_rgba(0,0,0,0.2)] -rotate-3 z-10 transition-transform hover:-translate-y-2">
+            <div class="flex gap-2 mb-4">
+              <div class="w-3 h-3 rounded-full bg-red-400"></div>
+              <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+              <div class="w-3 h-3 rounded-full bg-green-400"></div>
+            </div>
+            <div class="space-y-3 opacity-80">
+              <div class="h-3 bg-purple-400 rounded w-3/4"></div>
+              <div class="h-3 bg-green-400 rounded w-1/2 ml-4"></div>
+              <div class="h-3 bg-blue-400 rounded w-2/3 ml-4"></div>
+              <div class="h-3 bg-white rounded w-1/3"></div>
+              <div class="h-3 bg-pink-400 rounded w-4/5"></div>
+            </div>
+          </div>
+          
+          {/* Running Overlay Concept (using an image from contentful if available or abstract) */}
+          <div class="absolute bottom-0 right-0 w-2/3 aspect-square bg-gradient-to-tr from-secondary to-blue-400 rounded-[30%_70%_70%_30%_/_30%_30%_70%_70%] border-4 border-black shadow-[8px_8px_0px_rgba(0,0,0,0.2)] rotate-6 z-20 overflow-hidden hover:rotate-0 transition-transform flex items-center justify-center p-4">
+            {photographyImages[0] ? (
+              <Image 
+                src={photographyImages[0]?.fields.file.url} 
+                alt="Running" 
+                width={400} height={400} 
+                class="w-full h-full object-cover rounded-[30%_70%_70%_30%_/_30%_30%_70%_70%]"
+              />
+            ) : (
+                <div class="font-display font-bold text-6xl text-white mix-blend-overlay">Run\nFaster</div>
+            )}
+            <div class="absolute -top-4 -right-4 sticker sticker-pink scale-125 z-30">&rarr;</div>
+          </div>
+        </div>
+
+        {/* Text Area */}
+        <div class="space-y-6">
+          <p class="font-mono font-bold text-text-secondary uppercase tracking-widest text-sm">Engineering + Running</p>
+          <h2 class="text-5xl md:text-7xl font-display font-bold text-text-primary leading-[0.95] tracking-tight">
+            Two Passions,<br/>One Journey
+          </h2>
+          <p class="text-xl md:text-2xl text-text-secondary pr-8">
+            I bridge the gap between code and endurance, finding joy and innovation in both.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  {/* ------ STRAVA RUNS GRID ------ */}
+  <section class="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t-4 border-black/5">
+    <StravaRuns client:load />
+  </section>
+
+  {/* ------ BLOG/RUN GRID ------ */}
+  <section class="pb-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
       
-      <!-- Section Header -->
-      <div class="text-center max-w-2xl mx-auto mb-16">
-        <h2 class="text-3xl md:text-4xl font-bold text-purple-700 mb-4" style="font-family: 'Fields', Georgia, serif;">
-          Photography Portfolio
+      {/* Dynamic Blog Posts */}
+      {recentPosts.map((post, i) => {
+        const style = cardStyles[i % cardStyles.length];
+        return (
+          <a href={`/blog/${post.slug}`} class={`card-asymmetric ${style.bg} border-4 ${style.border} ${style.text} ${style.shadow} flex flex-col justify-between aspect-square block no-underline focus-ring`}>
+            <div>
+              <p class="font-mono text-sm opacity-80 mb-2 mt-4 uppercase font-bold">Blog Post:</p>
+              <h3 class="text-2xl font-display font-bold leading-tight">{post.title}</h3>
+            </div>
+            <div class="mt-4 flex flex-wrap gap-2">
+              <span class={`sticker ${style.sticker}`}>{post.type}</span>
+            </div>
+          </a>
+        );
+      })}
+
+    </div>
+  </section>
+
+  {/* ------ PHOTOGRAPHY GRID ------ */}
+  <section class="py-24 border-t-4 border-black/5 bg-gray-50/50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="mb-16">
+        <p class="font-mono font-bold text-text-secondary uppercase tracking-widest text-sm mb-2">Photography</p>
+        <h2 class="text-4xl md:text-6xl font-display font-bold text-text-primary tracking-tight">
+          Capturing Life's<br/>Moments
         </h2>
-        <p class="text-lg text-gray-600">
-          Documenting life through landscapes, portraits, and candid moments.
-        </p>
       </div>
 
-      <!-- Masonry-style Gallery -->
-      <div class="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-6 space-y-6">
-        {content.slice(1).map((photo, index) => (
-          <div class="break-inside-avoid group relative overflow-hidden rounded-lg shadow-md hover-lift transition-smooth bg-white">
-            <Image
-              src={photo.fields.file.url}
-              alt={`Portfolio photograph ${index + 1}`}
-              class="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700"
-              width={400}
-              height={600}
-              format="webp"
-              loading="lazy"
-            />
-            <!-- Subtle hover effect -->
-            <div class="absolute inset-0 bg-gradient-to-t from-purple-900/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+      <div class="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-8 space-y-8">
+        {photographyImages.map((photo, i) => (
+          <div class="break-inside-avoid relative group" style={`transform: rotate(${i % 2 === 0 ? '-2deg' : '3deg'});`}>
+            {/* Polaroid Base */}
+            <div class="bg-white p-3 pb-12 border-2 border-black/10 shadow-[8px_8px_0px_rgba(0,0,0,0.1)] group-hover:-translate-y-2 transition-transform duration-300">
+              <div class="relative overflow-hidden border-2 border-primary/20 bg-gray-100 aspect-[3/4]">
+                <Image
+                  src={photo.fields.file.url}
+                  alt={`Portfolio photograph ${i + 1}`}
+                  class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                  width={400}
+                  height={600}
+                  format="webp"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+            {/* Random tape/stickers on photos */}
+            {i % 3 === 0 && <div class="absolute -top-3 left-1/2 -ml-8 w-16 h-6 bg-pink-200/80 rotate-3 border-x-2 border-pink-300 backdrop-blur-sm shadow-sm opacity-80 z-20"></div>}
+            {i % 4 === 1 && <div class="absolute -bottom-4 right-4 sticker sticker-purple z-20">&starf;</div>}
+            {i % 5 === 2 && <div class="absolute top-10 -right-5 sticker sticker-green z-20">~</div>}
           </div>
         ))}
       </div>
-
-    </div>
-  </section>
-
-  <!-- Blog Preview Section -->
-  <section class="py-20 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      
-      <!-- Section Header -->
-      <div class="text-center flex flex-col gap-4 max-w-3xl mx-auto mb-16">
-        <h2 class="text-3xl md:text-4xl font-bold text-purple-700 mb-4" style="font-family: 'Fields', Georgia, serif;">
-          Latest Thoughts
-        </h2>
-        <p class="text-lg text-gray-600 leading-relaxed">
-            Right now I'm training for another half-marathon in November, so my content is focused on fitness and running.
-        </p>
-        <a href="/blog" class="btn btn-primary hover-lift transition-smooth w-fit mx-auto">
-          Visit Blog
-        </a>
-      </div>
-
     </div>
   </section>
 
 </Layout>
-
-
