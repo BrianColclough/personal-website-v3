@@ -10,7 +10,7 @@ const contentfulEntries = await contentfulClient.getEntries<BlogEntryRO>({
 });
 
 const contentfulPosts: BlogPost[] = contentfulEntries.items.map((item) => {
-    const { title, datePosted, summary, slug, content } = item.fields;
+    const { title, datePosted, summary, slug, content, tags } = item.fields;
     return {
         title: title as string,
         slug: slug as string,
@@ -19,6 +19,7 @@ const contentfulPosts: BlogPost[] = contentfulEntries.items.map((item) => {
         datePosted: new Date(datePosted as string).toLocaleDateString(),
         rawDate: new Date(datePosted as string),
         source: "contentful" as const,
+        tags: tags as string[] || [],
     };
 });
 
@@ -35,6 +36,7 @@ const markdownPosts = markdownEntries.map((entry: any) => {
         datePosted: entry.data.datePosted.toLocaleDateString(),
         rawDate: entry.data.datePosted,
         source: "markdown" as const,
+        tags: entry.data.tags || [],
     };
 });
 
@@ -105,7 +107,7 @@ const cardStyles = [
                                         </h3>
                                         
                                         <p class="text-lg font-medium opacity-90 leading-relaxed mb-4 line-clamp-3">
-                                            {post.summary}
+                                            {post.summary || post.content.replace(/<[^>]*>?/gm, '')}
                                         </p>
                                         
                                         <div class="mt-auto pt-6 flex items-center justify-between">
@@ -114,7 +116,9 @@ const cardStyles = [
                                             </span>
                                             
                                             <div class="flex items-center gap-2">
-                                                <span class={`sticker ${style.sticker}`}>{style.typeTag}</span>
+                                                {(post.tags && post.tags.length > 0 ? post.tags : [style.typeTag]).map((tag: string) => (
+                                                    <span class={`sticker ${style.sticker}`}>{tag}</span>
+                                                ))}
                                             </div>
                                         </div>
                                     </div>
@@ -124,8 +128,8 @@ const cardStyles = [
                     </div>
                 </section>
             ) : (
-                <!-- Empty State -->
                 <section class="text-center py-24">
+                    {/* Empty State */}
                     <div class="max-w-md mx-auto card-asymmetric bg-surface-container-lowest border-4 border-black p-8 shadow-sticker-lg rotate-1">
                         <div class="text-6xl mb-6">📝</div>
                         <h3 class="text-3xl font-display font-black text-primary mb-4">

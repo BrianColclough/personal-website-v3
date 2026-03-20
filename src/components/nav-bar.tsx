@@ -64,10 +64,10 @@ export default function NavBar() {
           </div>
 
           <div
-            class={`absolute left-0 right-0 top-[110%] border-ghost glassmorphism
-            transform transition-all duration-200 ease-out ${isOpen()
-                ? "translate-y-0 opacity-100"
-                : "-translate-y-4 opacity-0 pointer-events-none"
+            class={`absolute left-0 right-0 top-[110%] bg-white border-4 border-black shadow-sticker-lg z-50 rounded-xl
+            transform transition-all duration-200 ease-out origin-top ${isOpen()
+                ? "scale-y-100 opacity-100"
+                : "scale-y-95 opacity-0 pointer-events-none"
               }`}
           >
             <ul class="px-4 py-6 space-y-1">

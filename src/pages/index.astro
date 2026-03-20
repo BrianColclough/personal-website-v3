@@ -65,7 +65,7 @@ const cardStyles = [
         {/* Text */}
         <div class="lg:col-span-7 space-y-8">
           <div class="relative inline-block">
-            <h1 class="text-6xl md:text-8xl font-display font-extrabold text-primary leading-[0.9] tracking-tighter mix-blend-multiply">
+            <h1 class="text-5xl md:text-8xl font-display font-extrabold text-primary leading-[0.9] tracking-tighter mix-blend-multiply">
               Brian <br/>Colclough.
             </h1>
             <div class="absolute -top-8 -right-8 sticker sticker-green rotate-6 text-sm">
@@ -143,7 +143,7 @@ const cardStyles = [
                 class="w-full h-full object-cover rounded-[30%_70%_70%_30%_/_30%_30%_70%_70%]"
               />
             ) : (
-                <div class="font-display font-bold text-6xl text-white mix-blend-overlay">Run\nFaster</div>
+                <div class="font-display font-bold text-4xl sm:text-6xl text-white mix-blend-overlay">Run\nFaster</div>
             )}
             <div class="absolute -top-4 -right-4 sticker sticker-pink scale-125 z-30">&rarr;</div>
           </div>
@@ -202,7 +202,7 @@ const cardStyles = [
         </h2>
       </div>
 
-      <div class="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-8 space-y-8">
+      <div class="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 sm:gap-8 space-y-4 sm:space-y-8">
         {photographyImages.map((photo, i) => (
           <div class="break-inside-avoid relative group" style={`transform: rotate(${i % 2 === 0 ? '-2deg' : '3deg'});`}>
             {/* Polaroid Base */}

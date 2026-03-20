@@ -5,6 +5,7 @@ export type BlogPost = {
     summary: string,
     slug: string,
     rawDate: Date,
-    source: 'contentful' | 'markdown'
+    source: 'contentful' | 'markdown',
+    tags?: string[]
 }
 

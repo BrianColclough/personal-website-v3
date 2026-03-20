@@ -2,6 +2,7 @@ import { createSignal, onMount, Show, For } from "solid-js";
 
 export default function StravaRuns() {
   const [runs, setRuns] = createSignal<any[]>([]);
+  const [weeklyMileage, setWeeklyMileage] = createSignal("0 mi");
   const [loading, setLoading] = createSignal(true);
   const [error, setError] = createSignal<string | null>(null);
 
@@ -10,7 +11,9 @@ export default function StravaRuns() {
       const res = await fetch('/api/strava');
       if (!res.ok) throw new Error('Failed to fetch runs');
       const data = await res.json();
-      setRuns(data.slice(0, 3));
+      setRuns(data.runs.slice(0, 3));
+      setWeeklyMileage(data.weeklyMileage);
+      
     } catch (err: any) {
       setError(err.message);
     } finally {
@@ -40,9 +43,20 @@ export default function StravaRuns() {
       <div class="mb-12 flex flex-col sm:flex-row sm:items-end justify-between gap-6">
         <div>
           <p class="font-mono font-bold text-text-secondary uppercase tracking-widest text-sm mb-2">Strava</p>
-          <h2 class="text-4xl md:text-6xl font-display font-bold text-text-primary tracking-tight">
-            Recent Runs
-          </h2>
+          <div class="flex flex-col md:flex-row md:items-center gap-4">
+            <h2 class="text-4xl md:text-6xl font-display font-bold text-text-primary tracking-tight">
+              Recent Runs
+            </h2>
+            <Show when={!loading() && !error() && weeklyMileage() !== "0.0 mi"}>
+              <div class="inline-flex items-center gap-3 bg-secondary-container border-4 border-black px-4 py-2 shadow-[4px_4px_0_#000] transform -rotate-2 mt-2 md:mt-0 self-start">
+                <span class="text-2xl">🏃‍♂️</span>
+                <div>
+                  <div class="text-[10px] font-mono font-bold uppercase tracking-wider text-black opacity-80 leading-tight">This Week ({new Date().toLocaleDateString('en-US', { weekday: 'short' })})</div>
+                  <div class="text-xl font-display font-black text-black leading-none">{weeklyMileage()}</div>
+                </div>
+              </div>
+            </Show>
+          </div>
         </div>
         <div>
           <a href="https://www.strava.com/athletes/121531955" target="_blank" rel="noopener noreferrer" class="btn btn-secondary border-4 border-black font-bold uppercase shadow-[4px_4px_0_#000] text-sm px-6 py-2 transition-transform hover:-translate-y-1 hover:shadow-[6px_6px_0_#000] inline-block">

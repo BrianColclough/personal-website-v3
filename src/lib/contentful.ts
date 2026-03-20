@@ -8,7 +8,8 @@ export interface BlogEntryRO {
         content: EntryFieldTypes.RichText,
         datePosted: EntryFieldTypes.Date,
         summary: EntryFieldTypes.Text,
-        slug: EntryFieldTypes.Text
+        slug: EntryFieldTypes.Text,
+        tags?: EntryFieldTypes.Array<EntryFieldTypes.Symbol>
     }
 };
 

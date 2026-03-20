@@ -30,8 +30,8 @@ export async function GET() {
     const { access_token } = await tokenResponse.json();
 
     // 2. Fetch the recent activities
-    // Fetch 15 so we have enough buffer if you recently did cross-training/walks
-    const activitiesResponse = await fetch('https://www.strava.com/api/v3/athlete/activities?per_page=15', {
+    // Fetch 30 so we have enough buffer if you recently did cross-training/walks
+    const activitiesResponse = await fetch('https://www.strava.com/api/v3/athlete/activities?per_page=30', {
       headers: { Authorization: `Bearer ${access_token}` },
     });
 
@@ -42,8 +42,21 @@ export async function GET() {
 
     const activities = await activitiesResponse.json();
     
-    // Filter out non-runs first, then take the top 3
-    const runActivities = activities.filter((a: any) => a.type === 'Run' || a.type === 'VirtualRun').slice(0, 3);
+    // Filter out non-runs first
+    const allRunActivities = activities.filter((a: any) => a.type === 'Run' || a.type === 'VirtualRun');
+    
+    // Calculate weekly mileage across all fetched runs
+    const now = new Date();
+    const day = now.getDay() || 7;
+    const monday = new Date(now);
+    monday.setHours(-24 * (day - 1), 0, 0, 0);
+
+    const currentWeekRuns = allRunActivities.filter((a: any) => new Date(a.start_date_local) >= monday);
+    const weeklyDistanceMeters = currentWeekRuns.reduce((acc: number, run: any) => acc + run.distance, 0);
+    const weeklyMileage = (weeklyDistanceMeters * 0.000621371).toFixed(1) + ' mi';
+
+    // Take the top 3
+    const runActivities = allRunActivities.slice(0, 3);
 
     // 3. For each activity, fetch detailed data to get the description
     const detailedActivities = await Promise.all(
@@ -69,7 +82,10 @@ export async function GET() {
       })
     );
 
-    return new Response(JSON.stringify(detailedActivities), {
+    return new Response(JSON.stringify({
+      runs: detailedActivities,
+      weeklyMileage: weeklyMileage
+    }), {
       status: 200,
       headers: {
         'Content-Type': 'application/json',
