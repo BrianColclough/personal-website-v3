@@ -53,16 +53,18 @@ function formatDate(dateString: string): string {
 
 // Neo-Brutalist recurring styles for grid mapping
 const cardStyles = [
-  { bg: "bg-primary", text: "text-white", border: "border-secondary", shadow: "shadow-[6px_6px_0px_#22c55e]", sticker: "sticker-green", typeTag: "Tech" },
-  { bg: "bg-secondary-container", text: "text-primary", border: "border-primary", shadow: "shadow-[6px_6px_0px_#7c3aed]", sticker: "sticker-purple", typeTag: "Code" },
-  { bg: "bg-tertiary-container", text: "text-primary", border: "border-secondary", shadow: "shadow-[6px_6px_0px_#22c55e]", sticker: "sticker-green", typeTag: "Life" }
+  { bg: "bg-surface-container-lowest", text: "text-black", border: "border-primary", shadow: "shadow-[6px_6px_0px_#702ddc]", sticker: "sticker-purple", typeTag: "Code" },
+  { bg: "bg-surface-container-lowest", text: "text-black", border: "border-secondary", shadow: "shadow-[6px_6px_0px_#22c55e]", sticker: "sticker-green", typeTag: "Tech" },
+  { bg: "bg-surface-container-lowest", text: "text-black", border: "border-tertiary", shadow: "shadow-[6px_6px_0px_#ff66b2]", sticker: "sticker-pink", typeTag: "Ideas" },
+  { bg: "bg-surface-container-lowest", text: "text-black", border: "border-error", shadow: "shadow-[6px_6px_0px_#ef4444]", sticker: "sticker-pink", typeTag: "Life" },
+  { bg: "bg-surface-container-lowest", text: "text-black", border: "border-black", shadow: "shadow-[6px_6px_0px_#1a1a1a]", sticker: "sticker-purple", typeTag: "Rambling" }
 ];
 ---
 
 <Layout title="Brian Colclough | Blog" description="Thoughts on AI, software engineering, photography, and the intersection of technology and creativity.">
     
     <!-- Hero Section -->
-    <section class="border-b-4 border-black bg-surface pb-16 pt-24 lg:pt-32 relative overflow-hidden">
+    <section class="border-b-4 border-black bg-surface pb-16 pt-56 lg:pt-64 relative overflow-hidden">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
             <h1 class="text-5xl md:text-7xl lg:text-8xl font-display font-black text-black leading-tight tracking-tight mb-8" transition:name="page-title">
                 Writing & <br/>Thoughts.
@@ -92,11 +94,11 @@ const cardStyles = [
             
             {posts.length > 0 ? (
                 <section>
-                    <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+                    <div class="columns-1 sm:columns-2 lg:columns-3 gap-8">
                         {posts.map((post, index) => {
                             const style = cardStyles[index % cardStyles.length];
                             return (
-                                <a href={`/blog/${post.slug}`} class={`card-asymmetric ${style.bg} border-4 ${style.border} ${style.text} ${style.shadow} flex flex-col justify-between aspect-square group no-underline focus-ring`}>
+                                <a href={`/blog/${post.slug}`} class={`card-asymmetric mb-8 break-inside-avoid block ${style.bg} border-4 ${style.border} ${style.text} ${style.shadow} group no-underline focus-ring`}>
                                     <div class="flex flex-col h-full">
                                         <div class="flex items-center gap-3 text-sm font-mono font-bold mb-4 opacity-80 uppercase tracking-widest">
                                             <time>{formatDate(post.datePosted)}</time>

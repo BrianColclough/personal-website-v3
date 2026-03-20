@@ -3,6 +3,7 @@ title: Half Marathon Training Week 2
 datePosted: 2025-07-05
 summary: “My second week training for a half marathon, I’m giving my thoughts on each of my works, what went wrong and what was good.”
 slug: “half-marathon-training-week-2“
+tags: [fitness]
 ---
 # Week 2 of Training
 ## Sunday Long Run

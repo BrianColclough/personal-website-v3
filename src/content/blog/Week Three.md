@@ -3,6 +3,7 @@ title: Half Marathon Training Week 3
 datePosted: 2025-07-12
 summary: “Week 3 of Half Marathon Training! Feeling good and progressing well”
 slug: “half-marathon-training-week-3“
+tags: [fitness]
 ---
 # Week Three 
 ## Tuesday 2.5 Miles Easy

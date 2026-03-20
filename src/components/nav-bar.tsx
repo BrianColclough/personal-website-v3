@@ -1,23 +1,29 @@
 import { Icon } from "@iconify-icon/solid";
 import { createSignal } from "solid-js";
 
-export default function NavBar() {
+export default function NavBar(props: { isHome?: boolean }) {
   const [isOpen, setIsOpen] = createSignal(false);
 
   return (
-    <nav class="fixed top-4 left-1/2 -translate-x-1/2 w-[95%] max-w-7xl z-50 glassmorphism border-ghost transition-smooth">
-      <div class="px-4 sm:px-6 lg:px-8">
-        {/* Desktop Navigation */}
-        <div class="hidden md:flex h-16 justify-between items-center">
+    <nav class="w-full absolute top-0 left-0 z-50 pt-8 pb-4">
+      <div class="px-4 sm:px-6 lg:px-8 flex flex-col items-center">
+        {!props.isHome && (
           <a
             href="/"
-            class="text-2xl font-bold text-primary hover:text-black transition-colors duration-200 focus-ring no-underline font-display"
-            data-astro-transition-name="nav-brand"
+          class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-black text-tertiary mb-3 tracking-tighter hover:scale-[1.02] transition-transform duration-200 focus-ring no-underline"
+            style={{
+              "-webkit-text-stroke": "3px black",
+              "text-shadow": "6px 6px 0px rgba(0,0,0,0.1), 0px 0px 0px black",
+              "view-transition-name": "nav-brand"
+            }}
           >
             Brian Colclough
           </a>
+        )}
 
-          <ul class="flex items-center space-x-8">
+        {/* Desktop / Core Navigation */}
+        <div class="hidden md:block">
+          <ul class="flex items-center justify-center space-x-6 sm:space-x-8">
             {[
               { href: "/", label: "Home" },
               { href: "/blog", label: "Blog" },
@@ -27,10 +33,8 @@ export default function NavBar() {
                 <a
                   href={href}
                   data-astro-prefetch
-                  class="font-medium text-text-secondary hover:text-primary relative py-2 px-1 transition-colors duration-200 focus-ring no-underline
-                  after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px]
-                  after:bg-primary after:origin-left after:scale-x-0
-                  hover:after:scale-x-100 after:transition-transform after:duration-200"
+                  style={{ "view-transition-name": `nav-link-${label.toLowerCase()}` }}
+                  class="font-display font-black text-lg sm:text-xl text-black hover:text-tertiary relative py-2 px-1 transition-colors duration-200 focus-ring no-underline"
                 >
                   {label}
                 </a>
@@ -39,57 +43,31 @@ export default function NavBar() {
           </ul>
         </div>
 
-        {/* Mobile Navigation */}
-        <div class="md:hidden">
-          <div class="flex h-16 justify-between items-center">
-            <a
-              href="/"
-              class="text-xl font-bold text-primary focus-ring no-underline font-display"
-              data-astro-transition-name="nav-brand"
-            >
-              Brian Colclough
-            </a>
-
-            <button
-              onClick={() => setIsOpen(!isOpen())}
-              class="p-2 text-text-secondary hover:text-primary hover:bg-primary-container rounded-lg transition-all duration-200 focus-ring"
-              aria-label="Toggle menu for navigation"
-              aria-expanded={isOpen()}
-            >
-              <Icon
-                icon={isOpen() ? "mdi:close" : "mdi:menu"}
-                class="w-6 h-6"
-              />
-            </button>
-          </div>
-
-          <div
-            class={`absolute left-0 right-0 top-[110%] bg-white border-4 border-black shadow-sticker-lg z-50 rounded-xl
-            transform transition-all duration-200 ease-out origin-top ${isOpen()
-                ? "scale-y-100 opacity-100"
-                : "scale-y-95 opacity-0 pointer-events-none"
-              }`}
-          >
-            <ul class="px-4 py-6 space-y-1">
+        {/* Mobile Bottom Navigation */}
+        <div class="md:hidden fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] max-w-sm z-[100]">
+          <div class="bg-surface-container-lowest border-4 border-black shadow-[6px_6px_0px_#1a1a1a] rounded-2xl p-2 px-4">
+            <ul class="flex justify-between items-center">
               {[
-                { href: "/", label: "Home" },
-                { href: "/blog", label: "Blog" },
-                { href: "/about", label: "About" },
-              ].map(({ href, label }) => (
-                <li>
+                { href: "/", label: "Home", icon: "mdi:home" },
+                { href: "/blog", label: "Blog", icon: "mdi:text-box-outline" },
+                { href: "/about", label: "About", icon: "mdi:account" },
+              ].map(({ href, label, icon }) => (
+                <li class="flex-1">
                   <a
                     href={href}
                     data-astro-prefetch
-                    class="block px-3 py-2 font-medium text-text-secondary hover:text-primary hover:bg-primary-container rounded-lg transition-all duration-200 focus-ring no-underline"
-                    onClick={() => setIsOpen(false)}
+                    style={{ "view-transition-name": `nav-mobile-${label.toLowerCase()}` }}
+                    class="flex flex-col items-center justify-center py-2 px-1 text-black hover:text-tertiary active:scale-95 transition-all duration-200 focus-ring no-underline rounded-xl hover:bg-black/5"
                   >
-                    {label}
+                    <Icon icon={icon} class="text-2xl mb-1" />
+                    <span class="font-display font-black text-xs uppercase tracking-wider">{label}</span>
                   </a>
                 </li>
               ))}
             </ul>
           </div>
         </div>
+
       </div>
     </nav>
   );

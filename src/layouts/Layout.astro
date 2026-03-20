@@ -18,6 +18,9 @@ const {
     image,
     article,
 } = Astro.props;
+
+const pathname = Astro.url.pathname;
+const isHome = pathname === "/" || pathname === "";
 ---
 
 <!doctype html>
@@ -36,8 +39,8 @@ const {
         <ClientRouter />
     </head>
     <body class="flex flex-col min-h-screen">
-        <NavBar transition:persist client:load />
-        <main id="main" class="flex-grow mt-16">
+        <NavBar isHome={isHome} client:load />
+        <main id="main" class="flex-grow">
             <slot />
         </main>
         <Footer />

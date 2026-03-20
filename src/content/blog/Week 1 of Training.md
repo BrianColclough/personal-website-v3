@@ -3,6 +3,7 @@ title: Half Marathon Training Week 1
 datePosted: 2025-06-28
 summary: “My first week back training for a half marathon, I’m giving my thoughts on each of my works, what went wrong and what was good.”
 slug: “half-marathon-training-week-1“
+tags: [fitness]
 ---
 # Week 1 of Training
 ## Sunday 6/22 - 4.5 Mile Long Run
