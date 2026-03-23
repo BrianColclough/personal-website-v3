@@ -4,6 +4,8 @@ import Footer from "../components/footer/footer.astro";
 import NavBar from "../components/nav-bar";
 import SEOHead from "../components/SEOHead.astro";
 import "../styles/design-system.css";
+import Analytics from '@vercel/analytics/astro';
+import SpeedInsights from '@vercel/speed-insights/astro';
 
 interface Props {
     title: string;
@@ -44,5 +46,7 @@ const isHome = pathname === "/" || pathname === "";
             <slot />
         </main>
         <Footer />
+        <Analytics />
+        <SpeedInsights />
     </body>
 </html>
